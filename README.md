@@ -5,8 +5,8 @@ Allthings Node/Javascript SDK
 1.  [Installation & Usage](#installation--usage)
 1.  [Configuration](#configuration)
     1.  [Options](#configuration-options)
-1.  [Example](#example)
-1.  [API](#api)
+2.  [API](#api)
+3.  [OAuth Implicit Grant Example](#oauth-implicit-grant-example-example)
 
 ## Installation & Usage
 
@@ -14,15 +14,33 @@ Allthings Node/Javascript SDK
 yarn add @allthings/sdk
 ```
 
-## Configuration
-
 ```javascript
-const allthingsRestSdk = require('@allthings/sdk/rest')
+const allthings = require('@allthings/sdk')
 
-const api = allthingsRestSdk({
-  accessToken: 'foobar',
+const client = allthings.restSdk({
+  accessToken: '043dab7447450772example1214b552838003522',
 })
+
+client.getCurrentUser().then(viewer => 
+  console.log(`Welcome back ${viewer.username}!`)
+)
 ```
+
+<!--
+```javascript
+const allthingsSdk = require('@allthings/sdk')
+
+const allthings = allthingsSdk({
+  accessToken: '043dab7447450772example1214b552838003522',
+})
+
+allthings.query.viewer().then(viewer => 
+  console.log(`Welcome back ${viewer.username}!`)
+)
+```
+-->
+
+## Configuration
 
 ### Configuration Options
 
@@ -39,55 +57,106 @@ The available configuration options are outlined here:
 
 
 
-## Example
+## OAuth Implicit Grant Example
+
+@TODO
 
 ```javascript
-const allthingsSdk = require('@allthings/sdk/rest')
+const allthings = require('@allthings/sdk')
 
-const allthings = allthingsSdk({
+const client = allthings.restSdk({
   accessToken: '043dab7447450772example1214b552838003522',
 })
 
-allthings.getCurrentUser().then(viewer => 
+client.getCurrentUser().then(viewer => 
   console.log(`Welcome back ${viewer.username}!`)
 )
 ```
 
 
-<!--
-```javascript
-const allthingsSdk = require('@allthings/sdk')
 
-const allthings = allthingsSdk({
-  accessToken: '043dab7447450772example1214b552838003522',
-})
-
-allthings.query.viewer().then(viewer => 
-  console.log(`Welcome back ${viewer.username}!`)
-)
-```
--->
 
 ## API
 
-### AllthingsSDK module
+### Allthings SDK module
 
-* [`allthingsApi()`](#api-@TODO)
-
+* [`restSdk()`](#module-export-restSdk)
+  * [`client.createAgent()`](#restsdk-client-createagent)
+  * [`client.createAgentPermissions()`](#restsdk-client-createagent)
+  * [`client.createApp()`](#restsdk-client-createagent)
+  * [`client.createIdLookup()`](#restsdk-client-createagent)
+  * [`client.createGroup()`](#restsdk-client-createagent)
+  * [`client.getGroupById()`](#restsdk-client-createagent)
+  * [`client.updateGroupById()`](#restsdk-client-createagent)
+  * [`client.createProperty()`](#restsdk-client-createagent)
+  * [`client.getPropertyById()`](#restsdk-client-createagent)
+  * [`client.updatePropertyById()`](#restsdk-client-createagent)
+  * [`client.createRegistrationCode()`](#restsdk-client-createagent)
+  * [`client.createUnit()`](#restsdk-client-createagent)
+  * [`client.getUnitById()`](#restsdk-client-createagent)
+  * [`client.createUser()`](#restsdk-client-createagent)
+  * [`client.createUserPermission()`](#restsdk-client-createagent)
+  * [`client.deleteUserPermission()`](#restsdk-client-createagent)
+  * [`client.getUsers()`](#restsdk-client-createagent)
+  * [`client.getCurrentUser()`](#restsdk-client-createagent)
+  * [`client.getUserById()`](#restsdk-client-createagent)
+  * [`client.getUserPermissions()`](#restsdk-client-createagent)
+  * [`client.updateUserById()`](#restsdk-client-createagent)
+  * [`client.createUtilisationPeriod()`](#restsdk-client-createagent)
+  * [`client.getUtilisationPeriodById()`](#restsdk-client-createagent)
+  * [`client.updateUtilisationPeriodById()`](#restsdk-client-createagent)
+  * [`client.delete()`](#restsdk-client-delete)
+  * [`client.get()`](#restsdk-client-get)
+  * [`client.post()`](#restsdk-client-post)
+  * [`client.patch()`](#restsdk-client-patch)
 
 ---
 
-<a name="api-@TODO" />
+<a name="module-export-restSdk" />
 
-### allthings(configurationOptions): @TODO
+### restSdk(configurationOptions?): Client
 
-@TODO
+Create an client instance of the SDK.
 
 ```javascript
-const allthingsApi = require('@allthings/sdk')
+const allthings = require('@allthings/sdk')
 
-@TODO
+const client = allthings.restSdk(configurationOptions)
 ```
+
+---
+
+<a name="restsdk-client-createagent" />
+
+### client.createAgent()
+
+Create a new agent. This is a convenience function around creating a user and adding that user to a property-manager's team.
+
+```javascript
+const appId = '575027e58178f56a008b4568'
+const propertyManagerId = '5a818c07ef5f2f00441146a2'
+const username = 'mr.example@allthings.test'
+
+const agent = await client.createAgent(
+  appId,
+  propertyManagerId,
+  username,
+  { email: 'mr.example@allthings.test', locale: 'en_US' }
+)
+```
+
+```typescript
+export type MethodCreateAgent = (
+  appId: string,
+  propertyManagerId: string,
+  username: string,
+  data: PartialUser & {
+    readonly email: string
+    readonly locale: EnumLocale
+  },
+) => UserResult
+```
+
 
 ```typescript
 // Describes the API wrapper's resulting interface
