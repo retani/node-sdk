@@ -1,7 +1,7 @@
 import commonjs from 'rollup-plugin-commonjs'
 import hashbang from 'rollup-plugin-hashbang'
 import resolve from 'rollup-plugin-node-resolve'
-import json from 'rollup-plugin-json'
+// import json from 'rollup-plugin-json'
 
 const external = ['bottleneck', 'got', 'mem', 'readline', 'shortid']
 
@@ -13,10 +13,10 @@ const plugins = [
     main: true,
     module: true,
   }),
-  json({
-    indent: '  ',
-    preferConst: true,
-  }),
+  // json({
+  //   indent: '  ',
+  //   preferConst: true,
+  // }),
   commonjs({
     extensions: ['.js'],
     ignoreGlobal: false,

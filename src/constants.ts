@@ -1,5 +1,4 @@
-import packageJson from '../package.json'
-import { InterfaceRestApiWrapperOptions } from './rest/types'
+import { InterfaceAllthingsRestClientOptions } from './rest/types'
 
 export const API_OAUTH_URL =
   process.env.ALLTHINGS_OAUTH_URL || 'https://accounts.allthings.me/oauth/token'
@@ -18,11 +17,14 @@ export const REQUEST_BACK_OFF_INTERVAL = 500
 export const REQUEST_MAX_RETRIES = 50
 
 // Default options passed to the api wrapper on instansiation
-export const DEFAULT_API_WRAPPER_OPTIONS: InterfaceRestApiWrapperOptions = {
+export const DEFAULT_API_WRAPPER_OPTIONS: InterfaceAllthingsRestClientOptions = {
   clientId: process.env.ALLTHINGS_CLIENT_ID,
   clientSecret: process.env.ALLTHINGS_CLIENT_SECRET,
   password: process.env.ALLTHINGS_OAUTH_PASSWORD,
   username: process.env.ALLTHINGS_OAUTH_USERNAME,
 }
 
-export const USER_AGENT = `Allthings Node REST SDK/${packageJson.version}`
+export const USER_AGENT = `Allthings Node REST SDK/${
+  // tslint:disable-next-line no-var-requires
+  require('../package.json').version // less than ideal hack
+}`

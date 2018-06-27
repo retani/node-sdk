@@ -58,7 +58,7 @@ export enum EnumLocale {
 }
 
 // Describes the options with which to construct a new API wrapper instance
-export interface InterfaceRestApiWrapperOptions {
+export interface InterfaceAllthingsRestClientOptions {
   readonly accessToken?: string
   readonly clientId?: string
   readonly clientSecret?: string
@@ -68,7 +68,7 @@ export interface InterfaceRestApiWrapperOptions {
 }
 
 // Describes the REST API wrapper's resulting interface
-export interface InterfaceAllthingsRestApi {
+export interface InterfaceAllthingsRestClient {
   readonly delete: MethodHttpDelete
   readonly get: MethodHttpGet
   readonly post: MethodHttpPost

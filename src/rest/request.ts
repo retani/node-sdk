@@ -14,7 +14,7 @@ import { until } from '../utils/functional'
 import makeLogger from '../utils/logger'
 import sleep from '../utils/sleep'
 import { getNewTokenUsingPasswordGrant } from './oauth'
-import { InterfaceRestApiWrapperOptions } from './types'
+import { InterfaceAllthingsRestClientOptions } from './types'
 
 const logger = makeLogger('REST API Request')
 
@@ -143,7 +143,7 @@ function makeApiRequest(
  * is reused on subsequent requests.
  */
 export default async function request(
-  options: InterfaceRestApiWrapperOptions,
+  options: InterfaceAllthingsRestClientOptions,
   httpMethod: string,
   apiMethod: string,
   payload?: IRequestOptions,

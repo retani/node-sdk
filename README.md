@@ -1,5 +1,7 @@
 Allthings Node/Javascript SDK
 
+[![Build status](https://badge.buildkite.com/0cba57805232b819e0bc2836dc96dd8314ab9165f9553623ca.svg?branch=master)](https://github.com/allthings/node-sdk)
+
 ## Contents
 
 1.  [Installation & Usage](#installation--usage)

@@ -12,11 +12,18 @@ import {
   updatePropertyById,
 } from './methods/property'
 import { createRegistrationCode } from './methods/registrationCode'
-import { createUnit, getUnitById, updateUnitById } from './methods/unit'
+import {
+  createUnit,
+  EnumUnitType,
+  getUnitById,
+  updateUnitById,
+} from './methods/unit'
 import {
   createUser,
   createUserPermission,
   deleteUserPermission,
+  EnumUserPermissionObjectType,
+  EnumUserPermissionRole,
   getCurrentUser,
   getUserById,
   getUserPermissions,
@@ -32,8 +39,8 @@ import httpPatch from './patch'
 import httpPost from './post'
 import httpRequest from './request'
 import {
-  InterfaceAllthingsRestApi,
-  InterfaceRestApiWrapperOptions,
+  InterfaceAllthingsRestClient,
+  InterfaceAllthingsRestClientOptions,
 } from './types'
 
 const API_METHODS: ReadonlyArray<any> = [
@@ -81,6 +88,8 @@ const API_METHODS: ReadonlyArray<any> = [
   updateUtilisationPeriodById,
 ]
 
+export { EnumUnitType, EnumUserPermissionObjectType, EnumUserPermissionRole }
+
 /*
   The API wrapper
   Creates a new token via an OAuth Password Grant, then
@@ -88,9 +97,9 @@ const API_METHODS: ReadonlyArray<any> = [
   api method function wrappers.
 */
 export default function restSdk(
-  userOptions: InterfaceRestApiWrapperOptions = DEFAULT_API_WRAPPER_OPTIONS,
-): InterfaceAllthingsRestApi {
-  const options: InterfaceRestApiWrapperOptions = {
+  userOptions: InterfaceAllthingsRestClientOptions = DEFAULT_API_WRAPPER_OPTIONS,
+): InterfaceAllthingsRestClient {
+  const options: InterfaceAllthingsRestClientOptions = {
     ...DEFAULT_API_WRAPPER_OPTIONS,
     ...userOptions,
   }
