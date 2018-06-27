@@ -1,8 +1,5 @@
 import Bottleneck from 'bottleneck'
 import * as got from 'got'
-import { until } from '../utils/functional'
-import makeLogger from '../utils/logger'
-import sleep from '../utils/sleep'
 import {
   QUEUE_CONCURRENCY,
   QUEUE_DELAY,
@@ -12,7 +9,10 @@ import {
   REQUEST_MAX_RETRIES,
   REST_API_URL,
   USER_AGENT,
-} from './constants'
+} from '../constants'
+import { until } from '../utils/functional'
+import makeLogger from '../utils/logger'
+import sleep from '../utils/sleep'
 import { getNewTokenUsingPasswordGrant } from './oauth'
 import { InterfaceRestApiWrapperOptions } from './types'
 

@@ -1,7 +1,7 @@
 import * as got from 'got'
-import * as memoize from 'mem'
-import { API_OAUTH_URL, USER_AGENT } from './constants'
-import makeLogger from './utils/logger'
+import memoize from 'mem'
+import { API_OAUTH_URL, USER_AGENT } from '../constants'
+import makeLogger from '../utils/logger'
 
 const logger = makeLogger('API Request')
 

@@ -1,5 +1,5 @@
+import { DEFAULT_API_WRAPPER_OPTIONS } from '../constants'
 import { partial } from '../utils/functional'
-import { DEFAULT_API_WRAPPER_OPTIONS } from './constants'
 import httpDelete from './delete'
 import httpGet from './get'
 import { createAgent, createAgentPermissions } from './methods/agent'
@@ -87,7 +87,7 @@ const API_METHODS: ReadonlyArray<any> = [
   partially applies the api url, access token, get/post methods to
   api method function wrappers.
 */
-export default function api(
+export default function restSdk(
   userOptions: InterfaceRestApiWrapperOptions = DEFAULT_API_WRAPPER_OPTIONS,
 ): InterfaceAllthingsRestApi {
   const options: InterfaceRestApiWrapperOptions = {

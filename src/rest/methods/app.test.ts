@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { generate as generateId } from 'shortid'
-import restApi from '../'
+import restApi from '..'
 import { USER_ID } from '../../../test/constants'
 
 const api = restApi()

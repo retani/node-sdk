@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { generate as generateId } from 'shortid'
-import restApi from '../'
+import restApi from '..'
 import { APP_ID } from '../../../test/constants'
 import { EnumLocale } from '../types'
 import { EnumUserPermissionObjectType, EnumUserPermissionRole } from './user'

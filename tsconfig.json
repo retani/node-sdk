@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "allowJs": false,
-    "allowSyntheticDefaultImports": false,
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["es2015", "esnext"],
+    "lib": ["es2018", "esnext"],
     "module": "es2015",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -21,7 +21,7 @@
     "skipLibCheck": false,
     "sourceMap": false,
     "strictNullChecks": true,
-    "target": "es2015"
+    "target": "es2017"
   },
   "exclude": ["node_modules", "dist", "test"]
 }

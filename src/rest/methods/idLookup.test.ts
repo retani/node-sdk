@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import restApi from '../'
+import restApi from '..'
 import { APP_ID } from '../../../test/constants'
 import { EnumResource } from '../types'
 
