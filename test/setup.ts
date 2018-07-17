@@ -4,7 +4,8 @@
 process.env.DEBUG = process.env.DEBUG || 'Handler Helper'
 
 process.env.ALLTHINGS_OAUTH_CLIENT_ID = process.env.ALLTHINGS_CLIENT_ID || ''
-process.env.ALLTHINGS_OAUTH_CLIENT_SECRET = process.env.ALLTHINGS_CLIENT_SECRET || ''
+process.env.ALLTHINGS_OAUTH_CLIENT_SECRET =
+  process.env.ALLTHINGS_CLIENT_SECRET || ''
 process.env.ALLTHINGS_OAUTH_USERNAME =
   process.env.ALLTHINGS_OAUTH_USERNAME || ''
 process.env.ALLTHINGS_OAUTH_PASSWORD =
