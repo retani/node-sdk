@@ -1,5 +1,5 @@
 export {
-  default as restSdk,
+  default as restClient,
   EnumUnitType,
   EnumUserPermissionObjectType,
   EnumUserPermissionRole,

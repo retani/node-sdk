@@ -13,13 +13,13 @@ Allthings Node/Javascript SDK
 ## Installation & Usage
 
 ```sh
-yarn add @allthings/sdk
+yarn add allthings
 ```
 
 ```javascript
-const allthings = require('@allthings/sdk')
+const allthings = require('allthings')
 
-const client = allthings.restSdk({
+const client = allthings.restClient({
   accessToken: '043dab7447450772example1214b552838003522',
 })
 
@@ -64,9 +64,9 @@ The available configuration options are outlined here:
 @TODO
 
 ```javascript
-const allthings = require('@allthings/sdk')
+const allthings = require('allthings')
 
-const client = allthings.restSdk({
+const client = allthings.restClient({
   accessToken: '043dab7447450772example1214b552838003522',
 })
 
@@ -82,53 +82,53 @@ client.getCurrentUser().then(viewer =>
 
 ### Allthings SDK module
 
-* [`restSdk()`](#module-export-restSdk)
-  * [`client.createAgent()`](#restsdk-client-createagent)
-  * [`client.createAgentPermissions()`](#restsdk-client-createagent)
-  * [`client.createApp()`](#restsdk-client-createagent)
-  * [`client.createIdLookup()`](#restsdk-client-createagent)
-  * [`client.createGroup()`](#restsdk-client-createagent)
-  * [`client.getGroupById()`](#restsdk-client-createagent)
-  * [`client.updateGroupById()`](#restsdk-client-createagent)
-  * [`client.createProperty()`](#restsdk-client-createagent)
-  * [`client.getPropertyById()`](#restsdk-client-createagent)
-  * [`client.updatePropertyById()`](#restsdk-client-createagent)
-  * [`client.createRegistrationCode()`](#restsdk-client-createagent)
-  * [`client.createUnit()`](#restsdk-client-createagent)
-  * [`client.getUnitById()`](#restsdk-client-createagent)
-  * [`client.createUser()`](#restsdk-client-createagent)
-  * [`client.createUserPermission()`](#restsdk-client-createagent)
-  * [`client.deleteUserPermission()`](#restsdk-client-createagent)
-  * [`client.getUsers()`](#restsdk-client-createagent)
-  * [`client.getCurrentUser()`](#restsdk-client-createagent)
-  * [`client.getUserById()`](#restsdk-client-createagent)
-  * [`client.getUserPermissions()`](#restsdk-client-createagent)
-  * [`client.updateUserById()`](#restsdk-client-createagent)
-  * [`client.createUtilisationPeriod()`](#restsdk-client-createagent)
-  * [`client.getUtilisationPeriodById()`](#restsdk-client-createagent)
-  * [`client.updateUtilisationPeriodById()`](#restsdk-client-createagent)
-  * [`client.delete()`](#restsdk-client-delete)
-  * [`client.get()`](#restsdk-client-get)
-  * [`client.post()`](#restsdk-client-post)
-  * [`client.patch()`](#restsdk-client-patch)
+* [`restClient()`](#module-export-restClient)
+  * [`client.createAgent()`](#restclient-client-createagent)
+  * [`client.createAgentPermissions()`](#restclient-client-createagent)
+  * [`client.createApp()`](#restclient-client-createagent)
+  * [`client.createIdLookup()`](#restclient-client-createagent)
+  * [`client.createGroup()`](#restclient-client-createagent)
+  * [`client.getGroupById()`](#restclient-client-createagent)
+  * [`client.updateGroupById()`](#restclient-client-createagent)
+  * [`client.createProperty()`](#restclient-client-createagent)
+  * [`client.getPropertyById()`](#restclient-client-createagent)
+  * [`client.updatePropertyById()`](#restclient-client-createagent)
+  * [`client.createRegistrationCode()`](#restclient-client-createagent)
+  * [`client.createUnit()`](#restclient-client-createagent)
+  * [`client.getUnitById()`](#restclient-client-createagent)
+  * [`client.createUser()`](#restclient-client-createagent)
+  * [`client.createUserPermission()`](#restclient-client-createagent)
+  * [`client.deleteUserPermission()`](#restclient-client-createagent)
+  * [`client.getUsers()`](#restclient-client-createagent)
+  * [`client.getCurrentUser()`](#restclient-client-createagent)
+  * [`client.getUserById()`](#restclient-client-createagent)
+  * [`client.getUserPermissions()`](#restclient-client-createagent)
+  * [`client.updateUserById()`](#restclient-client-createagent)
+  * [`client.createUtilisationPeriod()`](#restclient-client-createagent)
+  * [`client.getUtilisationPeriodById()`](#restclient-client-createagent)
+  * [`client.updateUtilisationPeriodById()`](#restclient-client-createagent)
+  * [`client.delete()`](#restclient-client-delete)
+  * [`client.get()`](#restclient-client-get)
+  * [`client.post()`](#restclient-client-post)
+  * [`client.patch()`](#restclient-client-patch)
 
 ---
 
-<a name="module-export-restSdk" />
+<a name="module-export-restclient" />
 
-### restSdk(configurationOptions?): Client
+### restClient(configurationOptions?): Client
 
 Create an client instance of the SDK.
 
 ```javascript
-const allthings = require('@allthings/sdk')
+const allthings = require('allthings')
 
-const client = allthings.restSdk(configurationOptions)
+const client = allthings.restClient(configurationOptions)
 ```
 
 ---
 
-<a name="restsdk-client-createagent" />
+<a name="restclient-client-createagent" />
 
 ### client.createAgent()
 

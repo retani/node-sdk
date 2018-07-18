@@ -40,6 +40,11 @@ import {
 import { MethodHttpPatch } from './patch'
 import { MethodHttpPost } from './post'
 
+export enum EnumCountryCode {}
+
+// https://github.com/allthings/nisaba/pull/194/files
+export enum EnumTimezone {}
+
 // Describes the possible resources which exist in the API
 export enum EnumResource {
   property = 'property',

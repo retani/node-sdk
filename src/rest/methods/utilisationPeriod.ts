@@ -3,6 +3,7 @@ import { MethodHttpPatch } from '../patch'
 import { MethodHttpPost } from '../post'
 
 export interface IUtilisationPeriod {
+  readonly _embedded: { readonly invitations: ReadonlyArray<any> }
   readonly endDate: string | null
   readonly externalId: string | null
   readonly id: string
