@@ -1,11 +1,12 @@
 import { MethodHttpGet } from '../get'
 import { MethodHttpPatch } from '../patch'
 import { MethodHttpPost } from '../post'
+import { EnumCountryCode } from '../types'
 
 export interface IGroup {
   readonly address: Partial<{
     readonly city: string | null
-    readonly country: string | null // @TODO EnumCountryCode?,
+    readonly country: EnumCountryCode | null
     readonly houseNumber: string | null
     readonly latitude: number | null
     readonly longitude: number | null

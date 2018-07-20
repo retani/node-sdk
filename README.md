@@ -17,7 +17,7 @@ yarn add allthings
 ```
 
 ```javascript
-const allthings = require('allthings')
+const allthings = require('@allthings/sdk')
 
 const client = allthings.restClient({
   accessToken: '043dab7447450772example1214b552838003522',
@@ -64,7 +64,7 @@ The available configuration options are outlined here:
 @TODO
 
 ```javascript
-const allthings = require('allthings')
+const allthings = require('@allthings/sdk')
 
 const client = allthings.restClient({
   accessToken: '043dab7447450772example1214b552838003522',
@@ -121,7 +121,7 @@ client.getCurrentUser().then(viewer =>
 Create an client instance of the SDK.
 
 ```javascript
-const allthings = require('allthings')
+const allthings = require('@allthings/sdk')
 
 const client = allthings.restClient(configurationOptions)
 ```

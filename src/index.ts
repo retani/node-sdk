@@ -5,8 +5,10 @@ export {
   EnumUserPermissionRole,
 } from './rest'
 export {
-  EnumResource,
+  EnumCountryCode,
   EnumLocale,
+  EnumResource,
+  EnumTimezone,
   InterfaceAllthingsRestClient,
   InterfaceAllthingsRestClientOptions,
 } from './rest/types'
