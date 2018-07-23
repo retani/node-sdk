@@ -97,11 +97,21 @@ export { EnumUnitType, EnumUserPermissionObjectType, EnumUserPermissionRole }
   api method function wrappers.
 */
 export default function restClient(
-  userOptions: InterfaceAllthingsRestClientOptions = DEFAULT_API_WRAPPER_OPTIONS,
+  userOptions: Partial<
+    InterfaceAllthingsRestClientOptions
+  > = DEFAULT_API_WRAPPER_OPTIONS,
 ): InterfaceAllthingsRestClient {
   const options: InterfaceAllthingsRestClientOptions = {
     ...DEFAULT_API_WRAPPER_OPTIONS,
     ...userOptions,
+  }
+
+  if (typeof options.apiUrl === 'undefined') {
+    throw new Error('API URL is undefined.')
+  }
+
+  if (typeof options.oauthUrl === 'undefined') {
+    throw new Error('OAuth2 URL is undefined.')
   }
 
   if (!options.clientId && !options.accessToken) {
@@ -131,6 +141,6 @@ export default function restClient(
         methodNameToHttpVerbMap[method.name.substr(0, 6)] || get,
       ),
     }),
-    { delete: del, get, patch, post },
+    { delete: del, get, options, patch, post },
   )
 }

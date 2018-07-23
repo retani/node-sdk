@@ -7,7 +7,6 @@ import {
   QUEUE_RESERVOIR_REFILL_INTERVAL,
   REQUEST_BACK_OFF_INTERVAL,
   REQUEST_MAX_RETRIES,
-  REST_API_URL,
   USER_AGENT,
 } from '../constants'
 import { until } from '../utils/functional'
@@ -87,6 +86,7 @@ function responseWasSuccessful(result: any): boolean {
  * penalty of retryCount * REQUEST_BACK_OFF_INTERVAL.
  */
 function makeApiRequest(
+  apiUrl: string,
   httpMethod: string,
   apiMethod: string,
   accessToken: string,
@@ -121,7 +121,7 @@ function makeApiRequest(
       return (
         refillReservoir() &&
         (await queue.schedule(async () =>
-          (got as IndexSignature)[httpMethod](`${REST_API_URL}${apiMethod}`, {
+          (got as IndexSignature)[httpMethod](`${apiUrl}/api${apiMethod}`, {
             headers: {
               Authorization: `Bearer ${accessToken}`,
               'user-agent': USER_AGENT,
@@ -152,16 +152,19 @@ export default async function request(
   logger.log(httpMethod, apiMethod, payload)
 
   const {
+    apiUrl,
     accessToken: maybeAccessToken,
     clientId,
     clientSecret,
-    username,
+    oauthUrl,
     password,
+    username,
   } = options
 
   const accessToken =
     clientId && clientSecret && username && password
       ? await getNewTokenUsingPasswordGrant(
+          oauthUrl,
           clientId,
           clientSecret,
           username,
@@ -180,7 +183,7 @@ export default async function request(
   */
   const result = await until(
     responseWasSuccessful,
-    makeApiRequest(httpMethod, apiMethod, accessToken, payload),
+    makeApiRequest(apiUrl, httpMethod, apiMethod, accessToken, payload),
   )
 
   if (result instanceof Error) {
