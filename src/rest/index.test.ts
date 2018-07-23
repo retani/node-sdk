@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import restApi from './'
+import restApi from '.'
 
 const mockAccessToken = 'foobar-token'
 const mockClientId = 'foobar-clientId'

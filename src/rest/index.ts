@@ -96,7 +96,7 @@ export { EnumUnitType, EnumUserPermissionObjectType, EnumUserPermissionRole }
   partially applies the api url, access token, get/post methods to
   api method function wrappers.
 */
-export default function restSdk(
+export default function restClient(
   userOptions: InterfaceAllthingsRestClientOptions = DEFAULT_API_WRAPPER_OPTIONS,
 ): InterfaceAllthingsRestClient {
   const options: InterfaceAllthingsRestClientOptions = {
@@ -131,6 +131,6 @@ export default function restSdk(
         methodNameToHttpVerbMap[method.name.substr(0, 6)] || get,
       ),
     }),
-    { del, get, patch, post },
+    { delete: del, get, patch, post },
   )
 }

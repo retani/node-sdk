@@ -49,12 +49,33 @@ export enum EnumResource {
   user = 'user',
 }
 
+export enum EnumCountryCode {
+  CH = 'CH',
+  DE = 'DE',
+  FR = 'FR',
+  IT = 'IT',
+  NL = 'NL',
+  PT = 'PT',
+  US = 'US',
+}
+
 export enum EnumLocale {
+  ch_de = 'ch_DE',
+  ch_fr = 'ch_FR',
+  ch_it = 'ch_it',
   de_DE = 'de_DE',
   it_IT = 'it_IT',
   fr_FR = 'fr_FR',
   pt_PT = 'pt_PT',
   en_US = 'en_US',
+}
+
+export enum EnumTimezone {
+  EuropeBerlin = 'Europe/Berlin',
+  EuropeLondon = 'Europe/London',
+  EuropeSofia = 'Europe/Sofia',
+  EuropeZurich = 'Europe/Zurich',
+  UTC = 'UTC',
 }
 
 // Describes the options with which to construct a new API wrapper instance

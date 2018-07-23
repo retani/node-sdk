@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 // tslint:disable: no-console no-expression-statement object-literal-sort-keys
-import { restSdk } from './'
+import { restClient } from '.'
 
 // @TODO
 
 export async function main(): Promise<void> {
   const [, , action, ...args] = process.argv
-  const restClient = restSdk()
+  const client = restClient()
   console.log('\n\n', args)
 
   if (action === 'list-active-users') {
     // @TODO
     // const [appId] = args
     // console.log(await restClient.getActiveUsers(appId))
-    console.log(await restClient.getCurrentUser())
+    console.log(await client.getCurrentUser())
   } else {
     console.log('Please provide an action to perform.')
   }

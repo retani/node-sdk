@@ -1,12 +1,14 @@
 export {
-  default as restSdk,
+  default as restClient,
   EnumUnitType,
   EnumUserPermissionObjectType,
   EnumUserPermissionRole,
 } from './rest'
 export {
-  EnumResource,
+  EnumCountryCode,
   EnumLocale,
+  EnumResource,
+  EnumTimezone,
   InterfaceAllthingsRestClient,
   InterfaceAllthingsRestClientOptions,
 } from './rest/types'

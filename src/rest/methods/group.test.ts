@@ -2,17 +2,26 @@
 import { generate as generateId } from 'shortid'
 import restApi from '..'
 import { APP_ID, APP_PROPERTY_MANAGER_ID } from '../../../test/constants'
+import { EnumCountryCode, EnumTimezone } from '../types'
 
 const api = restApi()
 
 const testPropertyData = {
   name: 'Foobar Group Property',
-  timezone: 'Europe/Berlin',
+  timezone: EnumTimezone.EuropeBerlin,
 }
 
 const testData = {
   name: 'Foobar Group',
   propertyManagerId: APP_PROPERTY_MANAGER_ID,
+}
+
+const testAddressData = {
+  city: 'Springfield',
+  country: EnumCountryCode.DE,
+  houseNumber: '742',
+  postalCode: '1111',
+  street: 'Evergreen Terrace',
 }
 
 describe('createGroup()', () => {
@@ -52,12 +61,14 @@ describe('updateGroupById()', () => {
     expect(group.externalId).toEqual(initialData.externalId)
 
     const updateData = {
+      address: { ...testAddressData },
       description: 'Bio Vegan Gluten Free Group',
       externalId: generateId(),
     }
 
     const result = await api.updateGroupById(group.id, updateData)
 
+    expect(result.address.country).toEqual(EnumCountryCode.DE)
     expect(result.description).toEqual(updateData.description)
     expect(result.externalId).toEqual(updateData.externalId)
   })
