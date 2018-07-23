@@ -99,7 +99,7 @@ export async function createUser(
     readonly locale: EnumLocale
   },
 ): UserResult {
-  return post(`/users`, {
+  return post(`/v1/users`, {
     ...data,
     creationContext: appId,
     plainPassword,
@@ -111,14 +111,14 @@ export async function createUser(
   Get a list of users
 */
 
-export type MethodGetUsers = (page: number, limit: number) => UserResultList
+export type MethodGetUsers = (page?: number, limit?: number) => UserResultList
 
 export async function getUsers(
   get: MethodHttpGet,
   page: number = 1,
   limit: number = -1,
 ): UserResultList {
-  return get(`/users?page=${page}&limit=${limit}`)
+  return get(`/v1/users?page=${page}&limit=${limit}`)
 }
 
 /*
@@ -128,7 +128,7 @@ export async function getUsers(
 export type MethodGetCurrentUser = () => UserResult
 
 export async function getCurrentUser(get: MethodHttpGet): UserResult {
-  return get(`/me`)
+  return get(`/v1/me`)
 }
 
 /*
@@ -141,7 +141,7 @@ export async function getUserById(
   get: MethodHttpGet,
   userId: string,
 ): UserResult {
-  return get(`/users/${userId}`)
+  return get(`/v1/users/${userId}`)
 }
 
 /*
@@ -158,7 +158,7 @@ export async function updateUserById(
   userId: string,
   data: PartialUser,
 ): UserResult {
-  return patch(`/users/${userId}`, data)
+  return patch(`/v1/users/${userId}`, data)
 }
 
 /*
@@ -187,7 +187,7 @@ export async function createUserPermission(
 ): UserPermissionResult {
   const { objectId: objectID, ...rest } = data
   const { objectID: resultObjectId, ...result } = await post(
-    `/users/${userId}/permissions`,
+    `/v1/users/${userId}/permissions`,
     { ...rest, objectID },
   )
   return {
@@ -210,7 +210,7 @@ export async function getUserPermissions(
 ): Promise<ReadonlyArray<IUserPermission>> {
   const {
     _embedded: { items: permissions },
-  } = await get(`/users/${userId}/permissions?limit=-1`)
+  } = await get(`/v1/users/${userId}/permissions?limit=-1`)
 
   return permissions.map(({ objectID: objectId, ...result }: any) => ({
     ...result,
@@ -230,5 +230,5 @@ export async function deleteUserPermission(
   del: MethodHttpDelete,
   permissionId: string,
 ): Promise<boolean> {
-  return !(await del(`/permissions/${permissionId}`))
+  return !(await del(`/v1/permissions/${permissionId}`))
 }
