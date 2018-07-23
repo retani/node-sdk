@@ -50,7 +50,7 @@ describe('Rest API Client', () => {
 
     const client = restClient2({ clientId: 'foobar' } as any)
 
-    expect(client.options).toEqual({
+    expect(client.options).toMatchObject({
       apiUrl: 'https://api.allthings.me',
       clientId: 'foobar',
       clientSecret: undefined,
@@ -66,14 +66,13 @@ describe('Rest API Client', () => {
 
   it('should throw error when unable to get access token', async () => {
     const client = restClient({
-      clientId: 'failClient',
-      clientSecret: 'failSecret',
-      password: 'failPassword',
-      username: 'failUser',
+      accessToken: undefined,
+      password: undefined,
+      username: undefined,
     })
 
     await expect(
       client.createApp('foobar', { name: 'foobar', siteUrl: 'foobar.test' }),
-    ).rejects.toThrow()
+    ).rejects.toThrow('Issue getting OAuth2 authentication token.')
   })
 })

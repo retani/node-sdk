@@ -5,8 +5,6 @@ import {
   QUEUE_DELAY,
   QUEUE_RESERVOIR,
   QUEUE_RESERVOIR_REFILL_INTERVAL,
-  REQUEST_BACK_OFF_INTERVAL,
-  REQUEST_MAX_RETRIES,
   USER_AGENT,
 } from '../constants'
 import { until } from '../utils/functional'
@@ -23,6 +21,8 @@ export interface IRequestOptions {
 }
 
 export type RequestResult = Promise<any>
+
+export type HttpVerb = 'delete' | 'get' | 'head' | 'patch' | 'post' | 'put'
 
 export type MethodHttpRequest = (
   httpMethod: string,
@@ -75,7 +75,7 @@ function refillReservoir(): IntervalSet {
  * Determine if the result was successful. Here, successful means
  * _not_ a 503 error.
  */
-function responseWasSuccessful(result: any): boolean {
+export function responseWasSuccessful(result: any): boolean {
   return ![503].includes(result.statusCode)
 }
 
@@ -85,17 +85,18 @@ function responseWasSuccessful(result: any): boolean {
  * the request is retried up to REQUEST_MAX_RETRIES times. Each retry incurrs a wait
  * penalty of retryCount * REQUEST_BACK_OFF_INTERVAL.
  */
-function makeApiRequest(
+export function makeApiRequest(
+  options: InterfaceAllthingsRestClientOptions,
+  httpMethod: HttpVerb,
   apiUrl: string,
-  httpMethod: string,
   apiMethod: string,
   accessToken: string,
   payload?: IRequestOptions,
 ): (previousResult: any, iteration: number) => Promise<got.Response<object>> {
   return async (previousResult, retryCount) => {
     if (retryCount > 0) {
-      if (retryCount > REQUEST_MAX_RETRIES) {
-        const error = `Error: Maximum number of retries reached while retrying ${
+      if (retryCount > options.requestMaxRetries) {
+        const error = `Maximum number of retries reached while retrying ${
           previousResult.method
         } request ${previousResult.path}.`
 
@@ -114,7 +115,7 @@ function makeApiRequest(
 
       // disabling linter here for better readabiliy
       // tslint:disable-next-line:no-expression-statement
-      await sleep(REQUEST_BACK_OFF_INTERVAL * retryCount)
+      await sleep(options.requestBackOffInterval * retryCount)
     }
 
     try {
@@ -144,7 +145,7 @@ function makeApiRequest(
  */
 export default async function request(
   options: InterfaceAllthingsRestClientOptions,
-  httpMethod: string,
+  httpMethod: HttpVerb,
   apiMethod: string,
   payload?: IRequestOptions,
 ): RequestResult {
@@ -183,7 +184,14 @@ export default async function request(
   */
   const result = await until(
     responseWasSuccessful,
-    makeApiRequest(apiUrl, httpMethod, apiMethod, accessToken, payload),
+    makeApiRequest(
+      options,
+      httpMethod,
+      apiUrl,
+      apiMethod,
+      accessToken,
+      payload,
+    ),
   )
 
   if (result instanceof Error) {

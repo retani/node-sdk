@@ -20,6 +20,8 @@ export const DEFAULT_API_WRAPPER_OPTIONS: InterfaceAllthingsRestClientOptions = 
   clientSecret: process.env.ALLTHINGS_OAUTH_CLIENT_SECRET,
   oauthUrl: process.env.ALLTHINGS_OAUTH_URL || OAUTH_URL,
   password: process.env.ALLTHINGS_OAUTH_PASSWORD,
+  requestBackOffInterval: REQUEST_BACK_OFF_INTERVAL,
+  requestMaxRetries: REQUEST_MAX_RETRIES,
   username: process.env.ALLTHINGS_OAUTH_USERNAME,
 }
 

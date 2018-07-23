@@ -87,6 +87,8 @@ export interface InterfaceAllthingsRestClientOptions {
   readonly concurrency?: number //@TODO
   readonly oauthUrl: string
   readonly password?: string
+  readonly requestBackOffInterval: number
+  readonly requestMaxRetries: number
   readonly username?: string
 }
 
