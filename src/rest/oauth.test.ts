@@ -14,7 +14,7 @@ describe('getNewTokenUsingPasswordGrant()', () => {
     expect(typeof accessToken).toBe('string')
   })
 
-  it('should return undefined given invalid credentials', async () => {
+  it('should throw given invalid credentials', async () => {
     await expect(
       getNewTokenUsingPasswordGrant(
         process.env.ALLTHINGS_OAUTH_URL as string,
@@ -23,6 +23,20 @@ describe('getNewTokenUsingPasswordGrant()', () => {
         '',
         '',
       ),
-    ).rejects.toThrow('HTTP 400 — Bad Request')
+    ).rejects.toThrow('HTTP 400 — Bad Request. OAuth')
+
+    await expect(
+      getNewTokenUsingPasswordGrant(
+        `${process.env.ALLTHINGS_OAUTH_URL as string}/foobar`,
+        '',
+        '',
+        '',
+        '',
+      ),
+    ).rejects.toThrow('HTTP 404 — Not Found')
+
+    await expect(
+      getNewTokenUsingPasswordGrant('foobarHost', '', '', '', ''),
+    ).rejects.toThrow('ENOTFOUND')
   })
 })
