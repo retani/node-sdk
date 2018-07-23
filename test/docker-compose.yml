@@ -68,3 +68,6 @@ services:
       - NODE_ENV
       - ALLTHINGS_OAUTH_USERNAME
       - ALLTHINGS_OAUTH_PASSWORD
+      - ALLTHINGS_OAUTH_CLIENT_ID
+      - ALLTHINGS_OAUTH_CLIENT_SECRET
+      - ALLTHINGS_OAUTH_URL="https://accounts.dev.allthings.me/oauth/token"

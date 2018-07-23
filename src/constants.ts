@@ -18,8 +18,8 @@ export const REQUEST_MAX_RETRIES = 50
 
 // Default options passed to the api wrapper on instansiation
 export const DEFAULT_API_WRAPPER_OPTIONS: InterfaceAllthingsRestClientOptions = {
-  clientId: process.env.ALLTHINGS_CLIENT_ID,
-  clientSecret: process.env.ALLTHINGS_CLIENT_SECRET,
+  clientId: process.env.ALLTHINGS_OAUTH_CLIENT_ID,
+  clientSecret: process.env.ALLTHINGS_OAUTH_CLIENT_SECRET,
   password: process.env.ALLTHINGS_OAUTH_PASSWORD,
   username: process.env.ALLTHINGS_OAUTH_USERNAME,
 }

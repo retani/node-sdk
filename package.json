@@ -112,8 +112,10 @@
     "bail": false,
     "collectCoverage": true,
     "roots": [
-      "src/"
+      "src/",
+      "examples/"
     ],
+    "setupTestFrameworkScriptFile": "<rootDir>/test/setup.ts",
     "transform": {
       "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
