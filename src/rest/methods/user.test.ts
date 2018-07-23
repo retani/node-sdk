@@ -1,16 +1,51 @@
 // tslint:disable:no-expression-statement
 import { generate as generateId } from 'shortid'
-import restApi from '..'
+import restClient from '..'
 import { APP_ID } from '../../../test/constants'
+import { times } from '../../utils/functional'
 import { EnumLocale } from '../types'
 import { EnumUserPermissionObjectType, EnumUserPermissionRole } from './user'
 
-const api = restApi()
+const client = restClient()
 
 const testData = {
   description: 'Foobar User',
   locale: EnumLocale.en_US,
 }
+
+describe('getUsers()', () => {
+  it('should be able to get a list of users', async () => {
+    const limit = 3
+
+    await Promise.all(
+      times(
+        () => ({
+          ...testData,
+          email: generateId() + '@foobar.test',
+          externalId: generateId(),
+        }),
+        limit,
+      ).map(data =>
+        client.createUser(APP_ID, generateId(), generateId(), data),
+      ),
+    )
+
+    const result = await client.getUsers()
+    expect(result._embedded).toHaveProperty('items')
+
+    const result2 = await client.getUsers(1, limit)
+    expect(result2._embedded.items).toHaveLength(limit)
+  })
+})
+
+describe('getCurrentUser()', () => {
+  it('should be able to get the current user (the viewer)', async () => {
+    const currentUser = await client.getCurrentUser()
+
+    expect(currentUser.id).toBeDefined()
+    expect(currentUser.email).toEqual(process.env.ALLTHINGS_OAUTH_USERNAME)
+  })
+})
 
 describe('createUser()', () => {
   it('should be able to create a new user', async () => {
@@ -19,7 +54,7 @@ describe('createUser()', () => {
       email: generateId() + '@foobar.test',
       externalId: generateId(),
     }
-    const result = await api.createUser(
+    const result = await client.createUser(
       APP_ID,
       generateId(),
       generateId(),
@@ -38,13 +73,13 @@ describe('getUserById()', () => {
       email: generateId() + '@foobar.test',
       externalId: generateId(),
     }
-    const { id } = await api.createUser(
+    const { id } = await client.createUser(
       APP_ID,
       generateId(),
       generateId(),
       data,
     )
-    const result = await api.getUserById(id)
+    const result = await client.getUserById(id)
 
     expect(result.email).toEqual(data.email)
     expect(result.externalId).toEqual(data.externalId)
@@ -58,7 +93,7 @@ describe('updateUserById()', () => {
       email: generateId() + '@foobar.test',
       externalId: generateId(),
     }
-    const user = await api.createUser(
+    const user = await client.createUser(
       APP_ID,
       generateId(),
       generateId(),
@@ -73,7 +108,7 @@ describe('updateUserById()', () => {
       locale: EnumLocale.de_DE,
     }
 
-    const result = await api.updateUserById(user.id, updateData)
+    const result = await client.updateUserById(user.id, updateData)
 
     expect(result.locale).toEqual(updateData.locale)
     expect(result.externalId).toEqual(updateData.externalId)
@@ -87,7 +122,7 @@ describe('createUserPermission()', () => {
       email: generateId() + '@foobar.test',
       externalId: generateId(),
     }
-    const user = await api.createUser(
+    const user = await client.createUser(
       APP_ID,
       generateId(),
       generateId(),
@@ -104,7 +139,7 @@ describe('createUserPermission()', () => {
       role: EnumUserPermissionRole.admin,
     }
 
-    const result = await api.createUserPermission(user.id, permissionData)
+    const result = await client.createUserPermission(user.id, permissionData)
 
     expect(result.role).toEqual(permissionData.role)
     expect(result.objectType).toEqual(permissionData.objectType)
@@ -119,7 +154,7 @@ describe('getUserPermissions()', () => {
       externalId: generateId(),
     }
 
-    const user = await api.createUser(
+    const user = await client.createUser(
       APP_ID,
       generateId(),
       generateId(),
@@ -133,9 +168,9 @@ describe('getUserPermissions()', () => {
       role: EnumUserPermissionRole.admin,
     }
 
-    await api.createUserPermission(user.id, permissionData)
+    await client.createUserPermission(user.id, permissionData)
 
-    const result = await api.getUserPermissions(user.id)
+    const result = await client.getUserPermissions(user.id)
 
     expect(result).toHaveLength(1)
     expect(result[0].objectType).toEqual(permissionData.objectType)
@@ -150,7 +185,7 @@ describe('deleteUserPermission()', () => {
       externalId: generateId(),
     }
 
-    const user = await api.createUser(
+    const user = await client.createUser(
       APP_ID,
       generateId(),
       generateId(),
@@ -164,15 +199,18 @@ describe('deleteUserPermission()', () => {
       role: EnumUserPermissionRole.admin,
     }
 
-    const permission = await api.createUserPermission(user.id, permissionData)
+    const permission = await client.createUserPermission(
+      user.id,
+      permissionData,
+    )
 
     // permission should exist
-    expect(await api.getUserPermissions(user.id)).toHaveLength(1)
+    expect(await client.getUserPermissions(user.id)).toHaveLength(1)
 
     // delete the permission
-    expect(await api.deleteUserPermission(permission.id)).toBe(true)
+    expect(await client.deleteUserPermission(permission.id)).toBe(true)
 
     // permission should no longer exist
-    expect(await api.getUserPermissions(user.id)).toHaveLength(0)
+    expect(await client.getUserPermissions(user.id)).toHaveLength(0)
   })
 })

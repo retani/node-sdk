@@ -1,10 +1,10 @@
 // tslint:disable:no-expression-statement
 import { generate as generateId } from 'shortid'
-import restApi from '..'
+import restClient from '..'
 import { APP_PROPERTY_MANAGER_ID, USER_ID } from '../../../test/constants'
 import { EnumUnitType } from './unit'
 
-const api = restApi()
+const client = restClient()
 
 describe('createRegistrationCode()', async () => {
   it('should be able to create a new registration code', async () => {
@@ -12,39 +12,43 @@ describe('createRegistrationCode()', async () => {
     const code = generateId()
     const testExternalId = generateId()
 
-    const app = await api.createApp(USER_ID, { name, siteUrl: generateId() })
-    const property = await api.createProperty(app.id, {
+    const app = await client.createApp(USER_ID, { name, siteUrl: generateId() })
+    const property = await client.createProperty(app.id, {
       name,
       timezone: 'Europe/Berlin',
     })
-    const group = await api.createGroup(property.id, {
+    const group = await client.createGroup(property.id, {
       name,
       propertyManagerId: APP_PROPERTY_MANAGER_ID,
     })
-    const unit = await api.createUnit(group.id, {
+    const unit = await client.createUnit(group.id, {
       name,
       type: EnumUnitType.owned,
     })
     const utilisationPeriods = (await Promise.all([
-      api.createUtilisationPeriod(unit.id, {
+      client.createUtilisationPeriod(unit.id, {
         endDate: '2018-01-02',
         startDate: '2018-01-01',
       }),
-      api.createUtilisationPeriod(unit.id, {
+      client.createUtilisationPeriod(unit.id, {
         endDate: '2018-02-02',
         startDate: '2018-02-01',
       }),
-      api.createUtilisationPeriod(unit.id, {
+      client.createUtilisationPeriod(unit.id, {
         endDate: '2018-03-02',
         startDate: '2018-03-01',
       }),
     ])).map(item => item.id)
 
-    const result = await api.createRegistrationCode(code, utilisationPeriods, {
-      expiresAt: null,
-      externalId: testExternalId,
-      permanent: false,
-    })
+    const result = await client.createRegistrationCode(
+      code,
+      utilisationPeriods,
+      {
+        expiresAt: null,
+        externalId: testExternalId,
+        permanent: false,
+      },
+    )
 
     expect(result.id).toBeTruthy()
     expect(result.code).toEqual(code)
@@ -55,7 +59,7 @@ describe('createRegistrationCode()', async () => {
     expect(result.utilisationPeriods).toContainEqual(utilisationPeriods[1])
     expect(result.utilisationPeriods).toContainEqual(utilisationPeriods[2])
 
-    const singleUtilisationPeriod = await api.createRegistrationCode(
+    const singleUtilisationPeriod = await client.createRegistrationCode(
       generateId(),
       utilisationPeriods[0],
       {
@@ -70,7 +74,7 @@ describe('createRegistrationCode()', async () => {
     )
 
     // test for default options parameter
-    const emptyOptions = await api.createRegistrationCode(
+    const emptyOptions = await client.createRegistrationCode(
       generateId(),
       utilisationPeriods[0],
       undefined,

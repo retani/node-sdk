@@ -39,7 +39,7 @@ export async function createRegistrationCode(
   const { externalId, ...moreOptions } = options
 
   const { tenantID: resultExternalId, ...result } = await post(
-    `/registration-codes`,
+    `/v1/registration-codes`,
     {
       code,
       utilisationPeriods:

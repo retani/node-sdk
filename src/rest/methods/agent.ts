@@ -42,13 +42,16 @@ export async function createAgent(
     ...data,
     type: EnumUserType.customer,
   })
-  const manager = await post(`/property-managers/${propertyManagerId}/users`, {
-    userID: user.id,
-  })
+  const manager = await post(
+    `/v1/property-managers/${propertyManagerId}/users`,
+    {
+      userID: user.id,
+    },
+  )
 
   // trigger sending of invitation emails to agents, then return data
   return (
-    !(await post(`/users/${user.id}/invitations`)) && { ...user, ...manager }
+    !(await post(`/v1/users/${user.id}/invitations`)) && { ...user, ...manager }
   )
 }
 

@@ -42,7 +42,7 @@ export async function createUnit(
     readonly type: EnumUnitType
   },
 ): UnitResult {
-  return post(`/groups/${groupId}/units`, data)
+  return post(`/v1/groups/${groupId}/units`, data)
 }
 
 /*
@@ -55,7 +55,7 @@ export async function getUnitById(
   get: MethodHttpGet,
   unitId: string,
 ): UnitResult {
-  return get(`/units/${unitId}`)
+  return get(`/v1/units/${unitId}`)
 }
 
 /*
@@ -72,5 +72,5 @@ export async function updateUnitById(
   unitId: string,
   data: PartialUnit,
 ): UnitResult {
-  return patch(`/units/${unitId}`, data)
+  return patch(`/v1/units/${unitId}`, data)
 }

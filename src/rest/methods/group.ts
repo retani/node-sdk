@@ -54,7 +54,7 @@ export async function createGroup(
   },
 ): GroupResult {
   const { propertyManagerId, ...rest } = data
-  return post(`/properties/${propertyId}/groups`, {
+  return post(`/v1/properties/${propertyId}/groups`, {
     ...rest,
     propertyManagerID: propertyManagerId,
   })
@@ -72,7 +72,7 @@ export async function getGroupById(
   groupId: string,
 ): GroupResult {
   const { propertyManagerID: propertyManagerId, ...result } = await get(
-    `/groups/${groupId}`,
+    `/v1/groups/${groupId}`,
   )
   return { ...result, propertyManagerId }
 }
@@ -92,5 +92,5 @@ export async function updateGroupById(
   groupId: string,
   data: PartialGroup,
 ): GroupResult {
-  return patch(`/groups/${groupId}`, data)
+  return patch(`/v1/groups/${groupId}`, data)
 }
