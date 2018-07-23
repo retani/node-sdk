@@ -40,7 +40,7 @@ export async function createUtilisationPeriod(
   },
 ): UtilisationPeriodResult {
   const { tenantIDs: tenantIds, ...result } = await post(
-    `/units/${unitId}/utilisation-periods`,
+    `/v1/units/${unitId}/utilisation-periods`,
     data,
   )
   return { ...result, tenantIds }
@@ -59,7 +59,7 @@ export async function getUtilisationPeriodById(
   utilisationPeriodId: string,
 ): UtilisationPeriodResult {
   const { tenantIDs: tenantIds, ...result } = await get(
-    `/utilisation-periods/${utilisationPeriodId}`,
+    `/v1/utilisation-periods/${utilisationPeriodId}`,
   )
   return { ...result, tenantIds }
 }
@@ -81,7 +81,7 @@ export async function updateUtilisationPeriodById(
   },
 ): UtilisationPeriodResult {
   const { tenantIDs: tenantIds, ...result } = await patch(
-    `/utilisation-periods/${utilisationPeriodId}`,
+    `/v1/utilisation-periods/${utilisationPeriodId}`,
     data,
   )
   return { ...result, tenantIds }

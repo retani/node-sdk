@@ -1,15 +1,15 @@
 // tslint:disable:no-expression-statement
 import { generate as generateId } from 'shortid'
-import restApi from '..'
+import restClient from '..'
 import { APP_ID, APP_PROPERTY_MANAGER_ID } from '../../../test/constants'
-import { EnumLocale } from '../types'
+import { EnumLocale, EnumTimezone } from '../types'
 import {
   EnumUserPermissionObjectType,
   EnumUserPermissionRole,
   EnumUserType,
 } from './user'
 
-const api = restApi()
+const client = restClient()
 
 const testData = {
   description: 'Foobar User',
@@ -24,14 +24,14 @@ describe('createAgent()', () => {
       externalId: generateId(),
     }
 
-    const agent = await api.createAgent(
+    const agent = await client.createAgent(
       APP_ID,
       APP_PROPERTY_MANAGER_ID,
       generateId(),
       data,
     )
 
-    const result = await api.getUserById(agent.id)
+    const result = await client.getUserById(agent.id)
 
     expect(result.email).toEqual(data.email)
     expect(result.externalId).toEqual(data.externalId)
@@ -40,8 +40,8 @@ describe('createAgent()', () => {
 
     const {
       _embedded: { items: managerAgents },
-    } = await api.get(
-      `/property-managers/${APP_PROPERTY_MANAGER_ID}/users?limit=-1`,
+    } = await client.get(
+      `/v1/property-managers/${APP_PROPERTY_MANAGER_ID}/users?limit=-1`,
     )
     const ourManagerAgent = managerAgents.find(
       (item: any) => item.id === agent.id,
@@ -63,7 +63,7 @@ describe('createAgentPermissions()', () => {
       externalId: generateId(),
     }
 
-    const agent = await api.createAgent(
+    const agent = await client.createAgent(
       APP_ID,
       APP_PROPERTY_MANAGER_ID,
       generateId(),
@@ -73,7 +73,7 @@ describe('createAgentPermissions()', () => {
     const [
       appAdminPermission,
       appPinboardPermission,
-    ] = await api.createAgentPermissions(
+    ] = await client.createAgentPermissions(
       agent.id,
       APP_ID,
       EnumUserPermissionObjectType.app,
@@ -93,15 +93,15 @@ describe('createAgentPermissions()', () => {
     )
     expect(appPinboardPermission.role).toEqual(EnumUserPermissionRole.pinboard)
 
-    const property = await api.createProperty(APP_ID, {
+    const property = await client.createProperty(APP_ID, {
       name: generateId(),
-      timezone: 'Europe/Berlin',
+      timezone: EnumTimezone.EuropeBerlin,
     })
 
     const [
       propertyAdminPermission,
       propertyPinboardPermission,
-    ] = await api.createAgentPermissions(
+    ] = await client.createAgentPermissions(
       agent.id,
       property.id,
       EnumUserPermissionObjectType.property,

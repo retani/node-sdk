@@ -18,7 +18,7 @@ export async function createIdLookup(
   resource: EnumResource,
   ids: string | ReadonlyArray<string>,
 ): CreateIdLookupResult {
-  return post(`/id-lookup/${appId}/${resource}`, {
+  return post(`/v1/id-lookup/${appId}/${resource}`, {
     externalIds: typeof ids === 'string' ? [ids] : ids,
   })
 }

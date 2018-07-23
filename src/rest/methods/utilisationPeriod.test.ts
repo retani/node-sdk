@@ -1,26 +1,26 @@
 // tslint:disable:no-expression-statement
 import { generate as generateId } from 'shortid'
-import restApi from '..'
+import restClient from '..'
 import { APP_ID, APP_PROPERTY_MANAGER_ID } from '../../../test/constants'
 import { EnumUnitType } from './unit'
 
 let sharedUnitId: string // tslint:disable-line no-let
 
-const api = restApi()
+const client = restClient()
 
 describe('createUtilisationPeriod()', () => {
   beforeAll(async () => {
-    const property = await api.createProperty(APP_ID, {
+    const property = await client.createProperty(APP_ID, {
       name: 'Foobar Property',
       timezone: 'Europe/Berlin',
     })
 
-    const group = await api.createGroup(property.id, {
+    const group = await client.createGroup(property.id, {
       name: 'Foobar Group',
       propertyManagerId: APP_PROPERTY_MANAGER_ID,
     })
 
-    const unit = await api.createUnit(group.id, {
+    const unit = await client.createUnit(group.id, {
       name: 'Foobar Unit',
       type: EnumUnitType.rented,
     })
@@ -34,7 +34,7 @@ describe('createUtilisationPeriod()', () => {
       externalId: generateId(),
       startDate: '2050-01-01',
     }
-    const result = await api.createUtilisationPeriod(sharedUnitId, data)
+    const result = await client.createUtilisationPeriod(sharedUnitId, data)
 
     expect(result.startDate).toEqual(data.startDate)
     expect(result.externalId).toEqual(data.externalId)
@@ -48,8 +48,8 @@ describe('getUtilisationPeriodById()', () => {
       externalId: generateId(),
       startDate: '2050-01-02',
     }
-    const { id } = await api.createUtilisationPeriod(sharedUnitId, data)
-    const result = await api.getUtilisationPeriodById(id)
+    const { id } = await client.createUtilisationPeriod(sharedUnitId, data)
+    const result = await client.getUtilisationPeriodById(id)
 
     expect(result.startDate).toEqual(data.startDate)
     expect(result.externalId).toEqual(data.externalId)
@@ -63,7 +63,7 @@ describe('updateUtilisationPeriodById()', () => {
       externalId: generateId(),
       startDate: '2050-01-03',
     }
-    const utilisationPeriod = await api.createUtilisationPeriod(
+    const utilisationPeriod = await client.createUtilisationPeriod(
       sharedUnitId,
       initialData,
     )
@@ -77,7 +77,7 @@ describe('updateUtilisationPeriodById()', () => {
       startDate: '2100-01-02',
     }
 
-    const result = await api.updateUtilisationPeriodById(
+    const result = await client.updateUtilisationPeriodById(
       utilisationPeriod.id,
       updateData,
     )

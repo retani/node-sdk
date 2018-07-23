@@ -29,7 +29,7 @@ export async function createProperty(
   appId: string,
   data: PartialProperty & { readonly name: string; readonly timezone: string },
 ): PropertyResult {
-  return post(`/apps/${appId}/properties`, data)
+  return post(`/v1/apps/${appId}/properties`, data)
 }
 
 /*
@@ -43,7 +43,7 @@ export async function getPropertyById(
   get: MethodHttpGet,
   propertyId: string,
 ): PropertyResult {
-  return get(`/properties/${propertyId}`)
+  return get(`/v1/properties/${propertyId}`)
 }
 
 /*
@@ -61,5 +61,5 @@ export async function updatePropertyById(
   propertyId: string,
   data: PartialProperty,
 ): PropertyResult {
-  return patch(`/properties/${propertyId}`, data)
+  return patch(`/v1/properties/${propertyId}`, data)
 }
