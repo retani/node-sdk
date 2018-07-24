@@ -65,7 +65,7 @@
     "@types/got": "8.3.3",
     "@types/jest": "23.3.0",
     "@types/mem": "1.1.2",
-    "@types/node": "10.5.1",
+    "@types/node": "10.5.2",
     "@types/shortid": "0.0.29",
     "coveralls": "3.0.2",
     "husky": "0.14.3",
