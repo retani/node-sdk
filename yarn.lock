@@ -338,9 +338,9 @@
   version "0.0.39"
   resolved "https://registry.npmjs.org/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
 
-"@types/got@8.3.1":
-  version "8.3.1"
-  resolved "https://registry.npmjs.org/@types/got/-/got-8.3.1.tgz#823ded0ce469895be3d01553fec31ff86339ff9f"
+"@types/got@8.3.3":
+  version "8.3.3"
+  resolved "https://registry.yarnpkg.com/@types/got/-/got-8.3.3.tgz#8a0441ea88550c5d3c34729ae1aaa883f6bd4320"
   dependencies:
     "@types/node" "*"
 
@@ -2215,9 +2215,9 @@ globby@^8.0.0:
     pify "^3.0.0"
     slash "^1.0.0"
 
-got@8.3.1:
-  version "8.3.1"
-  resolved "https://registry.npmjs.org/got/-/got-8.3.1.tgz#093324403d4d955f5a16a7a8d39955d055ae10ed"
+got@8.3.2:
+  version "8.3.2"
+  resolved "https://registry.yarnpkg.com/got/-/got-8.3.2.tgz#1d23f64390e97f776cac52e5b936e5f514d2e937"
   dependencies:
     "@sindresorhus/is" "^0.7.0"
     cacheable-request "^2.1.1"
