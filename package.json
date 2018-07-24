@@ -53,7 +53,7 @@
     "semantic-release": "semantic-release -d"
   },
   "dependencies": {
-    "bottleneck": "2.5.1",
+    "bottleneck": "2.6.0",
     "got": "8.3.1",
     "mem": "3.0.1",
     "shortid": "2.2.8"
