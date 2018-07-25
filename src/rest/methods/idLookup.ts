@@ -1,5 +1,4 @@
-import { MethodHttpPost } from '../post'
-import { EnumResource } from '../types'
+import { EnumResource, InterfaceAllthingsRestClient } from '../types'
 
 export type CreateIdLookupResult = Promise<{
   readonly [externalId: string]: string | null
@@ -13,12 +12,12 @@ export type MethodCreateIdLookup = (
 
 // https://api-doc.allthings.me/#!/Id45Lookup/post_id_lookup_appID_resource
 export async function createIdLookup(
-  post: MethodHttpPost,
+  client: InterfaceAllthingsRestClient,
   appId: string,
   resource: EnumResource,
   ids: string | ReadonlyArray<string>,
 ): CreateIdLookupResult {
-  return post(`/v1/id-lookup/${appId}/${resource}`, {
+  return client.post(`/v1/id-lookup/${appId}/${resource}`, {
     externalIds: typeof ids === 'string' ? [ids] : ids,
   })
 }

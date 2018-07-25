@@ -1,7 +1,4 @@
-import { MethodHttpGet } from '../get'
-import { MethodHttpPatch } from '../patch'
-import { MethodHttpPost } from '../post'
-import { EnumCountryCode } from '../types'
+import { EnumCountryCode, InterfaceAllthingsRestClient } from '../types'
 
 export interface IGroup {
   readonly address: Partial<{
@@ -46,7 +43,7 @@ export type MethodCreateGroup = (
 ) => GroupResult
 
 export async function createGroup(
-  post: MethodHttpPost,
+  client: InterfaceAllthingsRestClient,
   propertyId: string,
   data: PartialGroup & {
     readonly name: string
@@ -54,7 +51,7 @@ export async function createGroup(
   },
 ): GroupResult {
   const { propertyManagerId, ...rest } = data
-  return post(`/v1/properties/${propertyId}/groups`, {
+  return client.post(`/v1/properties/${propertyId}/groups`, {
     ...rest,
     propertyManagerID: propertyManagerId,
   })
@@ -68,10 +65,10 @@ export async function createGroup(
 export type MethodGetGroupById = (id: string) => GroupResult
 
 export async function getGroupById(
-  get: MethodHttpGet,
+  client: InterfaceAllthingsRestClient,
   groupId: string,
 ): GroupResult {
-  const { propertyManagerID: propertyManagerId, ...result } = await get(
+  const { propertyManagerID: propertyManagerId, ...result } = await client.get(
     `/v1/groups/${groupId}`,
   )
   return { ...result, propertyManagerId }
@@ -88,9 +85,9 @@ export type MethodUpdateGroupById = (
 ) => GroupResult
 
 export async function updateGroupById(
-  patch: MethodHttpPatch,
+  client: InterfaceAllthingsRestClient,
   groupId: string,
   data: PartialGroup,
 ): GroupResult {
-  return patch(`/v1/groups/${groupId}`, data)
+  return client.patch(`/v1/groups/${groupId}`, data)
 }

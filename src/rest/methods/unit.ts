@@ -1,6 +1,4 @@
-import { MethodHttpGet } from '../get'
-import { MethodHttpPatch } from '../patch'
-import { MethodHttpPost } from '../post'
+import { InterfaceAllthingsRestClient } from '../types'
 
 export enum EnumUnitType {
   rented = 'rented',
@@ -35,14 +33,14 @@ export type MethodCreateUnit = (
 ) => UnitResult
 
 export async function createUnit(
-  post: MethodHttpPost,
+  client: InterfaceAllthingsRestClient,
   groupId: string,
   data: PartialUnit & {
     readonly name: string
     readonly type: EnumUnitType
   },
 ): UnitResult {
-  return post(`/v1/groups/${groupId}/units`, data)
+  return client.post(`/v1/groups/${groupId}/units`, data)
 }
 
 /*
@@ -52,10 +50,10 @@ export async function createUnit(
 export type MethodGetUnitById = (id: string) => UnitResult
 
 export async function getUnitById(
-  get: MethodHttpGet,
+  client: InterfaceAllthingsRestClient,
   unitId: string,
 ): UnitResult {
-  return get(`/v1/units/${unitId}`)
+  return client.get(`/v1/units/${unitId}`)
 }
 
 /*
@@ -68,9 +66,9 @@ export type MethodUpdateUnitById = (
 ) => UnitResult
 
 export async function updateUnitById(
-  patch: MethodHttpPatch,
+  client: InterfaceAllthingsRestClient,
   unitId: string,
   data: PartialUnit,
 ): UnitResult {
-  return patch(`/v1/units/${unitId}`, data)
+  return client.patch(`/v1/units/${unitId}`, data)
 }

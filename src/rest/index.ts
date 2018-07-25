@@ -130,9 +130,11 @@ export default function restClient(
   const client: InterfaceAllthingsRestClient = API_METHODS.reduce(
     (methods, method) => ({
       ...methods,
-      [method.name]: partial(method, client),
+      // tslint:disable-next-line readonly-array
+      [method.name]: (...args: any[]) => method(client, ...args),
     }),
     { delete: del, get, options, patch, post },
   )
+
   return client
 }

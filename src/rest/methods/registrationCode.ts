@@ -1,4 +1,4 @@
-import { MethodHttpPost } from '../post'
+import { InterfaceAllthingsRestClient } from '../types'
 
 export interface IRegistrationCodeOptions {
   readonly expiresAt?: string | null
@@ -31,14 +31,14 @@ export type MethodCreateRegistrationCode = (
 ) => RegistrationCodeResult
 
 export async function createRegistrationCode(
-  post: MethodHttpPost,
+  client: InterfaceAllthingsRestClient,
   code: string,
   utilisationPeriods: string | ReadonlyArray<string>,
   options: IRegistrationCodeOptions = { permanent: false },
 ): RegistrationCodeResult {
   const { externalId, ...moreOptions } = options
 
-  const { tenantID: resultExternalId, ...result } = await post(
+  const { tenantID: resultExternalId, ...result } = await client.post(
     `/v1/registration-codes`,
     {
       code,

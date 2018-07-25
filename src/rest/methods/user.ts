@@ -1,8 +1,4 @@
-import { MethodHttpDelete } from '../delete'
-import { MethodHttpGet } from '../get'
-import { MethodHttpPatch } from '../patch'
-import { MethodHttpPost } from '../post'
-import { EnumLocale } from '../types'
+import { EnumLocale, InterfaceAllthingsRestClient } from '../types'
 
 export enum EnumGender {
   female = 'female',
@@ -90,7 +86,7 @@ export type MethodCreateUser = (
 ) => UserResult
 
 export async function createUser(
-  post: MethodHttpPost,
+  client: InterfaceAllthingsRestClient,
   appId: string,
   username: string,
   plainPassword: string,
@@ -99,7 +95,7 @@ export async function createUser(
     readonly locale: EnumLocale
   },
 ): UserResult {
-  return post(`/v1/users`, {
+  return client.post(`/v1/users`, {
     ...data,
     creationContext: appId,
     plainPassword,
@@ -114,11 +110,11 @@ export async function createUser(
 export type MethodGetUsers = (page?: number, limit?: number) => UserResultList
 
 export async function getUsers(
-  get: MethodHttpGet,
+  client: InterfaceAllthingsRestClient,
   page: number = 1,
   limit: number = -1,
 ): UserResultList {
-  return get(`/v1/users?page=${page}&limit=${limit}`)
+  return client.get(`/v1/users?page=${page}&limit=${limit}`)
 }
 
 /*
@@ -127,8 +123,10 @@ export async function getUsers(
 
 export type MethodGetCurrentUser = () => UserResult
 
-export async function getCurrentUser(get: MethodHttpGet): UserResult {
-  return get(`/v1/me`)
+export async function getCurrentUser(
+  client: InterfaceAllthingsRestClient,
+): UserResult {
+  return client.get(`/v1/me`)
 }
 
 /*
@@ -138,10 +136,10 @@ export async function getCurrentUser(get: MethodHttpGet): UserResult {
 export type MethodGetUserById = (id: string) => UserResult
 
 export async function getUserById(
-  get: MethodHttpGet,
+  client: InterfaceAllthingsRestClient,
   userId: string,
 ): UserResult {
-  return get(`/v1/users/${userId}`)
+  return client.get(`/v1/users/${userId}`)
 }
 
 /*
@@ -154,11 +152,11 @@ export type MethodUpdateUserById = (
 ) => UserResult
 
 export async function updateUserById(
-  patch: MethodHttpPatch,
+  client: InterfaceAllthingsRestClient,
   userId: string,
   data: PartialUser,
 ): UserResult {
-  return patch(`/v1/users/${userId}`, data)
+  return client.patch(`/v1/users/${userId}`, data)
 }
 
 /*
@@ -176,7 +174,7 @@ export type MethodCreateUserPermission = (
 ) => UserPermissionResult
 
 export async function createUserPermission(
-  post: MethodHttpPost,
+  client: InterfaceAllthingsRestClient,
   userId: string,
   data: PartialUserPermission & {
     readonly objectId: string
@@ -186,7 +184,7 @@ export async function createUserPermission(
   },
 ): UserPermissionResult {
   const { objectId: objectID, ...rest } = data
-  const { objectID: resultObjectId, ...result } = await post(
+  const { objectID: resultObjectId, ...result } = await client.post(
     `/v1/users/${userId}/permissions`,
     { ...rest, objectID },
   )
@@ -205,12 +203,12 @@ export type MethodGetUserPermissions = (
 ) => Promise<ReadonlyArray<IUserPermission>>
 
 export async function getUserPermissions(
-  get: MethodHttpGet,
+  client: InterfaceAllthingsRestClient,
   userId: string,
 ): Promise<ReadonlyArray<IUserPermission>> {
   const {
     _embedded: { items: permissions },
-  } = await get(`/v1/users/${userId}/permissions?limit=-1`)
+  } = await client.get(`/v1/users/${userId}/permissions?limit=-1`)
 
   return permissions.map(({ objectID: objectId, ...result }: any) => ({
     ...result,
@@ -227,8 +225,8 @@ export type MethodDeleteUserPermission = (
 ) => Promise<boolean>
 
 export async function deleteUserPermission(
-  del: MethodHttpDelete,
+  client: InterfaceAllthingsRestClient,
   permissionId: string,
 ): Promise<boolean> {
-  return !(await del(`/v1/permissions/${permissionId}`))
+  return !(await client.delete(`/v1/permissions/${permissionId}`))
 }

@@ -1,6 +1,4 @@
-import { MethodHttpGet } from '../get'
-import { MethodHttpPatch } from '../patch'
-import { MethodHttpPost } from '../post'
+import { InterfaceAllthingsRestClient } from '../types'
 
 export interface IProperty {
   readonly externalId: string
@@ -25,11 +23,11 @@ export type MethodCreateProperty = (
 ) => PropertyResult
 
 export async function createProperty(
-  post: MethodHttpPost,
+  client: InterfaceAllthingsRestClient,
   appId: string,
   data: PartialProperty & { readonly name: string; readonly timezone: string },
 ): PropertyResult {
-  return post(`/v1/apps/${appId}/properties`, data)
+  return client.post(`/v1/apps/${appId}/properties`, data)
 }
 
 /*
@@ -40,10 +38,10 @@ export async function createProperty(
 export type MethodGetPropertyById = (propertyId: string) => PropertyResult
 
 export async function getPropertyById(
-  get: MethodHttpGet,
+  client: InterfaceAllthingsRestClient,
   propertyId: string,
 ): PropertyResult {
-  return get(`/v1/properties/${propertyId}`)
+  return client.get(`/v1/properties/${propertyId}`)
 }
 
 /*
@@ -57,9 +55,9 @@ export type MethodUpdatePropertyById = (
 ) => PropertyResult
 
 export async function updatePropertyById(
-  patch: MethodHttpPatch,
+  client: InterfaceAllthingsRestClient,
   propertyId: string,
   data: PartialProperty,
 ): PropertyResult {
-  return patch(`/v1/properties/${propertyId}`, data)
+  return client.patch(`/v1/properties/${propertyId}`, data)
 }

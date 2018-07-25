@@ -1,9 +1,6 @@
 import { generate as generateId } from 'shortid'
-import { MethodHttpPost } from '../post'
-import { EnumLocale } from '../types'
+import { EnumLocale, InterfaceAllthingsRestClient } from '../types'
 import {
-  createUser,
-  createUserPermission,
   EnumUserPermissionObjectType,
   EnumUserPermissionRole,
   EnumUserType,
@@ -29,7 +26,7 @@ export type MethodCreateAgent = (
 ) => UserResult
 
 export async function createAgent(
-  post: MethodHttpPost,
+  client: InterfaceAllthingsRestClient,
   appId: string,
   propertyManagerId: string,
   username: string,
@@ -38,11 +35,11 @@ export async function createAgent(
     readonly locale: EnumLocale
   },
 ): UserResult {
-  const user = await createUser(post, appId, username, generateId(), {
+  const user = await client.createUser(appId, username, generateId(), {
     ...data,
     type: EnumUserType.customer,
   })
-  const manager = await post(
+  const manager = await client.post(
     `/v1/property-managers/${propertyManagerId}/users`,
     {
       userID: user.id,
@@ -51,7 +48,10 @@ export async function createAgent(
 
   // trigger sending of invitation emails to agents, then return data
   return (
-    !(await post(`/v1/users/${user.id}/invitations`)) && { ...user, ...manager }
+    !(await client.post(`/v1/users/${user.id}/invitations`)) && {
+      ...user,
+      ...manager,
+    }
   )
 }
 
@@ -72,19 +72,19 @@ export type MethodCreateAgentPermissions = (
  * Returns a datastore-specific object of redis clients.
  */
 export async function createAgentPermissions(
-  post: MethodHttpPost,
+  client: InterfaceAllthingsRestClient,
   agentId: string,
   objectId: string,
   objectType: EnumUserPermissionObjectType,
 ): AgentPermissionsResult {
   return Promise.all([
-    createUserPermission(post, agentId, {
+    client.createUserPermission(agentId, {
       objectId,
       objectType,
       restrictions: [],
       role: EnumUserPermissionRole.admin,
     }),
-    createUserPermission(post, agentId, {
+    client.createUserPermission(agentId, {
       objectId,
       objectType,
       restrictions: [],

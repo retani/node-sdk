@@ -1,4 +1,4 @@
-import { MethodHttpPost } from '../post'
+import { InterfaceAllthingsRestClient } from '../types'
 
 export interface IApp {
   readonly id: string
@@ -20,14 +20,14 @@ export type MethodCreateApp = (
 
 // @TODO: this is very much incomplete.
 export async function createApp(
-  post: MethodHttpPost,
+  client: InterfaceAllthingsRestClient,
   userId: string,
   data: PartialApp & {
     readonly name: string
     readonly siteUrl: string
   },
 ): CreateAppResult {
-  return post(`/v1/users/${userId}/apps`, {
+  return client.post(`/v1/users/${userId}/apps`, {
     availableLocales: { '0': 'de_DE' },
     contactEmail: 'no-reply@allthings.me',
     fromEmailAddress: 'no-reply@alltings.me',
