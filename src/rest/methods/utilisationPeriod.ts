@@ -1,6 +1,7 @@
 import { MethodHttpGet } from '../get'
 import { MethodHttpPatch } from '../patch'
 import { MethodHttpPost } from '../post'
+import { InterfaceAllthingsRestClient } from '../types'
 
 export interface IUtilisationPeriod {
   readonly _embedded: { readonly invitations: ReadonlyArray<any> }
@@ -82,6 +83,20 @@ export async function updateUtilisationPeriodById(
 ): UtilisationPeriodResult {
   const { tenantIDs: tenantIds, ...result } = await patch(
     `/v1/utilisation-periods/${utilisationPeriodId}`,
+    data,
+  )
+  return { ...result, tenantIds }
+}
+
+export async function createNewTenantCheckIn(
+  client: InterfaceAllthingsRestClient,
+  utilisationPeriodId: string,
+  data: PartialUtilisationPeriod & {
+    readonly email: string
+  },
+): UtilisationPeriodResult {
+  const { tenantIDs: tenantIds, ...result } = await client.post(
+    `/v1/utilisation-periods/${utilisationPeriodId}/users`,
     data,
   )
   return { ...result, tenantIds }
