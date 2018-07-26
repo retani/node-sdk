@@ -1,6 +1,4 @@
-import { MethodHttpGet } from '../get'
-import { MethodHttpPatch } from '../patch'
-import { MethodHttpPost } from '../post'
+import { InterfaceAllthingsRestClient } from '../types'
 
 export interface IUtilisationPeriod {
   readonly _embedded: { readonly invitations: ReadonlyArray<any> }
@@ -33,13 +31,13 @@ export type MethodCreateUtilisationPeriod = (
 ) => UtilisationPeriodResult
 
 export async function createUtilisationPeriod(
-  post: MethodHttpPost,
+  client: InterfaceAllthingsRestClient,
   unitId: string,
   data: PartialUtilisationPeriod & {
     readonly startDate: string
   },
 ): UtilisationPeriodResult {
-  const { tenantIDs: tenantIds, ...result } = await post(
+  const { tenantIDs: tenantIds, ...result } = await client.post(
     `/v1/units/${unitId}/utilisation-periods`,
     data,
   )
@@ -55,10 +53,10 @@ export type MethodGetUtilisationPeriodById = (
 ) => UtilisationPeriodResult
 
 export async function getUtilisationPeriodById(
-  get: MethodHttpGet,
+  client: InterfaceAllthingsRestClient,
   utilisationPeriodId: string,
 ): UtilisationPeriodResult {
-  const { tenantIDs: tenantIds, ...result } = await get(
+  const { tenantIDs: tenantIds, ...result } = await client.get(
     `/v1/utilisation-periods/${utilisationPeriodId}`,
   )
   return { ...result, tenantIds }
@@ -74,13 +72,13 @@ export type MethodUpdateUtilisationPeriodById = (
 ) => UtilisationPeriodResult
 
 export async function updateUtilisationPeriodById(
-  patch: MethodHttpPatch,
+  client: InterfaceAllthingsRestClient,
   utilisationPeriodId: string,
   data: PartialUtilisationPeriod & {
     readonly startDate: string
   },
 ): UtilisationPeriodResult {
-  const { tenantIDs: tenantIds, ...result } = await patch(
+  const { tenantIDs: tenantIds, ...result } = await client.patch(
     `/v1/utilisation-periods/${utilisationPeriodId}`,
     data,
   )

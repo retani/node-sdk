@@ -127,20 +127,14 @@ export default function restClient(
   const post = partial(httpPost, request)
   const patch = partial(httpPatch, request)
 
-  const methodNameToHttpVerbMap: IndexSignature = {
-    create: post, // e.g. createProperty --> post()
-    delete: del, // e.g. deleteProperty --> del()
-    update: patch, // e.g. updateProperty --> path()
-  }
-
-  return API_METHODS.reduce(
+  const client: InterfaceAllthingsRestClient = API_METHODS.reduce(
     (methods, method) => ({
       ...methods,
-      [method.name]: partial(
-        method,
-        methodNameToHttpVerbMap[method.name.substr(0, 6)] || get,
-      ),
+      // tslint:disable-next-line readonly-array
+      [method.name]: (...args: any[]) => method(client, ...args),
     }),
     { delete: del, get, options, patch, post },
   )
+
+  return client
 }
