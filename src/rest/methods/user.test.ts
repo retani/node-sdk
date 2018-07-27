@@ -4,8 +4,8 @@ import restClient from '..'
 import { APP_ID, APP_PROPERTY_MANAGER_ID } from '../../../test/constants'
 import { times } from '../../utils/functional'
 import { EnumLocale, EnumTimezone } from '../types'
-import { EnumUserPermissionObjectType, EnumUserPermissionRole } from './user'
 import { EnumUnitType } from './unit'
+import { EnumUserPermissionObjectType, EnumUserPermissionRole } from './user'
 
 const client = restClient()
 

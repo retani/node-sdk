@@ -1,5 +1,5 @@
 import { EnumLocale, InterfaceAllthingsRestClient } from '../types'
-import { UtilisationPeriodResult } from './utilisationPeriod'
+import { UtilisationPeriodResults } from './utilisationPeriod'
 
 export enum EnumGender {
   female = 'female',
@@ -238,12 +238,12 @@ export async function deleteUserPermission(
 
 export type MethodUserGetUtilisationPeriod = (
   permissionId: string,
-) => Promise<ReadonlyArray<UtilisationPeriodResult>>
+) => UtilisationPeriodResults
 
 export async function userGetUtilisationPeriod(
   client: InterfaceAllthingsRestClient,
   userId: string,
-): Promise<ReadonlyArray<UtilisationPeriodResult>> {
+): UtilisationPeriodResults {
   const {
     _embedded: { items: utilisationPeriods },
   } = await client.get(`/v1/users/${userId}/utilisation-periods`)

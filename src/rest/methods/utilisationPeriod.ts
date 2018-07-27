@@ -18,6 +18,9 @@ export interface IUtilisationPeriod {
 export type PartialUtilisationPeriod = Partial<IUtilisationPeriod>
 
 export type UtilisationPeriodResult = Promise<IUtilisationPeriod>
+export type UtilisationPeriodResults = Promise<
+  ReadonlyArray<IUtilisationPeriod>
+>
 
 /*
   Create new Utilisation Period
@@ -97,7 +100,7 @@ export async function checkInUserToUtilisationPeriod(
     readonly email: string
   },
 ): UtilisationPeriodResult {
-  const { id: userId, ...userData } = await client.post(
+  const { id: tenantIds, ...userData } = await client.post(
     `/v1/utilisation-periods/${utilisationPeriodId}/users`,
     { email: data.email },
   )
@@ -106,5 +109,10 @@ export async function checkInUserToUtilisationPeriod(
     utilisationPeriodId,
   )
 
-  return { ...userData, ...utilisationPeriodData, userId, utilisationPeriodId }
+  return {
+    ...userData,
+    ...utilisationPeriodData,
+    tenantIds,
+    utilisationPeriodId,
+  }
 }

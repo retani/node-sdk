@@ -108,16 +108,17 @@ describe('checkInUserToUtilisationPeriod()', () => {
       locale: EnumLocale.de_DE,
     })
 
-    const checkedInUser = await client.checkInUserToUtilisationPeriod(
-      utilisationPeriod.id,
-      { email: userEmail },
-    )
+    const {
+      tenantIds: checkedInUserId,
+    } = await client.checkInUserToUtilisationPeriod(utilisationPeriod.id, {
+      email: userEmail,
+    })
 
     const [usersUtilisationPeriod] = await client.userGetUtilisationPeriod(
       user.id,
     )
 
-    expect(user.id).toEqual(checkedInUser.userId)
+    expect(user.id).toEqual(checkedInUserId)
     expect(usersUtilisationPeriod.id).toEqual(utilisationPeriod.id)
   })
 })
