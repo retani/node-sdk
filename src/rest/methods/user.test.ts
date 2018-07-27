@@ -1,10 +1,11 @@
 // tslint:disable:no-expression-statement
 import { generate as generateId } from 'shortid'
 import restClient from '..'
-import { APP_ID } from '../../../test/constants'
+import { APP_ID, APP_PROPERTY_MANAGER_ID } from '../../../test/constants'
 import { times } from '../../utils/functional'
-import { EnumLocale } from '../types'
+import { EnumLocale, EnumTimezone } from '../types'
 import { EnumUserPermissionObjectType, EnumUserPermissionRole } from './user'
+import { EnumUnitType } from './unit'
 
 const client = restClient()
 
@@ -212,5 +213,57 @@ describe('deleteUserPermission()', () => {
 
     // permission should no longer exist
     expect(await client.getUserPermissions(user.id)).toHaveLength(0)
+  })
+})
+
+describe('userGetUtilisationPeriod()', () => {
+  let sharedUnitId: string // tslint:disable-line no-let
+
+  beforeAll(async () => {
+    const property = await client.createProperty(APP_ID, {
+      name: 'Foobar2 Property',
+      timezone: EnumTimezone.EuropeBerlin,
+    })
+
+    const group = await client.createGroup(property.id, {
+      name: 'Foobar2 Group',
+      propertyManagerId: APP_PROPERTY_MANAGER_ID,
+    })
+
+    const unit = await client.createUnit(group.id, {
+      name: 'Foobar2 Unit',
+      type: EnumUnitType.rented,
+    })
+
+    sharedUnitId = unit.id // tslint:disable-line no-expression-statement
+  })
+
+  it('should get a list of utlisation periods a user is checked in to', async () => {
+    const initialData = {
+      endDate: '2450-01-03',
+      externalId: generateId(),
+      startDate: '2449-01-03',
+    }
+    const utilisationPeriod = await client.createUtilisationPeriod(
+      sharedUnitId,
+      initialData,
+    )
+
+    const userEmail = generateId() + '@test.com'
+
+    const user = await client.createUser(APP_ID, generateId(), generateId(), {
+      email: userEmail,
+      locale: EnumLocale.de_DE,
+    })
+
+    await client.checkInUserToUtilisationPeriod(utilisationPeriod.id, {
+      email: userEmail,
+    })
+
+    const [usersUtilisationPeriod] = await client.userGetUtilisationPeriod(
+      user.id,
+    )
+
+    expect(usersUtilisationPeriod.id).toEqual(utilisationPeriod.id)
   })
 })

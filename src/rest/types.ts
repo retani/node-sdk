@@ -31,8 +31,10 @@ import {
   MethodGetUserPermissions,
   MethodGetUsers,
   MethodUpdateUserById,
+  MethodUserGetUtilisationPeriod,
 } from './methods/user'
 import {
+  MethodCheckInUserToUtilisationPeriod,
   MethodCreateUtilisationPeriod,
   MethodGetUtilisationPeriodById,
   MethodUpdateUtilisationPeriodById,
@@ -224,6 +226,11 @@ export interface InterfaceAllthingsRestClient {
   readonly getUserPermissions: MethodGetUserPermissions
 
   /**
+   * Get a list of user's current utilisation - periods
+   */
+  readonly userGetUtilisationPeriod: MethodUserGetUtilisationPeriod
+
+  /**
    * Update a user by their ID
    */
   readonly updateUserById: MethodUpdateUserById
@@ -244,4 +251,9 @@ export interface InterfaceAllthingsRestClient {
    * Update a utilisation period by it's ID
    */
   readonly updateUtilisationPeriodById: MethodUpdateUtilisationPeriodById
+
+  /**
+   * Check-in a user to a utilisation period with the users email
+   */
+  readonly checkInUserToUtilisationPeriod: MethodCheckInUserToUtilisationPeriod
 }

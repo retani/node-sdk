@@ -35,6 +35,7 @@
     "clean": "rimraf dist",
     "pretest": "npm run clean",
     "test": "jest",
+    "watch:build": "tsc -d -w & rollup -c --watch",
     "watch:test": "jest --watch",
     "lint": "yarn lint:tsc && yarn lint:tslint",
     "lint:tslint": "tslint -p tsconfig.json -t stylish",

@@ -84,3 +84,27 @@ export async function updateUtilisationPeriodById(
   )
   return { ...result, tenantIds }
 }
+
+export type MethodCheckInUserToUtilisationPeriod = (
+  utilisationPeriodId: string,
+  data: { readonly email: string },
+) => UtilisationPeriodResult
+
+export async function checkInUserToUtilisationPeriod(
+  client: InterfaceAllthingsRestClient,
+  utilisationPeriodId: string,
+  data: {
+    readonly email: string
+  },
+): UtilisationPeriodResult {
+  const { id: userId, ...userData } = await client.post(
+    `/v1/utilisation-periods/${utilisationPeriodId}/users`,
+    { email: data.email },
+  )
+
+  const utilisationPeriodData = await client.getUtilisationPeriodById(
+    utilisationPeriodId,
+  )
+
+  return { ...userData, ...utilisationPeriodData, userId, utilisationPeriodId }
+}
