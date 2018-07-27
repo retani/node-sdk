@@ -59,7 +59,7 @@
     "shortid": "2.2.12"
   },
   "devDependencies": {
-    "@allthings/tslint-preset": "1.8.0",
+    "@allthings/tslint-preset": "1.9.0",
     "@commitlint/cli": "7.0.0",
     "@commitlint/config-conventional": "7.0.1",
     "@types/got": "8.3.3",
