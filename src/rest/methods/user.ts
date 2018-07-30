@@ -75,7 +75,7 @@ export type UserPermissionResult = Promise<IUserPermission>
   Create new user
 */
 
-export type MethodCreateUser = (
+export type MethodUserCreate = (
   appId: string,
   username: string,
   plainPassword: string,
@@ -85,7 +85,7 @@ export type MethodCreateUser = (
   },
 ) => UserResult
 
-export async function createUser(
+export async function userCreate(
   client: InterfaceAllthingsRestClient,
   appId: string,
   username: string,
@@ -133,9 +133,9 @@ export async function getCurrentUser(
   Get a user by their ID
 */
 
-export type MethodGetUserById = (id: string) => UserResult
+export type MethodUserFindById = (id: string) => UserResult
 
-export async function getUserById(
+export async function userFindById(
   client: InterfaceAllthingsRestClient,
   userId: string,
 ): UserResult {
@@ -146,12 +146,12 @@ export async function getUserById(
   Update a user by their ID
 */
 
-export type MethodUpdateUserById = (
+export type MethodUserUpdateById = (
   userId: string,
   data: PartialUser,
 ) => UserResult
 
-export async function updateUserById(
+export async function userUpdateById(
   client: InterfaceAllthingsRestClient,
   userId: string,
   data: PartialUser,

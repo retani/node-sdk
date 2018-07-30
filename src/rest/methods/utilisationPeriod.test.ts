@@ -10,17 +10,17 @@ const client = restClient()
 
 describe('createUtilisationPeriod()', () => {
   beforeAll(async () => {
-    const property = await client.createProperty(APP_ID, {
+    const property = await client.propertyCreate(APP_ID, {
       name: 'Foobar Property',
       timezone: 'Europe/Berlin',
     })
 
-    const group = await client.createGroup(property.id, {
+    const group = await client.groupCreate(property.id, {
       name: 'Foobar Group',
       propertyManagerId: APP_PROPERTY_MANAGER_ID,
     })
 
-    const unit = await client.createUnit(group.id, {
+    const unit = await client.unitCreate(group.id, {
       name: 'Foobar Unit',
       type: EnumUnitType.rented,
     })
@@ -34,7 +34,7 @@ describe('createUtilisationPeriod()', () => {
       externalId: generateId(),
       startDate: '2050-01-01',
     }
-    const result = await client.createUtilisationPeriod(sharedUnitId, data)
+    const result = await client.utilisationPeriodCreate(sharedUnitId, data)
 
     expect(result.startDate).toEqual(data.startDate)
     expect(result.externalId).toEqual(data.externalId)
@@ -48,8 +48,8 @@ describe('getUtilisationPeriodById()', () => {
       externalId: generateId(),
       startDate: '2050-01-02',
     }
-    const { id } = await client.createUtilisationPeriod(sharedUnitId, data)
-    const result = await client.getUtilisationPeriodById(id)
+    const { id } = await client.utilisationPeriodCreate(sharedUnitId, data)
+    const result = await client.utilisationPeriodFindById(id)
 
     expect(result.startDate).toEqual(data.startDate)
     expect(result.externalId).toEqual(data.externalId)
@@ -63,7 +63,7 @@ describe('updateUtilisationPeriodById()', () => {
       externalId: generateId(),
       startDate: '2050-01-03',
     }
-    const utilisationPeriod = await client.createUtilisationPeriod(
+    const utilisationPeriod = await client.utilisationPeriodCreate(
       sharedUnitId,
       initialData,
     )
@@ -77,7 +77,7 @@ describe('updateUtilisationPeriodById()', () => {
       startDate: '2100-01-02',
     }
 
-    const result = await client.updateUtilisationPeriodById(
+    const result = await client.utilisationPeriodUpdateById(
       utilisationPeriod.id,
       updateData,
     )

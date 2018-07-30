@@ -24,7 +24,7 @@ export type UnitResult = Promise<IUnit>
   Create new unit
 */
 
-export type MethodCreateUnit = (
+export type MethodUnitCreate = (
   groupId: string,
   data: PartialUnit & {
     readonly name: string
@@ -32,7 +32,7 @@ export type MethodCreateUnit = (
   },
 ) => UnitResult
 
-export async function createUnit(
+export async function unitCreate(
   client: InterfaceAllthingsRestClient,
   groupId: string,
   data: PartialUnit & {
@@ -47,9 +47,9 @@ export async function createUnit(
   Get a unit by it's ID
 */
 
-export type MethodGetUnitById = (id: string) => UnitResult
+export type MethodUnitFindById = (id: string) => UnitResult
 
-export async function getUnitById(
+export async function unitFindById(
   client: InterfaceAllthingsRestClient,
   unitId: string,
 ): UnitResult {
@@ -60,12 +60,12 @@ export async function getUnitById(
   Update a unit by it's ID
 */
 
-export type MethodUpdateUnitById = (
+export type MethodUnitUpdateById = (
   unitId: string,
   data: PartialUnit,
 ) => UnitResult
 
-export async function updateUnitById(
+export async function unitUpdateById(
   client: InterfaceAllthingsRestClient,
   unitId: string,
   data: PartialUnit,

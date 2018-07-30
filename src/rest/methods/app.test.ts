@@ -7,7 +7,7 @@ const client = restClient()
 
 describe('createApp()', () => {
   it('should create a new App', async () => {
-    const result = await client.createApp(USER_ID, {
+    const result = await client.appCreate(USER_ID, {
       name: generateId(),
       siteUrl: generateId(),
     })

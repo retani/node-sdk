@@ -34,7 +34,7 @@ export type GroupResult = Promise<IGroup>
   https://api-doc.allthings.me/#!/Groups/post_properties_propertyID_groups
 */
 
-export type MethodCreateGroup = (
+export type MethodGroupCreate = (
   propertyId: string,
   data: PartialGroup & {
     readonly name: string
@@ -42,7 +42,7 @@ export type MethodCreateGroup = (
   },
 ) => GroupResult
 
-export async function createGroup(
+export async function groupCreate(
   client: InterfaceAllthingsRestClient,
   propertyId: string,
   data: PartialGroup & {
@@ -63,9 +63,9 @@ export async function createGroup(
   https://api-doc.allthings.me/#!/Groups/get_groups_groupID
 */
 
-export type MethodGetGroupById = (id: string) => GroupResult
+export type MethodGroupFindById = (id: string) => GroupResult
 
-export async function getGroupById(
+export async function groupFindById(
   client: InterfaceAllthingsRestClient,
   groupId: string,
 ): GroupResult {
@@ -81,12 +81,12 @@ export async function getGroupById(
   https://api-doc.allthings.me/#!/Groups/patch_groups_groupID
 */
 
-export type MethodUpdateGroupById = (
+export type MethodGroupUpdateById = (
   groupId: string,
   data: PartialGroup,
 ) => GroupResult
 
-export async function updateGroupById(
+export async function groupUpdateById(
   client: InterfaceAllthingsRestClient,
   groupId: string,
   data: PartialGroup,

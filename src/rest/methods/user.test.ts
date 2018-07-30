@@ -26,7 +26,7 @@ describe('getUsers()', () => {
         }),
         limit,
       ).map(data =>
-        client.createUser(APP_ID, generateId(), generateId(), data),
+        client.userCreate(APP_ID, generateId(), generateId(), data),
       ),
     )
 
@@ -54,7 +54,7 @@ describe('createUser()', () => {
       email: generateId() + '@foobar.test',
       externalId: generateId(),
     }
-    const result = await client.createUser(
+    const result = await client.userCreate(
       APP_ID,
       generateId(),
       generateId(),
@@ -73,13 +73,13 @@ describe('getUserById()', () => {
       email: generateId() + '@foobar.test',
       externalId: generateId(),
     }
-    const { id } = await client.createUser(
+    const { id } = await client.userCreate(
       APP_ID,
       generateId(),
       generateId(),
       data,
     )
-    const result = await client.getUserById(id)
+    const result = await client.userFindById(id)
 
     expect(result.email).toEqual(data.email)
     expect(result.externalId).toEqual(data.externalId)
@@ -93,7 +93,7 @@ describe('updateUserById()', () => {
       email: generateId() + '@foobar.test',
       externalId: generateId(),
     }
-    const user = await client.createUser(
+    const user = await client.userCreate(
       APP_ID,
       generateId(),
       generateId(),
@@ -108,7 +108,7 @@ describe('updateUserById()', () => {
       locale: EnumLocale.de_DE,
     }
 
-    const result = await client.updateUserById(user.id, updateData)
+    const result = await client.userUpdateById(user.id, updateData)
 
     expect(result.locale).toEqual(updateData.locale)
     expect(result.externalId).toEqual(updateData.externalId)
@@ -122,7 +122,7 @@ describe('createUserPermission()', () => {
       email: generateId() + '@foobar.test',
       externalId: generateId(),
     }
-    const user = await client.createUser(
+    const user = await client.userCreate(
       APP_ID,
       generateId(),
       generateId(),
@@ -154,7 +154,7 @@ describe('getUserPermissions()', () => {
       externalId: generateId(),
     }
 
-    const user = await client.createUser(
+    const user = await client.userCreate(
       APP_ID,
       generateId(),
       generateId(),
@@ -185,7 +185,7 @@ describe('deleteUserPermission()', () => {
       externalId: generateId(),
     }
 
-    const user = await client.createUser(
+    const user = await client.userCreate(
       APP_ID,
       generateId(),
       generateId(),

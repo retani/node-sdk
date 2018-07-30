@@ -17,12 +17,12 @@ export type PropertyResult = Promise<IProperty>
   https://api-doc.allthings.me/#!/Property/post_apps_appID_properties
 */
 
-export type MethodCreateProperty = (
+export type MethodPropertyCreate = (
   appId: string,
   data: PartialProperty & { readonly name: string; readonly timezone: string },
 ) => PropertyResult
 
-export async function createProperty(
+export async function propertyCreate(
   client: InterfaceAllthingsRestClient,
   appId: string,
   data: PartialProperty & { readonly name: string; readonly timezone: string },
@@ -35,9 +35,9 @@ export async function createProperty(
   https://api-doc.allthings.me/#!/Property/get_properties_propertyID
 */
 
-export type MethodGetPropertyById = (propertyId: string) => PropertyResult
+export type MethodPropertyFindById = (propertyId: string) => PropertyResult
 
-export async function getPropertyById(
+export async function propertyFindById(
   client: InterfaceAllthingsRestClient,
   propertyId: string,
 ): PropertyResult {
@@ -49,12 +49,12 @@ export async function getPropertyById(
   https://api-doc.allthings.me/#!/Property/patch_properties_propertyID
 */
 
-export type MethodUpdatePropertyById = (
+export type MethodPropertyUpdateById = (
   propertyId: string,
   data: PartialProperty,
 ) => PropertyResult
 
-export async function updatePropertyById(
+export async function propertyUpdateById(
   client: InterfaceAllthingsRestClient,
   propertyId: string,
   data: PartialProperty,

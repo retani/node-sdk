@@ -10,7 +10,7 @@ export type PartialApp = Partial<IApp>
 
 export type CreateAppResult = Promise<IApp>
 
-export type MethodCreateApp = (
+export type MethodAppCreate = (
   userId: string,
   data: PartialApp & {
     readonly name: string
@@ -19,7 +19,7 @@ export type MethodCreateApp = (
 ) => CreateAppResult
 
 // @TODO: this is very much incomplete.
-export async function createApp(
+export async function appCreate(
   client: InterfaceAllthingsRestClient,
   userId: string,
   data: PartialApp & {

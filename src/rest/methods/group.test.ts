@@ -26,10 +26,10 @@ const testAddressData = {
 
 describe('createGroup()', () => {
   it('should be able to create a new group', async () => {
-    const property = await client.createProperty(APP_ID, testPropertyData)
+    const property = await client.propertyCreate(APP_ID, testPropertyData)
 
     const data = { ...testData, externalId: generateId() }
-    const result = await client.createGroup(property.id, data)
+    const result = await client.groupCreate(property.id, data)
 
     expect(result.name).toEqual(data.name)
     expect(result.externalId).toEqual(data.externalId)
@@ -38,11 +38,11 @@ describe('createGroup()', () => {
 
 describe('getGroupById()', () => {
   it('should be able to get a group by ID', async () => {
-    const property = await client.createProperty(APP_ID, testPropertyData)
+    const property = await client.propertyCreate(APP_ID, testPropertyData)
 
     const data = { ...testData, externalId: generateId() }
-    const { id } = await client.createGroup(property.id, data)
-    const result = await client.getGroupById(id)
+    const { id } = await client.groupCreate(property.id, data)
+    const result = await client.groupFindById(id)
 
     expect(result.name).toEqual(data.name)
     expect(result.externalId).toEqual(data.externalId)
@@ -51,11 +51,11 @@ describe('getGroupById()', () => {
 
 describe('updateGroupById()', () => {
   it('should be able to update a group by ID', async () => {
-    const property = await client.createProperty(APP_ID, testPropertyData)
+    const property = await client.propertyCreate(APP_ID, testPropertyData)
 
     const initialData = { ...testData, externalId: generateId() }
 
-    const group = await client.createGroup(property.id, initialData)
+    const group = await client.groupCreate(property.id, initialData)
 
     expect(group.name).toEqual(initialData.name)
     expect(group.externalId).toEqual(initialData.externalId)
@@ -66,7 +66,7 @@ describe('updateGroupById()', () => {
       externalId: generateId(),
     }
 
-    const result = await client.updateGroupById(group.id, updateData)
+    const result = await client.groupUpdateById(group.id, updateData)
 
     expect(result.address.country).toEqual(EnumCountryCode.DE)
     expect(result.description).toEqual(updateData.description)

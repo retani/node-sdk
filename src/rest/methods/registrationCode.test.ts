@@ -12,29 +12,29 @@ describe('createRegistrationCode()', async () => {
     const code = generateId()
     const testExternalId = generateId()
 
-    const app = await client.createApp(USER_ID, { name, siteUrl: generateId() })
-    const property = await client.createProperty(app.id, {
+    const app = await client.appCreate(USER_ID, { name, siteUrl: generateId() })
+    const property = await client.propertyCreate(app.id, {
       name,
       timezone: 'Europe/Berlin',
     })
-    const group = await client.createGroup(property.id, {
+    const group = await client.groupCreate(property.id, {
       name,
       propertyManagerId: APP_PROPERTY_MANAGER_ID,
     })
-    const unit = await client.createUnit(group.id, {
+    const unit = await client.unitCreate(group.id, {
       name,
       type: EnumUnitType.owned,
     })
     const utilisationPeriods = (await Promise.all([
-      client.createUtilisationPeriod(unit.id, {
+      client.utilisationPeriodCreate(unit.id, {
         endDate: '2018-01-02',
         startDate: '2018-01-01',
       }),
-      client.createUtilisationPeriod(unit.id, {
+      client.utilisationPeriodCreate(unit.id, {
         endDate: '2018-02-02',
         startDate: '2018-02-01',
       }),
-      client.createUtilisationPeriod(unit.id, {
+      client.utilisationPeriodCreate(unit.id, {
         endDate: '2018-03-02',
         startDate: '2018-03-01',
       }),

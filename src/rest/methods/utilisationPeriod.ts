@@ -23,14 +23,14 @@ export type UtilisationPeriodResult = Promise<IUtilisationPeriod>
   Create new Utilisation Period
 */
 
-export type MethodCreateUtilisationPeriod = (
+export type MethodUtilisationPeriodCreated = (
   unitId: string,
   data: PartialUtilisationPeriod & {
     readonly startDate: string
   },
 ) => UtilisationPeriodResult
 
-export async function createUtilisationPeriod(
+export async function utilisationPeriodCreate(
   client: InterfaceAllthingsRestClient,
   unitId: string,
   data: PartialUtilisationPeriod & {
@@ -49,11 +49,11 @@ export async function createUtilisationPeriod(
   Get a Utilisation Period by its ID
 */
 
-export type MethodGetUtilisationPeriodById = (
+export type MethodUtilisationPeriodFindById = (
   id: string,
 ) => UtilisationPeriodResult
 
-export async function getUtilisationPeriodById(
+export async function utilisationPeriodFindById(
   client: InterfaceAllthingsRestClient,
   utilisationPeriodId: string,
 ): UtilisationPeriodResult {
@@ -68,12 +68,12 @@ export async function getUtilisationPeriodById(
   Update a unit by its ID
 */
 
-export type MethodUpdateUtilisationPeriodById = (
+export type MethodUtilisationPeriodUpdateById = (
   unitId: string,
   data: PartialUtilisationPeriod,
 ) => UtilisationPeriodResult
 
-export async function updateUtilisationPeriodById(
+export async function utilisationPeriodUpdateById(
   client: InterfaceAllthingsRestClient,
   utilisationPeriodId: string,
   data: PartialUtilisationPeriod & {
