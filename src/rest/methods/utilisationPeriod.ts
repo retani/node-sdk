@@ -88,12 +88,12 @@ export async function updateUtilisationPeriodById(
   return { ...result, tenantIds }
 }
 
-export type MethodCheckInUserToUtilisationPeriod = (
+export type MethodUtilisationPeriodCheckInUser = (
   utilisationPeriodId: string,
   data: { readonly email: string },
 ) => UtilisationPeriodResult
 
-export async function checkInUserToUtilisationPeriod(
+export async function utilisationPeriodCheckInUser(
   client: InterfaceAllthingsRestClient,
   utilisationPeriodId: string,
   data: {

@@ -256,7 +256,7 @@ describe('userGetUtilisationPeriod()', () => {
       locale: EnumLocale.de_DE,
     })
 
-    await client.checkInUserToUtilisationPeriod(utilisationPeriod.id, {
+    await client.utilisationPeriodCheckInUser(utilisationPeriod.id, {
       email: userEmail,
     })
 

@@ -110,7 +110,7 @@ describe('checkInUserToUtilisationPeriod()', () => {
 
     const {
       tenantIds: checkedInUserId,
-    } = await client.checkInUserToUtilisationPeriod(utilisationPeriod.id, {
+    } = await client.utilisationPeriodCheckInUser(utilisationPeriod.id, {
       email: userEmail,
     })
 

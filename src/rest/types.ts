@@ -34,10 +34,10 @@ import {
   MethodUserGetUtilisationPeriod,
 } from './methods/user'
 import {
-  MethodCheckInUserToUtilisationPeriod,
   MethodCreateUtilisationPeriod,
   MethodGetUtilisationPeriodById,
   MethodUpdateUtilisationPeriodById,
+  MethodUtilisationPeriodCheckInUser,
 } from './methods/utilisationPeriod'
 import { MethodHttpPatch } from './patch'
 import { MethodHttpPost } from './post'
@@ -255,5 +255,6 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Check-in a user to a utilisation period with the users email
    */
-  readonly checkInUserToUtilisationPeriod: MethodCheckInUserToUtilisationPeriod
+
+  readonly utilisationPeriodCheckInUser: MethodUtilisationPeriodCheckInUser
 }
