@@ -29,6 +29,7 @@ import {
   getUserPermissions,
   getUsers,
   updateUserById,
+  userCheckInToUtilisationPeriod,
   userGetUtilisationPeriod,
 } from './methods/user'
 import {
@@ -83,6 +84,7 @@ const API_METHODS: ReadonlyArray<any> = [
   getUserPermissions,
   getUsers,
   updateUserById,
+  userCheckInToUtilisationPeriod,
   userGetUtilisationPeriod,
 
   // Utilisation Periods

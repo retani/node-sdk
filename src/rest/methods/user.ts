@@ -250,3 +250,29 @@ export async function userGetUtilisationPeriod(
 
   return utilisationPeriods
 }
+
+/*
+  Checkin a user into a Utilisation-Period with userId and
+  utilisation-periodId
+*/
+
+export type MethodUserCheckInToUtilisationPeriod = (
+  userId: string,
+  utilisationPeriodId: string,
+) => UtilisationPeriodResults
+
+export async function userCheckInToUtilisationPeriod(
+  client: InterfaceAllthingsRestClient,
+  userId: string,
+  utilisationPeriodId: string,
+): UtilisationPeriodResults {
+  const { email: userEmail } = await client.getUserById(userId)
+
+  const {
+    _embedded: { items: utilisationPeriods },
+  } = await client.utilisationPeriodCheckInUser(utilisationPeriodId, {
+    email: userEmail,
+  })
+
+  return utilisationPeriods
+}

@@ -31,6 +31,7 @@ import {
   MethodGetUserPermissions,
   MethodGetUsers,
   MethodUpdateUserById,
+  MethodUserCheckInToUtilisationPeriod,
   MethodUserGetUtilisationPeriod,
 } from './methods/user'
 import {
@@ -234,6 +235,12 @@ export interface InterfaceAllthingsRestClient {
    * Update a user by their ID
    */
   readonly updateUserById: MethodUpdateUserById
+
+  /**
+   * Checkin a user into a Utilisation-Period with userId and
+   * utilisation-periodId
+   */
+  readonly userCheckInToUtilisationPeriod: MethodUserCheckInToUtilisationPeriod
 
   // Utilisation Period
 

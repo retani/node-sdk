@@ -109,16 +109,18 @@ describe('checkInUserToUtilisationPeriod()', () => {
     })
 
     const {
-      tenantIds: checkedInUserId,
+      _embedded: {
+        users: [{ id: checkedInUserId }],
+      },
     } = await client.utilisationPeriodCheckInUser(utilisationPeriod.id, {
       email: userEmail,
     })
 
-    const [usersUtilisationPeriod] = await client.userGetUtilisationPeriod(
-      user.id,
-    )
+    const [
+      { id: usersUtilisationPeriodId },
+    ] = await client.userGetUtilisationPeriod(user.id)
 
     expect(user.id).toEqual(checkedInUserId)
-    expect(usersUtilisationPeriod.id).toEqual(utilisationPeriod.id)
+    expect(usersUtilisationPeriodId).toEqual(utilisationPeriod.id)
   })
 })
