@@ -47,6 +47,7 @@ export async function createUtilisationPeriod(
     `/v1/units/${unitId}/utilisation-periods`,
     data,
   )
+
   return { ...result, tenantIds }
 }
 
@@ -65,6 +66,7 @@ export async function getUtilisationPeriodById(
   const { tenantIDs: tenantIds, ...result } = await client.get(
     `/v1/utilisation-periods/${utilisationPeriodId}`,
   )
+
   return { ...result, tenantIds }
 }
 
@@ -88,6 +90,7 @@ export async function updateUtilisationPeriodById(
     `/v1/utilisation-periods/${utilisationPeriodId}`,
     data,
   )
+
   return { ...result, tenantIds }
 }
 
