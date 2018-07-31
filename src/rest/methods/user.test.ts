@@ -216,7 +216,7 @@ describe('deleteUserPermission()', () => {
   })
 })
 
-describe('userGetUtilisationPeriod()', () => {
+describe('userGetUtilisationPeriods()', () => {
   let sharedUnitId: string // tslint:disable-line no-let
 
   beforeAll(async () => {
