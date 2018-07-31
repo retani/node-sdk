@@ -51,6 +51,7 @@ export async function createGroup(
   },
 ): GroupResult {
   const { propertyManagerId, ...rest } = data
+
   return client.post(`/v1/properties/${propertyId}/groups`, {
     ...rest,
     propertyManagerID: propertyManagerId,
@@ -71,6 +72,7 @@ export async function getGroupById(
   const { propertyManagerID: propertyManagerId, ...result } = await client.get(
     `/v1/groups/${groupId}`,
   )
+
   return { ...result, propertyManagerId }
 }
 

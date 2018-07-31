@@ -189,6 +189,7 @@ export async function createUserPermission(
     `/v1/users/${userId}/permissions`,
     { ...rest, objectID },
   )
+
   return {
     ...result,
     objectId: resultObjectId,
