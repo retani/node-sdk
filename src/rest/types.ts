@@ -31,11 +31,14 @@ import {
   MethodGetUserPermissions,
   MethodGetUsers,
   MethodUpdateUserById,
+  MethodUserCheckInToUtilisationPeriod,
+  MethodUserGetUtilisationPeriods,
 } from './methods/user'
 import {
   MethodCreateUtilisationPeriod,
   MethodGetUtilisationPeriodById,
   MethodUpdateUtilisationPeriodById,
+  MethodUtilisationPeriodCheckInUser,
 } from './methods/utilisationPeriod'
 import { MethodHttpPatch } from './patch'
 import { MethodHttpPost } from './post'
@@ -224,9 +227,20 @@ export interface InterfaceAllthingsRestClient {
   readonly getUserPermissions: MethodGetUserPermissions
 
   /**
+   * Get a list of user's current utilisation - periods
+   */
+  readonly userGetUtilisationPeriods: MethodUserGetUtilisationPeriods
+
+  /**
    * Update a user by their ID
    */
   readonly updateUserById: MethodUpdateUserById
+
+  /**
+   * Checkin a user into a Utilisation-Period with userId and
+   * utilisation-periodId
+   */
+  readonly userCheckInToUtilisationPeriod: MethodUserCheckInToUtilisationPeriod
 
   // Utilisation Period
 
@@ -244,4 +258,10 @@ export interface InterfaceAllthingsRestClient {
    * Update a utilisation period by it's ID
    */
   readonly updateUtilisationPeriodById: MethodUpdateUtilisationPeriodById
+
+  /**
+   * Check-in a user to a utilisation period with the users email
+   */
+
+  readonly utilisationPeriodCheckInUser: MethodUtilisationPeriodCheckInUser
 }

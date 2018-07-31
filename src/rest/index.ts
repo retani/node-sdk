@@ -29,11 +29,14 @@ import {
   getUserPermissions,
   getUsers,
   updateUserById,
+  userCheckInToUtilisationPeriod,
+  userGetUtilisationPeriods,
 } from './methods/user'
 import {
   createUtilisationPeriod,
   getUtilisationPeriodById,
   updateUtilisationPeriodById,
+  utilisationPeriodCheckInUser,
 } from './methods/utilisationPeriod'
 import httpPatch from './patch'
 import httpPost from './post'
@@ -81,8 +84,11 @@ const API_METHODS: ReadonlyArray<any> = [
   getUserPermissions,
   getUsers,
   updateUserById,
+  userCheckInToUtilisationPeriod,
+  userGetUtilisationPeriods,
 
   // Utilisation Periods
+  utilisationPeriodCheckInUser,
   createUtilisationPeriod,
   getUtilisationPeriodById,
   updateUtilisationPeriodById,

@@ -1,4 +1,5 @@
 import { EnumLocale, InterfaceAllthingsRestClient } from '../types'
+import { UtilisationPeriodResults } from './utilisationPeriod'
 
 export enum EnumGender {
   female = 'female',
@@ -230,4 +231,49 @@ export async function deleteUserPermission(
   permissionId: string,
 ): Promise<boolean> {
   return !(await client.delete(`/v1/permissions/${permissionId}`))
+}
+
+/*
+  Get a list of utilisationPeriods a user is checked in to
+*/
+
+export type MethodUserGetUtilisationPeriods = (
+  permissionId: string,
+) => UtilisationPeriodResults
+
+export async function userGetUtilisationPeriods(
+  client: InterfaceAllthingsRestClient,
+  userId: string,
+): UtilisationPeriodResults {
+  const {
+    _embedded: { items: utilisationPeriods },
+  } = await client.get(`/v1/users/${userId}/utilisation-periods`)
+
+  return utilisationPeriods
+}
+
+/*
+  Checkin a user into a Utilisation-Period with userId and
+  utilisation-periodId
+*/
+
+export type MethodUserCheckInToUtilisationPeriod = (
+  userId: string,
+  utilisationPeriodId: string,
+) => UtilisationPeriodResults
+
+export async function userCheckInToUtilisationPeriod(
+  client: InterfaceAllthingsRestClient,
+  userId: string,
+  utilisationPeriodId: string,
+): UtilisationPeriodResults {
+  const { email: userEmail } = await client.getUserById(userId)
+
+  const {
+    _embedded: { items: utilisationPeriods },
+  } = await client.utilisationPeriodCheckInUser(utilisationPeriodId, {
+    email: userEmail,
+  })
+
+  return utilisationPeriods
 }
