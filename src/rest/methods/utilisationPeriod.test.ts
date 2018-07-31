@@ -118,7 +118,7 @@ describe('checkInUserToUtilisationPeriod()', () => {
 
     const [
       { id: usersUtilisationPeriodId },
-    ] = await client.userGetUtilisationPeriod(user.id)
+    ] = await client.userGetUtilisationPeriods(user.id)
 
     expect(user.id).toEqual(checkedInUserId)
     expect(usersUtilisationPeriodId).toEqual(utilisationPeriod.id)

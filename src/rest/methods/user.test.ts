@@ -258,7 +258,7 @@ describe('userGetUtilisationPeriod()', () => {
 
     await client.userCheckInToUtilisationPeriod(user.id, utilisationPeriod.id)
 
-    const [usersUtilisationPeriod] = await client.userGetUtilisationPeriod(
+    const [usersUtilisationPeriod] = await client.userGetUtilisationPeriods(
       user.id,
     )
 

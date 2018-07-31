@@ -32,7 +32,7 @@ import {
   MethodGetUsers,
   MethodUpdateUserById,
   MethodUserCheckInToUtilisationPeriod,
-  MethodUserGetUtilisationPeriod,
+  MethodUserGetUtilisationPeriods,
 } from './methods/user'
 import {
   MethodCreateUtilisationPeriod,
@@ -229,7 +229,7 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Get a list of user's current utilisation - periods
    */
-  readonly userGetUtilisationPeriod: MethodUserGetUtilisationPeriod
+  readonly userGetUtilisationPeriods: MethodUserGetUtilisationPeriods
 
   /**
    * Update a user by their ID

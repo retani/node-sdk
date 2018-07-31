@@ -236,11 +236,11 @@ export async function deleteUserPermission(
   Get a list of utilisationPeriods a user is checked in to
 */
 
-export type MethodUserGetUtilisationPeriod = (
+export type MethodUserGetUtilisationPeriods = (
   permissionId: string,
 ) => UtilisationPeriodResults
 
-export async function userGetUtilisationPeriod(
+export async function userGetUtilisationPeriods(
   client: InterfaceAllthingsRestClient,
   userId: string,
 ): UtilisationPeriodResults {
