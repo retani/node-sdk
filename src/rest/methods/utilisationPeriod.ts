@@ -1,7 +1,10 @@
 import { InterfaceAllthingsRestClient } from '../types'
 
 export interface IUtilisationPeriod {
-  readonly _embedded: { readonly invitations: ReadonlyArray<any> }
+  readonly _embedded: {
+    readonly invitations: ReadonlyArray<any>
+    readonly [key: string]: any
+  }
   readonly endDate: string | null
   readonly externalId: string | null
   readonly id: string
@@ -18,6 +21,9 @@ export interface IUtilisationPeriod {
 export type PartialUtilisationPeriod = Partial<IUtilisationPeriod>
 
 export type UtilisationPeriodResult = Promise<IUtilisationPeriod>
+export type UtilisationPeriodResults = Promise<
+  ReadonlyArray<IUtilisationPeriod>
+>
 
 /*
   Create new Utilisation Period
@@ -86,4 +92,23 @@ export async function utilisationPeriodUpdateById(
   )
 
   return { ...result, tenantIds }
+}
+
+export type MethodUtilisationPeriodCheckInUser = (
+  utilisationPeriodId: string,
+  data: { readonly email: string },
+) => UtilisationPeriodResult
+
+export async function utilisationPeriodCheckInUser(
+  client: InterfaceAllthingsRestClient,
+  utilisationPeriodId: string,
+  data: {
+    readonly email: string
+  },
+): UtilisationPeriodResult {
+  return (
+    (await client.post(`/v1/utilisation-periods/${utilisationPeriodId}/users`, {
+      email: data.email,
+    })) && client.utilisationPeriodFindById(utilisationPeriodId)
+  )
 }

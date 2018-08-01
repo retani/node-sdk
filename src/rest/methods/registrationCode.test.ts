@@ -6,7 +6,7 @@ import { EnumUnitType } from './unit'
 
 const client = restClient()
 
-describe('createRegistrationCode()', async () => {
+describe('registrationCodeCreate()', async () => {
   it('should be able to create a new registration code', async () => {
     const name = `Registration Code ${generateId()}`
     const code = generateId()
@@ -40,7 +40,7 @@ describe('createRegistrationCode()', async () => {
       }),
     ])).map(item => item.id)
 
-    const result = await client.createRegistrationCode(
+    const result = await client.registrationCodeCreate(
       code,
       utilisationPeriods,
       {
@@ -59,7 +59,7 @@ describe('createRegistrationCode()', async () => {
     expect(result.utilisationPeriods).toContainEqual(utilisationPeriods[1])
     expect(result.utilisationPeriods).toContainEqual(utilisationPeriods[2])
 
-    const singleUtilisationPeriod = await client.createRegistrationCode(
+    const singleUtilisationPeriod = await client.registrationCodeCreate(
       generateId(),
       utilisationPeriods[0],
       {
@@ -74,7 +74,7 @@ describe('createRegistrationCode()', async () => {
     )
 
     // test for default options parameter
-    const emptyOptions = await client.createRegistrationCode(
+    const emptyOptions = await client.registrationCodeCreate(
       generateId(),
       utilisationPeriods[0],
       undefined,

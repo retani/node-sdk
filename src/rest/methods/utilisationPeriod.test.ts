@@ -2,6 +2,7 @@
 import { generate as generateId } from 'shortid'
 import restClient from '..'
 import { APP_ID, APP_PROPERTY_MANAGER_ID } from '../../../test/constants'
+import { EnumLocale, EnumTimezone } from '../types'
 import { EnumUnitType } from './unit'
 
 let sharedUnitId: string // tslint:disable-line no-let
@@ -12,7 +13,7 @@ describe('createUtilisationPeriod()', () => {
   beforeAll(async () => {
     const property = await client.propertyCreate(APP_ID, {
       name: 'Foobar Property',
-      timezone: 'Europe/Berlin',
+      timezone: EnumTimezone.EuropeBerlin,
     })
 
     const group = await client.groupCreate(property.id, {
@@ -85,5 +86,41 @@ describe('updateUtilisationPeriodById()', () => {
     expect(result.startDate).toEqual(updateData.startDate)
     expect(result.endDate).toEqual(updateData.endDate)
     expect(result.externalId).toEqual(updateData.externalId)
+  })
+})
+
+describe('checkInUserToUtilisationPeriod()', () => {
+  it('should checkIn and existing user to a utilisationPeriod by email', async () => {
+    const initialData = {
+      endDate: '2450-01-03',
+      externalId: generateId(),
+      startDate: '2449-01-03',
+    }
+    const utilisationPeriod = await client.utilisationPeriodCreate(
+      sharedUnitId,
+      initialData,
+    )
+
+    const userEmail = generateId() + '@test.com'
+
+    const user = await client.userCreate(APP_ID, generateId(), generateId(), {
+      email: userEmail,
+      locale: EnumLocale.de_DE,
+    })
+
+    const {
+      _embedded: {
+        users: [{ id: checkedInUserId }],
+      },
+    } = await client.utilisationPeriodCheckInUser(utilisationPeriod.id, {
+      email: userEmail,
+    })
+
+    const [
+      { id: usersUtilisationPeriodId },
+    ] = await client.userGetUtilisationPeriods(user.id)
+
+    expect(user.id).toEqual(checkedInUserId)
+    expect(usersUtilisationPeriodId).toEqual(utilisationPeriod.id)
   })
 })

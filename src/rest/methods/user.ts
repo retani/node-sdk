@@ -1,4 +1,5 @@
 import { EnumLocale, InterfaceAllthingsRestClient } from '../types'
+import { UtilisationPeriodResults } from './utilisationPeriod'
 
 export enum EnumGender {
   female = 'female',
@@ -159,11 +160,11 @@ export async function userUpdateById(
   return client.patch(`/v1/users/${userId}`, data)
 }
 
-/*
+/* UserPermisionCreat, UserCreatePermission
   Create a new permission for a user
 */
 
-export type MethodCreateUserPermission = (
+export type MethodUserCreatePermission = (
   userId: string,
   permission: PartialUserPermission & {
     readonly objectId: string
@@ -173,7 +174,7 @@ export type MethodCreateUserPermission = (
   },
 ) => UserPermissionResult
 
-export async function createUserPermission(
+export async function userCreatePermission(
   client: InterfaceAllthingsRestClient,
   userId: string,
   data: PartialUserPermission & {
@@ -195,15 +196,15 @@ export async function createUserPermission(
   }
 }
 
-/*
+/* UserPermisionFind, UserFindPermission
   Get a list of a user's permissions
 */
 
-export type MethodGetUserPermissions = (
+export type MethodUserFindPermissions = (
   userId: string,
 ) => Promise<ReadonlyArray<IUserPermission>>
 
-export async function getUserPermissions(
+export async function userFindPermissions(
   client: InterfaceAllthingsRestClient,
   userId: string,
 ): Promise<ReadonlyArray<IUserPermission>> {
@@ -217,17 +218,62 @@ export async function getUserPermissions(
   }))
 }
 
-/*
+/* UserPermisionDelete, UserDeletePermission
   Delete a user permission by Id
 */
 
-export type MethodDeleteUserPermission = (
+export type MethodUserDeletePermission = (
   permissionId: string,
 ) => Promise<boolean>
 
-export async function deleteUserPermission(
+export async function userDeletePermission(
   client: InterfaceAllthingsRestClient,
   permissionId: string,
 ): Promise<boolean> {
   return !(await client.delete(`/v1/permissions/${permissionId}`))
+}
+
+/*
+  Get a list of utilisationPeriods a user is checked in to
+*/
+
+export type MethodUserGetUtilisationPeriods = (
+  permissionId: string,
+) => UtilisationPeriodResults
+
+export async function userGetUtilisationPeriods(
+  client: InterfaceAllthingsRestClient,
+  userId: string,
+): UtilisationPeriodResults {
+  const {
+    _embedded: { items: utilisationPeriods },
+  } = await client.get(`/v1/users/${userId}/utilisation-periods`)
+
+  return utilisationPeriods
+}
+
+/*
+  Checkin a user into a Utilisation-Period with userId and
+  utilisation-periodId
+*/
+
+export type MethodUserCheckInToUtilisationPeriod = (
+  userId: string,
+  utilisationPeriodId: string,
+) => UtilisationPeriodResults
+
+export async function userCheckInToUtilisationPeriod(
+  client: InterfaceAllthingsRestClient,
+  userId: string,
+  utilisationPeriodId: string,
+): UtilisationPeriodResults {
+  const { email: userEmail } = await client.userFindById(userId)
+
+  const {
+    _embedded: { items: utilisationPeriods },
+  } = await client.utilisationPeriodCheckInUser(utilisationPeriodId, {
+    email: userEmail,
+  })
+
+  return utilisationPeriods
 }

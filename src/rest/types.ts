@@ -10,29 +10,32 @@ import {
   MethodGroupFindById,
   MethodGroupUpdateById,
 } from './methods/group'
-import { MethodCreateIdLookup } from './methods/idLookup'
+import { MethodLookupIds } from './methods/idLookup'
 import {
   MethodPropertyCreate,
   MethodPropertyFindById,
   MethodPropertyUpdateById,
 } from './methods/property'
-import { MethodCreateRegistrationCode } from './methods/registrationCode'
+import { MethodRegistrationCodeCreate } from './methods/registrationCode'
 import {
   MethodUnitCreate,
   MethodUnitFindById,
   MethodUnitUpdateById,
 } from './methods/unit'
 import {
-  MethodCreateUserPermission,
-  MethodDeleteUserPermission,
   MethodGetCurrentUser,
-  MethodGetUserPermissions,
   MethodGetUsers,
+  MethodUserCheckInToUtilisationPeriod,
   MethodUserCreate,
+  MethodUserCreatePermission,
+  MethodUserDeletePermission,
   MethodUserFindById,
+  MethodUserFindPermissions,
+  MethodUserGetUtilisationPeriods,
   MethodUserUpdateById,
 } from './methods/user'
 import {
+  MethodUtilisationPeriodCheckInUser,
   MethodUtilisationPeriodCreated,
   MethodUtilisationPeriodFindById,
   MethodUtilisationPeriodUpdateById,
@@ -126,7 +129,7 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Map one or more externalId's to API ObjectId's within the scope of a specified App
    */
-  readonly createIdLookup: MethodCreateIdLookup
+  readonly lookupIds: MethodLookupIds
 
   // Group
 
@@ -167,7 +170,7 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Create a new registration code
    */
-  readonly createRegistrationCode: MethodCreateRegistrationCode
+  readonly registrationCodeCreate: MethodRegistrationCodeCreate
 
   // Unit
 
@@ -194,14 +197,14 @@ export interface InterfaceAllthingsRestClient {
   readonly userCreate: MethodUserCreate
 
   /**
-   * Give a user a permission/role on an given object of specified type
+   * Get a user by their ID
    */
-  readonly createUserPermission: MethodCreateUserPermission
+  readonly userFindById: MethodUserFindById
 
   /**
-   * Delete a user a permission/role on an given object of specified type
+   * Update a user by their ID
    */
-  readonly deleteUserPermission: MethodDeleteUserPermission
+  readonly userUpdateById: MethodUserUpdateById
 
   /**
    * Get a list of users
@@ -214,19 +217,30 @@ export interface InterfaceAllthingsRestClient {
   readonly getCurrentUser: MethodGetCurrentUser
 
   /**
-   * Get a user by their ID
+   * Give a user a permission/role on an given object of specified type
    */
-  readonly userFindById: MethodUserFindById
+  readonly userCreatePermission: MethodUserCreatePermission
 
   /**
    * Get a list of user's permissions
    */
-  readonly getUserPermissions: MethodGetUserPermissions
+  readonly userFindPermissions: MethodUserFindPermissions
 
   /**
-   * Update a user by their ID
+   * Delete a user a permission/role on an given object of specified type
    */
-  readonly userUpdateById: MethodUserUpdateById
+  readonly userDeletePermission: MethodUserDeletePermission
+
+  /**
+   * Get a list of user's current utilisation - periods
+   */
+  readonly userGetUtilisationPeriods: MethodUserGetUtilisationPeriods
+
+  /**
+   * Checkin a user into a Utilisation-Period with userId and
+   * utilisation-periodId
+   */
+  readonly userCheckInToUtilisationPeriod: MethodUserCheckInToUtilisationPeriod
 
   // Utilisation Period
 
@@ -244,4 +258,9 @@ export interface InterfaceAllthingsRestClient {
    * Update a utilisation period by it's ID
    */
   readonly utilisationPeriodUpdateById: MethodUtilisationPeriodUpdateById
+
+  /**
+   * Check-in a user to a utilisation period with the users email
+   */
+  readonly utilisationPeriodCheckInUser: MethodUtilisationPeriodCheckInUser
 }

@@ -78,13 +78,13 @@ export async function agentCreatePermissions(
   objectType: EnumUserPermissionObjectType,
 ): AgentPermissionsResult {
   return Promise.all([
-    client.createUserPermission(agentId, {
+    client.userCreatePermission(agentId, {
       objectId,
       objectType,
       restrictions: [],
       role: EnumUserPermissionRole.admin,
     }),
-    client.createUserPermission(agentId, {
+    client.userCreatePermission(agentId, {
       objectId,
       objectType,
       restrictions: [],

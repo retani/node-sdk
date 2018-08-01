@@ -5,13 +5,13 @@ import httpGet from './get'
 import { agentCreate, agentCreatePermissions } from './methods/agent'
 import { appCreate } from './methods/app'
 import { groupCreate, groupFindById, groupUpdateById } from './methods/group'
-import { createIdLookup } from './methods/idLookup'
+import { lookupIds } from './methods/idLookup'
 import {
   propertyCreate,
   propertyFindById,
   propertyUpdateById,
 } from './methods/property'
-import { createRegistrationCode } from './methods/registrationCode'
+import { registrationCodeCreate } from './methods/registrationCode'
 import {
   EnumUnitType,
   unitCreate,
@@ -19,18 +19,21 @@ import {
   unitUpdateById,
 } from './methods/unit'
 import {
-  createUserPermission,
-  deleteUserPermission,
   EnumUserPermissionObjectType,
   EnumUserPermissionRole,
   getCurrentUser,
-  getUserPermissions,
   getUsers,
+  userCheckInToUtilisationPeriod,
   userCreate,
+  userCreatePermission,
+  userDeletePermission,
   userFindById,
+  userFindPermissions,
+  userGetUtilisationPeriods,
   userUpdateById,
 } from './methods/user'
 import {
+  utilisationPeriodCheckInUser,
   utilisationPeriodCreate,
   utilisationPeriodFindById,
   utilisationPeriodUpdateById,
@@ -52,7 +55,7 @@ const API_METHODS: ReadonlyArray<any> = [
   appCreate,
 
   // ID Lookup
-  createIdLookup,
+  lookupIds,
 
   // Group
   groupCreate,
@@ -65,7 +68,7 @@ const API_METHODS: ReadonlyArray<any> = [
   propertyUpdateById,
 
   // Registration Code
-  createRegistrationCode,
+  registrationCodeCreate,
 
   // Unit
   unitCreate,
@@ -74,18 +77,21 @@ const API_METHODS: ReadonlyArray<any> = [
 
   // User
   userCreate,
-  createUserPermission,
-  deleteUserPermission,
-  getCurrentUser,
   userFindById,
   userUpdateById,
-  getUserPermissions,
+  userCreatePermission,
+  userFindPermissions,
+  userDeletePermission,
+  userCheckInToUtilisationPeriod,
+  userGetUtilisationPeriods,
+  getCurrentUser,
   getUsers,
 
   // Utilisation Periods
   utilisationPeriodCreate,
   utilisationPeriodFindById,
   utilisationPeriodUpdateById,
+  utilisationPeriodCheckInUser,
 ]
 
 export { EnumUnitType, EnumUserPermissionObjectType, EnumUserPermissionRole }
