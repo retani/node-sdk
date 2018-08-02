@@ -59,7 +59,7 @@ export async function groupCreate(
 }
 
 /*
-  Get a group by it's ID
+  Get a group by its ID
   https://api-doc.allthings.me/#!/Groups/get_groups_groupID
 */
 
@@ -77,7 +77,7 @@ export async function groupFindById(
 }
 
 /*
-  Update a group by it's ID
+  Update a group by its ID
   https://api-doc.allthings.me/#!/Groups/patch_groups_groupID
 */
 

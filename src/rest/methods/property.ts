@@ -31,7 +31,7 @@ export async function propertyCreate(
 }
 
 /*
-  Get a property by it's ID
+  Get a property by its ID
   https://api-doc.allthings.me/#!/Property/get_properties_propertyID
 */
 
@@ -45,7 +45,7 @@ export async function propertyFindById(
 }
 
 /*
-  Update a property by it's ID
+  Update a property by its ID
   https://api-doc.allthings.me/#!/Property/patch_properties_propertyID
 */
 

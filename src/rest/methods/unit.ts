@@ -44,7 +44,7 @@ export async function unitCreate(
 }
 
 /*
-  Get a unit by it's ID
+  Get a unit by its ID
 */
 
 export type MethodUnitFindById = (id: string) => UnitResult
@@ -57,7 +57,7 @@ export async function unitFindById(
 }
 
 /*
-  Update a unit by it's ID
+  Update a unit by its ID
 */
 
 export type MethodUnitUpdateById = (

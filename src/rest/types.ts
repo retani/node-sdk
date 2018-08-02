@@ -139,12 +139,12 @@ export interface InterfaceAllthingsRestClient {
   readonly groupCreate: MethodGroupCreate
 
   /**
-   * Get a group by it's ID
+   * Get a group by its ID
    */
   readonly groupFindById: MethodGroupFindById
 
   /**
-   * Update a group by it's ID
+   * Update a group by its ID
    */
   readonly groupUpdateById: MethodGroupUpdateById
 
@@ -156,12 +156,12 @@ export interface InterfaceAllthingsRestClient {
   readonly propertyCreate: MethodPropertyCreate
 
   /**
-   * Get a property by it's ID
+   * Get a property by its ID
    */
   readonly propertyFindById: MethodPropertyFindById
 
   /**
-   * Update a property by it's ID
+   * Update a property by its ID
    */
   readonly propertyUpdateById: MethodPropertyUpdateById
 
@@ -180,12 +180,12 @@ export interface InterfaceAllthingsRestClient {
   readonly unitCreate: MethodUnitCreate
 
   /**
-   * Get a unit by it's ID
+   * Get a unit by its ID
    */
   readonly unitFindById: MethodUnitFindById
 
   /**
-   * Update a unit by it's ID
+   * Update a unit by its ID
    */
   readonly unitUpdateById: MethodUnitUpdateById
 
@@ -250,12 +250,12 @@ export interface InterfaceAllthingsRestClient {
   readonly utilisationPeriodCreate: MethodUtilisationPeriodCreate
 
   /**
-   * Get a utilisation period by it's ID
+   * Get a utilisation period by its ID
    */
   readonly utilisationPeriodFindById: MethodUtilisationPeriodFindById
 
   /*
-   * Update a utilisation period by it's ID
+   * Update a utilisation period by its ID
    */
   readonly utilisationPeriodUpdateById: MethodUtilisationPeriodUpdateById
 
