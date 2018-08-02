@@ -16,7 +16,7 @@ const testData = {
   locale: EnumLocale.en_US,
 }
 
-describe('createAgent()', () => {
+describe('agentCreate()', () => {
   it('should be able to create a new agent', async () => {
     const data = {
       ...testData,
@@ -55,7 +55,7 @@ describe('createAgent()', () => {
   })
 })
 
-describe('createAgentPermissions()', () => {
+describe('agentCreatePermissions()', () => {
   it('should be able to add agent permissions', async () => {
     const data = {
       ...testData,

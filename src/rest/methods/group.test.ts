@@ -24,7 +24,7 @@ const testAddressData = {
   street: 'Evergreen Terrace',
 }
 
-describe('createGroup()', () => {
+describe('groupCreate()', () => {
   it('should be able to create a new group', async () => {
     const property = await client.propertyCreate(APP_ID, testPropertyData)
 
@@ -36,7 +36,7 @@ describe('createGroup()', () => {
   })
 })
 
-describe('getGroupById()', () => {
+describe('groupFindById()', () => {
   it('should be able to get a group by ID', async () => {
     const property = await client.propertyCreate(APP_ID, testPropertyData)
 
@@ -49,7 +49,7 @@ describe('getGroupById()', () => {
   })
 })
 
-describe('updateGroupById()', () => {
+describe('groupUpdateById()', () => {
   it('should be able to update a group by ID', async () => {
     const property = await client.propertyCreate(APP_ID, testPropertyData)
 

@@ -36,7 +36,7 @@ import {
 } from './methods/user'
 import {
   MethodUtilisationPeriodCheckInUser,
-  MethodUtilisationPeriodCreated,
+  MethodUtilisationPeriodCreate,
   MethodUtilisationPeriodFindById,
   MethodUtilisationPeriodUpdateById,
 } from './methods/utilisationPeriod'
@@ -247,7 +247,7 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Create a new utilisation period within a Unit
    */
-  readonly utilisationPeriodCreate: MethodUtilisationPeriodCreated
+  readonly utilisationPeriodCreate: MethodUtilisationPeriodCreate
 
   /**
    * Get a utilisation period by it's ID

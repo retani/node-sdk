@@ -5,7 +5,7 @@ import { EnumResource } from '../types'
 
 const client = restClient()
 
-describe('lookupId()', () => {
+describe('lookupIds()', () => {
   it('should be able to look up a single id given an id string', async () => {
     const result = await client.lookupIds(APP_ID, {
       externalIds: 'foobar',

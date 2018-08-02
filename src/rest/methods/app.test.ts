@@ -5,7 +5,7 @@ import { USER_ID } from '../../../test/constants'
 
 const client = restClient()
 
-describe('createApp()', () => {
+describe('appCreate()', () => {
   it('should create a new App', async () => {
     const result = await client.appCreate(USER_ID, {
       name: generateId(),

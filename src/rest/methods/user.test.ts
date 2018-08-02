@@ -48,7 +48,7 @@ describe('getCurrentUser()', () => {
   })
 })
 
-describe('createUser()', () => {
+describe('userCreate()', () => {
   it('should be able to create a new user', async () => {
     const data = {
       ...testData,
@@ -67,7 +67,7 @@ describe('createUser()', () => {
   })
 })
 
-describe('getUserById()', () => {
+describe('userFindById()', () => {
   it('should be able to get a user by their ID', async () => {
     const data = {
       ...testData,
@@ -87,7 +87,7 @@ describe('getUserById()', () => {
   })
 })
 
-describe('updateUserById()', () => {
+describe('userUpdateById()', () => {
   it('should be able to update a user by their ID', async () => {
     const initialData = {
       ...testData,
@@ -116,7 +116,7 @@ describe('updateUserById()', () => {
   })
 })
 
-describe('createUserPermission()', () => {
+describe('userCreatePermission()', () => {
   it('should be able to add a permission to a user', async () => {
     const initialData = {
       ...testData,
@@ -147,7 +147,7 @@ describe('createUserPermission()', () => {
   })
 })
 
-describe('getUserPermissions()', () => {
+describe('userFindPermissions()', () => {
   it('should be able to list permissions of a user', async () => {
     const initialData = {
       ...testData,
@@ -178,7 +178,7 @@ describe('getUserPermissions()', () => {
   })
 })
 
-describe('deleteUserPermission()', () => {
+describe('userDeletePermission()', () => {
   it('should be able to delete a user permission', async () => {
     const initialData = {
       ...testData,
@@ -212,7 +212,7 @@ describe('deleteUserPermission()', () => {
     expect(await client.userDeletePermission(permission.id)).toBe(true)
 
     // permission should no longer exist
-    expect(await client.userFindById(user.id)).toHaveLength(0)
+    expect(await client.userFindPermissions(user.id)).toHaveLength(0)
   })
 })
 

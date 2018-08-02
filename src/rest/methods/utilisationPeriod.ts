@@ -29,7 +29,7 @@ export type UtilisationPeriodResults = Promise<
   Create new Utilisation Period
 */
 
-export type MethodUtilisationPeriodCreated = (
+export type MethodUtilisationPeriodCreate = (
   unitId: string,
   data: PartialUtilisationPeriod & {
     readonly startDate: string

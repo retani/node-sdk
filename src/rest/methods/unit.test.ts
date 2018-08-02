@@ -13,7 +13,7 @@ const testData = {
   type: EnumUnitType.rented,
 }
 
-describe('createUnit()', () => {
+describe('unitCreate()', () => {
   beforeAll(async () => {
     const property = await client.propertyCreate(APP_ID, {
       name: 'Foobar Property',
@@ -37,7 +37,7 @@ describe('createUnit()', () => {
   })
 })
 
-describe('getUnitById()', () => {
+describe('unitFindById()', () => {
   it('should be able to get a unit by ID', async () => {
     const data = { ...testData, externalId: generateId() }
     const { id } = await client.unitCreate(sharedGroupId, data)
@@ -48,7 +48,7 @@ describe('getUnitById()', () => {
   })
 })
 
-describe('updateUnitById()', () => {
+describe('unitUpdateById()', () => {
   it('should be able to update a unit by ID', async () => {
     const initialData = { ...testData, externalId: generateId() }
     const unit = await client.unitCreate(sharedGroupId, initialData)

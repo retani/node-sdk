@@ -9,7 +9,7 @@ let sharedUnitId: string // tslint:disable-line no-let
 
 const client = restClient()
 
-describe('createUtilisationPeriod()', () => {
+describe('utilisationPeriodCreate()', () => {
   beforeAll(async () => {
     const property = await client.propertyCreate(APP_ID, {
       name: 'Foobar Property',
@@ -42,7 +42,7 @@ describe('createUtilisationPeriod()', () => {
   })
 })
 
-describe('getUtilisationPeriodById()', () => {
+describe('utilisationPeriodFindById()', () => {
   it('should be able to get a utilisation period by ID', async () => {
     const data = {
       endDate: '2050-01-02',
@@ -57,7 +57,7 @@ describe('getUtilisationPeriodById()', () => {
   })
 })
 
-describe('updateUtilisationPeriodById()', () => {
+describe('utilisationPeriodUpdateById()', () => {
   it('should be able to update a utilisation period by ID', async () => {
     const initialData = {
       endDate: '2050-01-03',
@@ -89,7 +89,7 @@ describe('updateUtilisationPeriodById()', () => {
   })
 })
 
-describe('checkInUserToUtilisationPeriod()', () => {
+describe('utilisationPeriodCheckInUser()', () => {
   it('should checkIn and existing user to a utilisationPeriod by email', async () => {
     const initialData = {
       endDate: '2450-01-03',

@@ -10,7 +10,7 @@ const testData = {
   timezone: 'Europe/Berlin',
 }
 
-describe('createProperty()', () => {
+describe('propertyCreate()', () => {
   it('should be able to create a new property', async () => {
     const data = { ...testData, externalId: generateId() }
     const result = await client.propertyCreate(APP_ID, data)
@@ -20,7 +20,7 @@ describe('createProperty()', () => {
   })
 })
 
-describe('getPropertyById()', () => {
+describe('propertyFindById()', () => {
   it('should be able to get a property by ID', async () => {
     const data = { ...testData, externalId: generateId() }
     const { id } = await client.propertyCreate(APP_ID, data)
@@ -31,7 +31,7 @@ describe('getPropertyById()', () => {
   })
 })
 
-describe('updatePropertyById()', () => {
+describe('propertyUpdateById()', () => {
   it('should be able to update a property by ID', async () => {
     const initialData = { ...testData, externalId: generateId() }
     const property = await client.propertyCreate(APP_ID, initialData)
