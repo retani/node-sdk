@@ -11,7 +11,11 @@ import {
   getPropertyById,
   updatePropertyById,
 } from './methods/property'
-import { createRegistrationCode } from './methods/registrationCode'
+import {
+  createRegistrationCode,
+  registrationCodeDelete,
+  registrationCodeFindById,
+} from './methods/registrationCode'
 import {
   createUnit,
   EnumUnitType,
@@ -69,6 +73,8 @@ const API_METHODS: ReadonlyArray<any> = [
 
   // Registration Code
   createRegistrationCode,
+  registrationCodeDelete,
+  registrationCodeFindById,
 
   // Unit
   createUnit,
