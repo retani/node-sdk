@@ -1,0 +1,14 @@
+{
+  "name": "erp-master-data-interface-example",
+  "version": "1.0.0",
+  "description": "Example of how to use the Allthings SDK to import ERP Master Data into the Allthings platform",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Allthings GmbH",
+  "license": "ISC",
+  "dependencies": {
+    "@allthings/sdk": "^0.1.0-12"
+  }
+}
