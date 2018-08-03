@@ -314,7 +314,7 @@ this.
 
   const externalUserId = '68838434-bafc-47e9-a915-557fb0a7c67b'
 
-  const userLookup = await client.lookupIds({
+  const { [externalUserId]: userId } = await client.lookupIds({
     externalIds: [externalUserId],
     resource: allthings.EnumResource.user,
   })
@@ -337,10 +337,7 @@ convenience method to do this.
 
 */
 
-  await client.userCheckInToUtilisationPeriod(
-    userLookup[externalUserId],
-    currentPeriod.id,
-  )
+  await client.userCheckInToUtilisationPeriod(userId, currentPeriod.id)
 
   /*
 +--------- SDK: client.userCheckInToUtilisationPeriod() ---------+
@@ -404,7 +401,7 @@ if it maps to an Utilisation Period ID in Allthings.
 
   const externalFuturePeriodId = '2fd96b30-e07e-47cb-b4a1-2dd8e6555002'
 
-  const futurePeriodLookup = await client.lookupIds({
+  const { [externalFuturePeriodId]: futurePeriodId } = await client.lookupIds({
     externalIds: [externalFuturePeriodId],
     resource: allthings.EnumResource.utilisationPeriod,
   })
@@ -424,7 +421,7 @@ Utilisation Period.
 
 */
 
-  if (typeof futurePeriodLookup[externalFuturePeriodId] === 'string') {
+  if (typeof futurePeriodId !== 'string') {
     const futurePeriod = await client.utilisationPeriodCreate(unit.id, {
       externalId: externalFuturePeriodId,
       startDate: '2022-06-01',
