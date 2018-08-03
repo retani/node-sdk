@@ -117,7 +117,8 @@ We've just created our new Property. A few things to point out:
 - externalId — We can supply an "external ID" when creating a resource. This
   let's us provide our own ID so that we can later retrieve the ID of the
   resource within Allthings knowing only our own ID. It let's us map our external
-  systems' ID to Allthings resource IDs. We'll explore this further later.
+  systems' ID to Allthings resource IDs. External IDs should be universally
+  unique. We'll explore external IDs again later.
 
 With our Property in hand, we can now create a representation of one of the
 building Towers in Allthings. To do this we create a new Group. Let's call
@@ -291,12 +292,12 @@ already has a User account from a previous Utilisation Period.
 |                           | Start: 2019-01-01  |                           |
 |                           | End:   2022-05-31  |                           |
 |                           |                    |                           |
-|                           +-------^------------+  +-Utilisation-Period-+   |
-|                                   |               |                    |   |
-|                                   |               | Start: 2022-06-01  |   |
-|                                   |               | End:               |   |
-|                                   |               |                    |   |
-|                                   |               |                    |   |
+|                           +-------^------------+                           |
+|                                   |                                        |
+|                                   |                                        |
+|                                   |                                        |
+|                                   |                                        |
+|                                   |                                        |
 +----------------------------------------------------------------------------+
                                     |
                                     |
