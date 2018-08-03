@@ -356,9 +356,9 @@
   version "10.3.6"
   resolved "https://registry.npmjs.org/@types/node/-/node-10.3.6.tgz#ea8aab9439b59f40d19ec5f13b44642344872b11"
 
-"@types/node@10.5.4":
-  version "10.5.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.4.tgz#6eccc158504357d1da91434d75e86acde94bb10b"
+"@types/node@10.5.5":
+  version "10.5.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.5.tgz#8e84d24e896cd77b0d4f73df274027e3149ec2ba"
 
 "@types/shortid@0.0.29":
   version "0.0.29"
@@ -4915,9 +4915,9 @@ rollup-pluginutils@^2.0.1, rollup-pluginutils@^2.2.0:
     estree-walker "^0.5.2"
     micromatch "^2.3.11"
 
-rollup@0.63.4:
-  version "0.63.4"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.63.4.tgz#cb58bf6c2a6c38542cae250684c962799ad7c00c"
+rollup@0.63.5:
+  version "0.63.5"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.63.5.tgz#5543eecac9a1b83b7e1be598b5be84c9c0a089db"
   dependencies:
     "@types/estree" "0.0.39"
     "@types/node" "*"
@@ -4976,9 +4976,9 @@ sax@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
-semantic-release@15.9.2:
-  version "15.9.2"
-  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-15.9.2.tgz#0c56c1fedbb7b99bc5aa06aac7b9edf92bdf8380"
+semantic-release@15.9.3:
+  version "15.9.3"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-15.9.3.tgz#16df893aaacfef038519e644e7902964acb01ede"
   dependencies:
     "@semantic-release/commit-analyzer" "^6.0.0"
     "@semantic-release/error" "^2.2.0"
