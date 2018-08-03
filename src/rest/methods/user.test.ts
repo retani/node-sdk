@@ -27,7 +27,7 @@ describe('getUsers()', () => {
         }),
         limit,
       ).map(data =>
-        client.createUser(APP_ID, generateId(), generateId(), data),
+        client.userCreate(APP_ID, generateId(), generateId(), data),
       ),
     )
 
@@ -48,14 +48,14 @@ describe('getCurrentUser()', () => {
   })
 })
 
-describe('createUser()', () => {
+describe('userCreate()', () => {
   it('should be able to create a new user', async () => {
     const data = {
       ...testData,
       email: generateId() + '@foobar.test',
       externalId: generateId(),
     }
-    const result = await client.createUser(
+    const result = await client.userCreate(
       APP_ID,
       generateId(),
       generateId(),
@@ -67,34 +67,34 @@ describe('createUser()', () => {
   })
 })
 
-describe('getUserById()', () => {
+describe('userFindById()', () => {
   it('should be able to get a user by their ID', async () => {
     const data = {
       ...testData,
       email: generateId() + '@foobar.test',
       externalId: generateId(),
     }
-    const { id } = await client.createUser(
+    const { id } = await client.userCreate(
       APP_ID,
       generateId(),
       generateId(),
       data,
     )
-    const result = await client.getUserById(id)
+    const result = await client.userFindById(id)
 
     expect(result.email).toEqual(data.email)
     expect(result.externalId).toEqual(data.externalId)
   })
 })
 
-describe('updateUserById()', () => {
+describe('userUpdateById()', () => {
   it('should be able to update a user by their ID', async () => {
     const initialData = {
       ...testData,
       email: generateId() + '@foobar.test',
       externalId: generateId(),
     }
-    const user = await client.createUser(
+    const user = await client.userCreate(
       APP_ID,
       generateId(),
       generateId(),
@@ -109,21 +109,21 @@ describe('updateUserById()', () => {
       locale: EnumLocale.de_DE,
     }
 
-    const result = await client.updateUserById(user.id, updateData)
+    const result = await client.userUpdateById(user.id, updateData)
 
     expect(result.locale).toEqual(updateData.locale)
     expect(result.externalId).toEqual(updateData.externalId)
   })
 })
 
-describe('createUserPermission()', () => {
+describe('userCreatePermission()', () => {
   it('should be able to add a permission to a user', async () => {
     const initialData = {
       ...testData,
       email: generateId() + '@foobar.test',
       externalId: generateId(),
     }
-    const user = await client.createUser(
+    const user = await client.userCreate(
       APP_ID,
       generateId(),
       generateId(),
@@ -140,14 +140,14 @@ describe('createUserPermission()', () => {
       role: EnumUserPermissionRole.admin,
     }
 
-    const result = await client.createUserPermission(user.id, permissionData)
+    const result = await client.userCreatePermission(user.id, permissionData)
 
     expect(result.role).toEqual(permissionData.role)
     expect(result.objectType).toEqual(permissionData.objectType)
   })
 })
 
-describe('getUserPermissions()', () => {
+describe('userFindPermissions()', () => {
   it('should be able to list permissions of a user', async () => {
     const initialData = {
       ...testData,
@@ -155,7 +155,7 @@ describe('getUserPermissions()', () => {
       externalId: generateId(),
     }
 
-    const user = await client.createUser(
+    const user = await client.userCreate(
       APP_ID,
       generateId(),
       generateId(),
@@ -169,16 +169,16 @@ describe('getUserPermissions()', () => {
       role: EnumUserPermissionRole.admin,
     }
 
-    await client.createUserPermission(user.id, permissionData)
+    await client.userCreatePermission(user.id, permissionData)
 
-    const result = await client.getUserPermissions(user.id)
+    const result = await client.userFindPermissions(user.id)
 
     expect(result).toHaveLength(1)
     expect(result[0].objectType).toEqual(permissionData.objectType)
   })
 })
 
-describe('deleteUserPermission()', () => {
+describe('userDeletePermission()', () => {
   it('should be able to delete a user permission', async () => {
     const initialData = {
       ...testData,
@@ -186,7 +186,7 @@ describe('deleteUserPermission()', () => {
       externalId: generateId(),
     }
 
-    const user = await client.createUser(
+    const user = await client.userCreate(
       APP_ID,
       generateId(),
       generateId(),
@@ -200,19 +200,19 @@ describe('deleteUserPermission()', () => {
       role: EnumUserPermissionRole.admin,
     }
 
-    const permission = await client.createUserPermission(
+    const permission = await client.userCreatePermission(
       user.id,
       permissionData,
     )
 
     // permission should exist
-    expect(await client.getUserPermissions(user.id)).toHaveLength(1)
+    expect(await client.userFindPermissions(user.id)).toHaveLength(1)
 
     // delete the permission
-    expect(await client.deleteUserPermission(permission.id)).toBe(true)
+    expect(await client.userDeletePermission(permission.id)).toBe(true)
 
     // permission should no longer exist
-    expect(await client.getUserPermissions(user.id)).toHaveLength(0)
+    expect(await client.userFindPermissions(user.id)).toHaveLength(0)
   })
 })
 
@@ -220,17 +220,17 @@ describe('userGetUtilisationPeriods()', () => {
   let sharedUnitId: string // tslint:disable-line no-let
 
   beforeAll(async () => {
-    const property = await client.createProperty(APP_ID, {
+    const property = await client.propertyCreate(APP_ID, {
       name: 'Foobar2 Property',
       timezone: EnumTimezone.EuropeBerlin,
     })
 
-    const group = await client.createGroup(property.id, {
+    const group = await client.groupCreate(property.id, {
       name: 'Foobar2 Group',
       propertyManagerId: APP_PROPERTY_MANAGER_ID,
     })
 
-    const unit = await client.createUnit(group.id, {
+    const unit = await client.unitCreate(group.id, {
       name: 'Foobar2 Unit',
       type: EnumUnitType.rented,
     })
@@ -244,14 +244,14 @@ describe('userGetUtilisationPeriods()', () => {
       externalId: generateId(),
       startDate: '2449-01-03',
     }
-    const utilisationPeriod = await client.createUtilisationPeriod(
+    const utilisationPeriod = await client.utilisationPeriodCreate(
       sharedUnitId,
       initialData,
     )
 
     const userEmail = generateId() + '@test.com'
 
-    const user = await client.createUser(APP_ID, generateId(), generateId(), {
+    const user = await client.userCreate(APP_ID, generateId(), generateId(), {
       email: userEmail,
       locale: EnumLocale.de_DE,
     })

@@ -83,30 +83,34 @@ client.getCurrentUser().then(viewer =>
 ### Allthings SDK module
 
 * [`restClient()`](#module-export-restClient)
-  * [`client.createAgent()`](#restclient-client-createagent)
-  * [`client.createAgentPermissions()`](#restclient-client-createagent)
-  * [`client.createApp()`](#restclient-client-createagent)
-  * [`client.createIdLookup()`](#restclient-client-createagent)
-  * [`client.createGroup()`](#restclient-client-createagent)
-  * [`client.getGroupById()`](#restclient-client-createagent)
-  * [`client.updateGroupById()`](#restclient-client-createagent)
-  * [`client.createProperty()`](#restclient-client-createagent)
-  * [`client.getPropertyById()`](#restclient-client-createagent)
-  * [`client.updatePropertyById()`](#restclient-client-createagent)
-  * [`client.createRegistrationCode()`](#restclient-client-createagent)
-  * [`client.createUnit()`](#restclient-client-createagent)
-  * [`client.getUnitById()`](#restclient-client-createagent)
-  * [`client.createUser()`](#restclient-client-createagent)
-  * [`client.createUserPermission()`](#restclient-client-createagent)
-  * [`client.deleteUserPermission()`](#restclient-client-createagent)
+  * [`client.agentCreate()`](#restclient-client-createagent)
+  * [`client.agentCreatePermissions()`](#restclient-client-createagent)
+  * [`client.appCreate()`](#restclient-client-createagent)
+  * [`client.lookupIds()`](#restclient-client-createagent)
+  * [`client.groupCreate()`](#restclient-client-createagent)
+  * [`client.groupFindById()`](#restclient-client-createagent)
+  * [`client.groupUpdateById()`](#restclient-client-createagent)
+  * [`client.propertyCreate()`](#restclient-client-createagent)
+  * [`client.propertyFindById()`](#restclient-client-createagent)
+  * [`client.propertyUpdateById()`](#restclient-client-createagent)
+  * [`client.registrationCodeCreate()`](#restclient-client-createagent)
+  * [`client.unitCreate()`](#restclient-client-createagent)
+  * [`client.unitFindById()`](#restclient-client-createagent)
+  * [`client.unitUpdateById()`](#restclient-client-createagent)
+  * [`client.userCreate()`](#restclient-client-createagent)
+  * [`client.userFindById()`](#restclient-client-createagent)
+  * [`client.userUpdateById()`](#restclient-client-createagent)
+  * [`client.userCreatePermission()`](#restclient-client-createagent)
+  * [`client.userFindPermissions()`](#restclient-client-createagent)
+  * [`client.userDeletePermission()`](#restclient-client-createagent)
+  * [`client.userGetUtilisationPeriods()`](#restclient-client-createagent)
+  * [`client.userCheckInToUtilisationPeriod()`](#restclient-client-createagent)
   * [`client.getUsers()`](#restclient-client-createagent)
   * [`client.getCurrentUser()`](#restclient-client-createagent)
-  * [`client.getUserById()`](#restclient-client-createagent)
-  * [`client.getUserPermissions()`](#restclient-client-createagent)
-  * [`client.updateUserById()`](#restclient-client-createagent)
-  * [`client.createUtilisationPeriod()`](#restclient-client-createagent)
-  * [`client.getUtilisationPeriodById()`](#restclient-client-createagent)
-  * [`client.updateUtilisationPeriodById()`](#restclient-client-createagent)
+  * [`client.utilisationPeriodCreate()`](#restclient-client-createagent)
+  * [`client.utilisationPeriodFindById()`](#restclient-client-createagent)
+  * [`client.utilisationPeriodUpdateById()`](#restclient-client-createagent)
+  * [`client.utilisationPeriodCheckInUser()`](#restclient-client-createagent)
   * [`client.delete()`](#restclient-client-delete)
   * [`client.get()`](#restclient-client-get)
   * [`client.post()`](#restclient-client-post)
@@ -174,102 +178,102 @@ export interface InterfaceAllthingsRestClient {
    * Create a new agent. This is a convenience function around
    * creating a user and adding that user to a property-manager's team
    */
-  readonly createAgent: MethodCreateAgent
+  readonly agentCreate: MethodAgentCreate
 
   /**
    * Create agent permissions. This is a convenience function around
    * creating two user permission's: one "admin" and the other "pinboard"
    */
-  readonly createAgentPermissions: MethodCreateAgentPermissions
+  readonly agentCreatePermissions: MethodAgentCreatePermissions
 
   // App
 
   /**
    * Create a new App.
    */
-  readonly createApp: MethodCreateApp
+  readonly appCreate: MethodAppCreate
 
   // ID Lookup
 
   /**
    * Map one or more externalId's to API ObjectId's within the scope of a specified App
    */
-  readonly createIdLookup: MethodCreateIdLookup
+  readonly lookupIds: MethodLookupIds
 
   // Group
 
   /**
    * Create a new group within a property
    */
-  readonly createGroup: MethodCreateGroup
+  readonly groupCreate: MethodGroupCreate
 
   /**
-   * Get a group by it's ID
+   * Get a group by its ID
    */
-  readonly getGroupById: MethodGetGroupById
+  readonly groupFindById: MethodGroupFindById
 
   /**
-   * Update a group by it's ID
+   * Update a group by its ID
    */
-  readonly updateGroupById: MethodUpdateGroupById
+  readonly groupUpdateById: MethodGroupUpdateById
 
   // Property
 
   /**
    * Create a new property
    */
-  readonly createProperty: MethodCreateProperty
+  readonly propertyCreate: MethodPropertyCreate
 
   /**
-   * Get a property by it's ID
+   * Get a property by its ID
    */
-  readonly getPropertyById: MethodGetPropertyById
+  readonly propertyFindById: MethodPropertyFindById
 
   /**
-   * Update a property by it's ID
+   * Update a property by its ID
    */
-  readonly updatePropertyById: MethodUpdatePropertyById
+  readonly propertyUpdateById: MethodPropertyUpdateById
 
   // Registration Code
 
   /**
    * Create a new registration code
    */
-  readonly createRegistrationCode: MethodCreateRegistrationCode
+  readonly registrationCodeCreate: MethodRegistrationCodeCreate
 
   // Unit
 
   /**
    * Create a unit within a group
    */
-  readonly createUnit: MethodCreateUnit
+  readonly unitCreate: MethodUnitCreate
 
   /**
-   * Get a unit by it's ID
+   * Get a unit by its ID
    */
-  readonly getUnitById: MethodGetUnitById
+  readonly unitFindById: MethodUnitFindById
 
   /**
-   * Update a unit by it's ID
+   * Update a unit by its ID
    */
-  readonly updateUnitById: MethodUpdateUnitById
+  readonly unitUpdateById: MethodUnitUpdateById
 
   // User
 
   /**
    * Create a new User.
    */
-  readonly createUser: MethodCreateUser
+  readonly userCreate: MethodUserCreate
 
   /**
-   * Give a user a permission/role on an given object of specified type
+   * Get a user by their ID
    */
-  readonly createUserPermission: MethodCreateUserPermission
+  readonly userFindById: MethodUserFindById
 
   /**
-   * Delete a user a permission/role on an given object of specified type
+   * Update a user by their ID
    */
-  readonly deleteUserPermission: MethodDeleteUserPermission
+  readonly userUpdateById: MethodUserUpdateById
 
   /**
    * Get a list of users
@@ -282,35 +286,51 @@ export interface InterfaceAllthingsRestClient {
   readonly getCurrentUser: MethodGetCurrentUser
 
   /**
-   * Get a user by their ID
+   * Give a user a permission/role on an given object of specified type
    */
-  readonly getUserById: MethodGetUserById
+  readonly userCreatePermission: MethodUserCreatePermission
 
   /**
    * Get a list of user's permissions
    */
-  readonly getUserPermissions: MethodGetUserPermissions
+  readonly userFindPermissions: MethodUserFindPermissions
 
   /**
-   * Update a user by their ID
+   * Delete a user a permission/role on an given object of specified type
    */
-  readonly updateUserById: MethodUpdateUserById
+  readonly userDeletePermission: MethodUserDeletePermission
+
+  /**
+   * Get a list of user's current utilisation - periods
+   */
+  readonly userGetUtilisationPeriods: MethodUserGetUtilisationPeriods
+
+  /**
+   * Checkin a user into a Utilisation-Period with userId and
+   * utilisation-periodId
+   */
+  readonly userCheckInToUtilisationPeriod: MethodUserCheckInToUtilisationPeriod
 
   // Utilisation Period
 
   /**
    * Create a new utilisation period within a Unit
    */
-  readonly createUtilisationPeriod: MethodCreateUtilisationPeriod
+  readonly utilisationPeriodCreate: MethodUtilisationPeriodCreate
 
   /**
-   * Get a utilisation period by it's ID
+   * Get a utilisation period by its ID
    */
-  readonly getUtilisationPeriodById: MethodGetUtilisationPeriodById
+  readonly utilisationPeriodFindById: MethodUtilisationPeriodFindById
+
+  /*
+   * Update a utilisation period by its ID
+   */
+  readonly utilisationPeriodUpdateById: MethodUtilisationPeriodUpdateById
 
   /**
-   * Update a utilisation period by it's ID
+   * Check-in a user to a utilisation period with the users email
    */
-  readonly updateUtilisationPeriodById: MethodUpdateUtilisationPeriodById
+  readonly utilisationPeriodCheckInUser: MethodUtilisationPeriodCheckInUser
 }
 ```

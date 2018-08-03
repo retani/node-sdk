@@ -6,41 +6,41 @@ import { EnumUnitType } from './unit'
 
 const client = restClient()
 
-describe('createRegistrationCode()', async () => {
+describe('registrationCodeCreate()', async () => {
   it('should be able to create a new registration code', async () => {
     const name = `Registration Code ${generateId()}`
     const code = generateId()
     const testExternalId = generateId()
 
-    const app = await client.createApp(USER_ID, { name, siteUrl: generateId() })
-    const property = await client.createProperty(app.id, {
+    const app = await client.appCreate(USER_ID, { name, siteUrl: generateId() })
+    const property = await client.propertyCreate(app.id, {
       name,
       timezone: 'Europe/Berlin',
     })
-    const group = await client.createGroup(property.id, {
+    const group = await client.groupCreate(property.id, {
       name,
       propertyManagerId: APP_PROPERTY_MANAGER_ID,
     })
-    const unit = await client.createUnit(group.id, {
+    const unit = await client.unitCreate(group.id, {
       name,
       type: EnumUnitType.owned,
     })
     const utilisationPeriods = (await Promise.all([
-      client.createUtilisationPeriod(unit.id, {
+      client.utilisationPeriodCreate(unit.id, {
         endDate: '2018-01-02',
         startDate: '2018-01-01',
       }),
-      client.createUtilisationPeriod(unit.id, {
+      client.utilisationPeriodCreate(unit.id, {
         endDate: '2018-02-02',
         startDate: '2018-02-01',
       }),
-      client.createUtilisationPeriod(unit.id, {
+      client.utilisationPeriodCreate(unit.id, {
         endDate: '2018-03-02',
         startDate: '2018-03-01',
       }),
     ])).map(item => item.id)
 
-    const result = await client.createRegistrationCode(
+    const result = await client.registrationCodeCreate(
       code,
       utilisationPeriods,
       {
@@ -59,7 +59,7 @@ describe('createRegistrationCode()', async () => {
     expect(result.utilisationPeriods).toContainEqual(utilisationPeriods[1])
     expect(result.utilisationPeriods).toContainEqual(utilisationPeriods[2])
 
-    const singleUtilisationPeriod = await client.createRegistrationCode(
+    const singleUtilisationPeriod = await client.registrationCodeCreate(
       generateId(),
       utilisationPeriods[0],
       {
@@ -74,7 +74,7 @@ describe('createRegistrationCode()', async () => {
     )
 
     // test for default options parameter
-    const emptyOptions = await client.createRegistrationCode(
+    const emptyOptions = await client.registrationCodeCreate(
       generateId(),
       utilisationPeriods[0],
       undefined,

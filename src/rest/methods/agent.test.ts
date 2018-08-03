@@ -16,7 +16,7 @@ const testData = {
   locale: EnumLocale.en_US,
 }
 
-describe('createAgent()', () => {
+describe('agentCreate()', () => {
   it('should be able to create a new agent', async () => {
     const data = {
       ...testData,
@@ -24,14 +24,14 @@ describe('createAgent()', () => {
       externalId: generateId(),
     }
 
-    const agent = await client.createAgent(
+    const agent = await client.agentCreate(
       APP_ID,
       APP_PROPERTY_MANAGER_ID,
       generateId(),
       data,
     )
 
-    const result = await client.getUserById(agent.id)
+    const result = await client.userFindById(agent.id)
 
     expect(result.email).toEqual(data.email)
     expect(result.externalId).toEqual(data.externalId)
@@ -55,7 +55,7 @@ describe('createAgent()', () => {
   })
 })
 
-describe('createAgentPermissions()', () => {
+describe('agentCreatePermissions()', () => {
   it('should be able to add agent permissions', async () => {
     const data = {
       ...testData,
@@ -63,7 +63,7 @@ describe('createAgentPermissions()', () => {
       externalId: generateId(),
     }
 
-    const agent = await client.createAgent(
+    const agent = await client.agentCreate(
       APP_ID,
       APP_PROPERTY_MANAGER_ID,
       generateId(),
@@ -73,7 +73,7 @@ describe('createAgentPermissions()', () => {
     const [
       appAdminPermission,
       appPinboardPermission,
-    ] = await client.createAgentPermissions(
+    ] = await client.agentCreatePermissions(
       agent.id,
       APP_ID,
       EnumUserPermissionObjectType.app,
@@ -93,7 +93,7 @@ describe('createAgentPermissions()', () => {
     )
     expect(appPinboardPermission.role).toEqual(EnumUserPermissionRole.pinboard)
 
-    const property = await client.createProperty(APP_ID, {
+    const property = await client.propertyCreate(APP_ID, {
       name: generateId(),
       timezone: EnumTimezone.EuropeBerlin,
     })
@@ -101,7 +101,7 @@ describe('createAgentPermissions()', () => {
     const [
       propertyAdminPermission,
       propertyPinboardPermission,
-    ] = await client.createAgentPermissions(
+    ] = await client.agentCreatePermissions(
       agent.id,
       property.id,
       EnumUserPermissionObjectType.property,

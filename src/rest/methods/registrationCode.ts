@@ -24,13 +24,13 @@ export type RegistrationCodeResult = Promise<IRegistrationCode>
   https://api-doc.allthings.me/#!/Registration32Code/post_registration_codes
 */
 
-export type MethodCreateRegistrationCode = (
+export type MethodRegistrationCodeCreate = (
   code: string,
   utilisationPeriods: string | ReadonlyArray<string>,
   options?: IRegistrationCodeOptions,
 ) => RegistrationCodeResult
 
-export async function createRegistrationCode(
+export async function registrationCodeCreate(
   client: InterfaceAllthingsRestClient,
   code: string,
   utilisationPeriods: string | ReadonlyArray<string>,

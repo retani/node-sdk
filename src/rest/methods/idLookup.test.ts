@@ -5,13 +5,12 @@ import { EnumResource } from '../types'
 
 const client = restClient()
 
-describe('createIdLookup()', () => {
+describe('lookupIds()', () => {
   it('should be able to look up a single id given an id string', async () => {
-    const result = await client.createIdLookup(
-      APP_ID,
-      EnumResource.property,
-      'foobar',
-    )
+    const result = await client.lookupIds(APP_ID, {
+      externalIds: 'foobar',
+      resource: EnumResource.property,
+    })
 
     expect(result).toEqual({
       foobar: null,
@@ -19,11 +18,10 @@ describe('createIdLookup()', () => {
   })
 
   it('should be able to look up an array of ids', async () => {
-    const result = await client.createIdLookup(APP_ID, EnumResource.group, [
-      'foo',
-      'bar',
-      'foobar',
-    ])
+    const result = await client.lookupIds(APP_ID, {
+      externalIds: ['foo', 'bar', 'foobar'],
+      resource: EnumResource.group,
+    })
 
     expect(result).toEqual({
       bar: null,

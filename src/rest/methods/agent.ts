@@ -15,7 +15,7 @@ export type AgentPermissionsResult = Promise<ReadonlyArray<IUserPermission>>
   Create new agent
 */
 
-export type MethodCreateAgent = (
+export type MethodAgentCreate = (
   appId: string,
   propertyManagerId: string,
   username: string,
@@ -25,7 +25,7 @@ export type MethodCreateAgent = (
   },
 ) => UserResult
 
-export async function createAgent(
+export async function agentCreate(
   client: InterfaceAllthingsRestClient,
   appId: string,
   propertyManagerId: string,
@@ -35,7 +35,7 @@ export async function createAgent(
     readonly locale: EnumLocale
   },
 ): UserResult {
-  const user = await client.createUser(appId, username, generateId(), {
+  const user = await client.userCreate(appId, username, generateId(), {
     ...data,
     type: EnumUserType.customer,
   })
@@ -62,7 +62,7 @@ export async function createAgent(
 /**
  * Returns a datastore-specific object of redis clients.
  */
-export type MethodCreateAgentPermissions = (
+export type MethodAgentCreatePermissions = (
   agentId: string,
   objectId: string,
   objectType: EnumUserPermissionObjectType,
@@ -71,20 +71,20 @@ export type MethodCreateAgentPermissions = (
 /**
  * Returns a datastore-specific object of redis clients.
  */
-export async function createAgentPermissions(
+export async function agentCreatePermissions(
   client: InterfaceAllthingsRestClient,
   agentId: string,
   objectId: string,
   objectType: EnumUserPermissionObjectType,
 ): AgentPermissionsResult {
   return Promise.all([
-    client.createUserPermission(agentId, {
+    client.userCreatePermission(agentId, {
       objectId,
       objectType,
       restrictions: [],
       role: EnumUserPermissionRole.admin,
     }),
-    client.createUserPermission(agentId, {
+    client.userCreatePermission(agentId, {
       objectId,
       objectType,
       restrictions: [],

@@ -2,41 +2,41 @@ import { DEFAULT_API_WRAPPER_OPTIONS } from '../constants'
 import { partial } from '../utils/functional'
 import httpDelete from './delete'
 import httpGet from './get'
-import { createAgent, createAgentPermissions } from './methods/agent'
-import { createApp } from './methods/app'
-import { createGroup, getGroupById, updateGroupById } from './methods/group'
-import { createIdLookup } from './methods/idLookup'
+import { agentCreate, agentCreatePermissions } from './methods/agent'
+import { appCreate } from './methods/app'
+import { groupCreate, groupFindById, groupUpdateById } from './methods/group'
+import { lookupIds } from './methods/idLookup'
 import {
-  createProperty,
-  getPropertyById,
-  updatePropertyById,
+  propertyCreate,
+  propertyFindById,
+  propertyUpdateById,
 } from './methods/property'
-import { createRegistrationCode } from './methods/registrationCode'
+import { registrationCodeCreate } from './methods/registrationCode'
 import {
-  createUnit,
   EnumUnitType,
-  getUnitById,
-  updateUnitById,
+  unitCreate,
+  unitFindById,
+  unitUpdateById,
 } from './methods/unit'
 import {
-  createUser,
-  createUserPermission,
-  deleteUserPermission,
   EnumUserPermissionObjectType,
   EnumUserPermissionRole,
   getCurrentUser,
-  getUserById,
-  getUserPermissions,
   getUsers,
-  updateUserById,
   userCheckInToUtilisationPeriod,
+  userCreate,
+  userCreatePermission,
+  userDeletePermission,
+  userFindById,
+  userFindPermissions,
   userGetUtilisationPeriods,
+  userUpdateById,
 } from './methods/user'
 import {
-  createUtilisationPeriod,
-  getUtilisationPeriodById,
-  updateUtilisationPeriodById,
   utilisationPeriodCheckInUser,
+  utilisationPeriodCreate,
+  utilisationPeriodFindById,
+  utilisationPeriodUpdateById,
 } from './methods/utilisationPeriod'
 import httpPatch from './patch'
 import httpPost from './post'
@@ -48,50 +48,50 @@ import {
 
 const API_METHODS: ReadonlyArray<any> = [
   // Agent
-  createAgent,
-  createAgentPermissions,
+  agentCreate,
+  agentCreatePermissions,
 
   // App
-  createApp,
+  appCreate,
 
   // ID Lookup
-  createIdLookup,
+  lookupIds,
 
   // Group
-  createGroup,
-  getGroupById,
-  updateGroupById,
+  groupCreate,
+  groupFindById,
+  groupUpdateById,
 
   // Property
-  createProperty,
-  getPropertyById,
-  updatePropertyById,
+  propertyCreate,
+  propertyFindById,
+  propertyUpdateById,
 
   // Registration Code
-  createRegistrationCode,
+  registrationCodeCreate,
 
   // Unit
-  createUnit,
-  getUnitById,
-  updateUnitById,
+  unitCreate,
+  unitFindById,
+  unitUpdateById,
 
   // User
-  createUser,
-  createUserPermission,
-  deleteUserPermission,
-  getCurrentUser,
-  getUserById,
-  getUserPermissions,
-  getUsers,
-  updateUserById,
+  userCreate,
+  userFindById,
+  userUpdateById,
+  userCreatePermission,
+  userFindPermissions,
+  userDeletePermission,
   userCheckInToUtilisationPeriod,
   userGetUtilisationPeriods,
+  getCurrentUser,
+  getUsers,
 
   // Utilisation Periods
+  utilisationPeriodCreate,
+  utilisationPeriodFindById,
+  utilisationPeriodUpdateById,
   utilisationPeriodCheckInUser,
-  createUtilisationPeriod,
-  getUtilisationPeriodById,
-  updateUtilisationPeriodById,
 ]
 
 export { EnumUnitType, EnumUserPermissionObjectType, EnumUserPermissionRole }
