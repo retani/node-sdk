@@ -39,7 +39,7 @@ to pass them to the restClient() function.
 More information about Authentication with the SDK is available here: 
 https://github.com/allthings/node-sdk#authentication
 
-Let's instansiate a new client for the Allthings REST API:
+Let's instantiate a new client for the Allthings REST API:
 
 */
 
