@@ -39,6 +39,10 @@ to pass them to the restClient() function.
 More information about Authentication with the SDK is available here: 
 https://github.com/allthings/node-sdk#authentication
 
+More information about how to perform OAuth Authentication for the Allthings
+REST API is available here:
+https://developers.allthings.me/developers/oauth.html
+
 Let's instantiate a new client for the Allthings REST API:
 
 */
