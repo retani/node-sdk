@@ -160,7 +160,7 @@ export async function userUpdateById(
   return client.patch(`/v1/users/${userId}`, data)
 }
 
-/* UserPermisionCreat, UserCreatePermission
+/*
   Create a new permission for a user
 */
 
@@ -196,7 +196,7 @@ export async function userCreatePermission(
   }
 }
 
-/* UserPermisionFind, UserFindPermission
+/*
   Get a list of a user's permissions
 */
 
@@ -218,7 +218,7 @@ export async function userFindPermissions(
   }))
 }
 
-/* UserPermisionDelete, UserDeletePermission
+/*
   Delete a user permission by Id
 */
 
