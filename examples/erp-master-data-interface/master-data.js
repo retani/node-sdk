@@ -5,6 +5,13 @@ How-to: Allthings Platform Master Data Interface
 
 ===============================================================================
 
+The aim of this guide is to provide a technical, but high level introduction
+to importing and managing Master Data on the Allthings Platform. It does not
+cover topics like Permissions & Channeling, nor subjects like data validation
+and data best-practices. For brevity, many of the methods called in this guide
+omit additional fields which would be desirable in a production context. Full
+SDK documentation may be found here: https://github.com/allthings/node-sdk#api
+
 On the Allthings Platform, Master Data refers to the basic property-related
 things which make up the property-data model. Master Data includes information
 about the property location (Property), the structures located on the property
@@ -224,7 +231,7 @@ have access to the Allthings App for a Unit-Group-Property combination.
     |          |   |          |   |                      |
     +----------+   +----------+   +----------------------+
 
-
+open ended open utilisation period
 A Utilisation Period has a date-range with a start date and optional
 end date. A Unit may have multiple Utilisation Periods, however no Tenant
 Utilisation Period within a single Unit may have overlapping start and end
