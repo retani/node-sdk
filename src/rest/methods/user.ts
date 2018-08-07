@@ -96,7 +96,7 @@ export async function userCreate(
     readonly locale: EnumLocale
   },
 ): UserResult {
-  return client.post(`/v1/users`, {
+  return client.post('/v1/users', {
     ...data,
     creationContext: appId,
     plainPassword,
@@ -112,8 +112,8 @@ export type MethodGetUsers = (page?: number, limit?: number) => UserResultList
 
 export async function getUsers(
   client: InterfaceAllthingsRestClient,
-  page: number = 1,
-  limit: number = -1,
+  page = 1,
+  limit = -1,
 ): UserResultList {
   return client.get(`/v1/users?page=${page}&limit=${limit}`)
 }
@@ -127,7 +127,7 @@ export type MethodGetCurrentUser = () => UserResult
 export async function getCurrentUser(
   client: InterfaceAllthingsRestClient,
 ): UserResult {
-  return client.get(`/v1/me`)
+  return client.get('/v1/me')
 }
 
 /*
