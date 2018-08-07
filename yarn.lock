@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@allthings/tslint-preset@1.9.0":
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/@allthings/tslint-preset/-/tslint-preset-1.9.0.tgz#a42fee311f20ca9e79c5ffbdadba1c2c33d40ead"
+"@allthings/tslint-preset@1.10.0":
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/@allthings/tslint-preset/-/tslint-preset-1.10.0.tgz#09ac3c01ca1cdd7d0612094327dc09c9f21a3633"
   dependencies:
     tslint-config-prettier "1.14.0"
     tslint-immutable "4.6.0"
