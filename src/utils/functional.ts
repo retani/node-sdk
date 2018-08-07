@@ -26,7 +26,7 @@ export async function until<A, B>(
   predicate: (value: B, iteration: number) => boolean | Promise<boolean>,
   transformer: (value: A | B | undefined, iteration: number) => B | Promise<B>,
   initialValue?: A | B,
-  iterationCount: number = 0,
+  iterationCount = 0,
 ): Promise<B> {
   const transformed = await transformer(initialValue, iterationCount)
 
