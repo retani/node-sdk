@@ -279,9 +279,9 @@ from the Unit we created earlier (unit.id) to establish the parent-child
 relationship between the Unit and Utilisation Period. We also again gave the
 Utilisation Period an external ID.
 
-We now want to "check in" a Tenant into this Utilisation Period thus given them
-access to our App. Let's pretend that our records indicate that this Tenant
-already has a User account from a previous Utilisation Period.
+We now want to "check in" a Tenant into this Utilisation Period thus giving
+them access to our App. Let's pretend that our records indicate that this
+Tenant already has a User account from a previous Utilisation Period.
 
 
 +-Unit-----------------------------------------------------------------------+
