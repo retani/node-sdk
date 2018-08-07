@@ -80,11 +80,11 @@ be visualised by the following diagram:
 
 
 A Property belongs to an App context. A Property may contain many Groups.
-A Group may contain many Units. A Unit may contain many Utilisation Periods—
-however no period may overlap with another period. Conversely, a Utilisation
-Period can belong to exactly one Unit. A Unit belongs to exactly one Group.
-A Group belongs to exactly one Property. These relationships are established
-upon creation of the resource. We'll see how in a moment.
+A Group may contain many Units. A Unit may contain many Utilisation Periods.
+Conversely, a Utilisation Period can belong to exactly one Unit. A Unit belongs
+to exactly one Group. A Group belongs to exactly one Property. These
+relationships are established upon creation of the resource. We'll see how in
+a moment.
 
 Let's pretend that we have a large real-estate project featuring multiple
 residential towers. In Allthings, we can represent this as a new Property.
@@ -226,8 +226,12 @@ have access to the Allthings App for a Unit-Group-Property combination.
 
 
 A Utilisation Period has a date-range with a start date and optional
-end date. A Unit may have multiple Utilisation Periods, however no Utilisation
-Period within a single Unit may have overlapping start and end dates.
+end date. A Unit may have multiple Utilisation Periods, however no Tenant
+Utilisation Period within a single Unit may have overlapping start and end
+dates. There are three types of Utilisation Periods: tenant, ownership, and
+vacancy. We will only discuss the tenant type, but note that start/end date
+period overlap is possible with ownership-tenant or ownership-vacancy
+combinations. Tenant is the default Utilisation Period type.
 
 
 +-Unit-----------------------------------------------------------------------+
@@ -446,6 +450,13 @@ Utilisation Period.
 
 We've now seen how to create Master Data and how to associate Users with that
 Data.
+
+We can run this script on the command line like so:
+
+ALLTHINGS_APP_ID="<place your app ID here>" \
+ALLTHINGS_APP_PROPERTY_MANAGER_ID="<place your property manager ID here>" \
+DEBUG=* \
+node ./master-data.js
 
 ===============================================================================*/
 })()
