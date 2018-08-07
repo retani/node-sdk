@@ -152,6 +152,13 @@ Let's create the Group now using the SDKs groupCreate() method.
 */
 
   const group = await client.groupCreate(property.id, {
+    address: {
+      city: 'Bern',
+      country: allthings.EnumCountryCode.CH,
+      houseNumber: '123',
+      postalCode: '123-4567',
+      street: 'Rainbow Road',
+    },
     externalId: 'ef351710-5c06-496d-ab83-e71b627510ea',
     name: 'South Tower',
     propertyManagerId: process.env.ALLTHINGS_APP_PROPERTY_MANAGER_ID,
