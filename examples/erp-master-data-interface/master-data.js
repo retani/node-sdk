@@ -231,7 +231,7 @@ have access to the Allthings App for a Unit-Group-Property combination.
     |          |   |          |   |                      |
     +----------+   +----------+   +----------------------+
 
-open ended open utilisation period
+
 A Utilisation Period has a date-range with a start date and optional
 end date. A Unit may have multiple Utilisation Periods, however no Tenant
 Utilisation Period within a single Unit may have overlapping start and end
@@ -239,6 +239,12 @@ dates. There are three types of Utilisation Periods: tenant, ownership, and
 vacancy. We will only discuss the tenant type, but note that start/end date
 period overlap is possible with ownership-tenant or ownership-vacancy
 combinations. Tenant is the default Utilisation Period type.
+
+If a Utilisation Period has no end-date, it is considered to be an "open
+utilisation period". It is not possible to have another Utilisation Period
+with a start-date later than an open utilisation period. In other words, an
+open utilisation period blocks the creation of any future Utilisation Period,
+until that open period is closed by updating it with an end-date.
 
 
 +-Unit-----------------------------------------------------------------------+
