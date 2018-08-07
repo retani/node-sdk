@@ -15,9 +15,9 @@ SDK documentation may be found here: https://github.com/allthings/node-sdk#api
 On the Allthings Platform, Master Data refers to the basic property-related
 things which make up the property-data model. Master Data includes information
 about the property location (Property), the structures located on the property
-(Group), the units or own-able/rentable sub-divisions within a group (Units), and
-who has, is currently, and will occupy or make use of a unit (Utilisation Periods—
-often a contract).
+(Group), the units or own-able/rentable sub-divisions within a group (Units),
+and who has, is currently, and will occupy or make use of a unit (Utilisation
+Periods— often a contract).
 
 We may use the Allthings REST API to create and modify these resources. This
 guide will demonstrate how Master Data can be imported via the REST API
