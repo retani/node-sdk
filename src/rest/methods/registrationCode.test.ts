@@ -9,47 +9,45 @@ let sharedUtilisationPeriodIds: ReadonlyArray<string> // tslint:disable-line no-
 
 const client = restClient()
 
-describe('createRegistrationCode()', async () => {
-  beforeAll(async () => {
-    const name = `Registration Code ${generateId()}`
-    const app = await client.createApp(USER_ID, { name, siteUrl: generateId() })
+beforeAll(async () => {
+  const name = `Registration Code ${generateId()}`
+  const app = await client.appCreate(USER_ID, { name, siteUrl: generateId() })
 
-    const property = await client.createProperty(app.id, {
-      name,
-      timezone: EnumTimezone.EuropeBerlin,
-    })
-
-    const group = await client.createGroup(property.id, {
-      name,
-      propertyManagerId: APP_PROPERTY_MANAGER_ID,
-    })
-
-    const unit = await client.createUnit(group.id, {
-      name,
-      type: EnumUnitType.rented,
-    })
-
-    sharedUtilisationPeriodIds = (await Promise.all([
-      client.createUtilisationPeriod(unit.id, {
-        endDate: '2018-01-02',
-        startDate: '2018-01-01',
-      }),
-      client.createUtilisationPeriod(unit.id, {
-        endDate: '2018-02-02',
-        startDate: '2018-02-01',
-      }),
-      client.createUtilisationPeriod(unit.id, {
-        endDate: '2018-03-02',
-        startDate: '2018-03-01',
-      }),
-    ])).map(item => item.id)
+  const property = await client.propertyCreate(app.id, {
+    name,
+    timezone: EnumTimezone.EuropeBerlin,
+  })
+  const group = await client.groupCreate(property.id, {
+    name,
+    propertyManagerId: APP_PROPERTY_MANAGER_ID,
+  })
+  const unit = await client.unitCreate(group.id, {
+    name,
+    type: EnumUnitType.rented,
   })
 
+  sharedUtilisationPeriodIds = (await Promise.all([
+    client.utilisationPeriodCreate(unit.id, {
+      endDate: '2018-01-02',
+      startDate: '2018-01-01',
+    }),
+    client.utilisationPeriodCreate(unit.id, {
+      endDate: '2018-02-02',
+      startDate: '2018-02-01',
+    }),
+    client.utilisationPeriodCreate(unit.id, {
+      endDate: '2018-03-02',
+      startDate: '2018-03-01',
+    }),
+  ])).map(item => item.id)
+})
+
+describe('registrationCodeCreate()', async () => {
   it('should be able to create a new registration code', async () => {
     const code = generateId()
     const testExternalId = generateId()
 
-    const result = await client.createRegistrationCode(
+    const result = await client.registrationCodeCreate(
       code,
       sharedUtilisationPeriodIds,
       {
@@ -74,7 +72,7 @@ describe('createRegistrationCode()', async () => {
       sharedUtilisationPeriodIds[2],
     )
 
-    const singleUtilisationPeriod = await client.createRegistrationCode(
+    const singleUtilisationPeriod = await client.registrationCodeCreate(
       generateId(),
       sharedUtilisationPeriodIds[0],
       {
@@ -89,7 +87,7 @@ describe('createRegistrationCode()', async () => {
     )
 
     // test for default options parameter
-    const emptyOptions = await client.createRegistrationCode(
+    const emptyOptions = await client.registrationCodeCreate(
       generateId(),
       sharedUtilisationPeriodIds[0],
       undefined,
@@ -105,7 +103,7 @@ describe('registrationCodeFindById()', async () => {
   it('should be able to find a registration code by id', async () => {
     const testExternalId = generateId()
 
-    const createdRegistrationCode = await client.createRegistrationCode(
+    const createdRegistrationCode = await client.registrationCodeCreate(
       generateId(),
       sharedUtilisationPeriodIds,
       {
@@ -135,10 +133,10 @@ describe('registrationCodeFindById()', async () => {
 })
 
 describe('registrationCodeDelete()', async () => {
-  it('should be able to find a registration code by id', async () => {
+  it('should delete a registrationCode', async () => {
     const testExternalId = generateId()
 
-    const createdRegistrationCode = await client.createRegistrationCode(
+    const createdRegistrationCode = await client.registrationCodeCreate(
       generateId(),
       sharedUtilisationPeriodIds,
       {
@@ -157,10 +155,10 @@ describe('registrationCodeDelete()', async () => {
 
     await client.registrationCodeDelete(createdRegistrationCode.id)
 
-    /* const wasRegCodeDeleted = await client.registrationCodeFindById(
+    const wasRegCodeDeleted = client.registrationCodeFindById(
       createdRegistrationCode.id,
     )
-    this will be neede but it doesnt return anything, so what to expect?
-    console.log(wasRegCodeDeleted)*/
+
+    await expect(wasRegCodeDeleted).rejects.toThrow('404')
   })
 })

@@ -1,48 +1,48 @@
 import { MethodHttpDelete } from './delete'
 import { MethodHttpGet } from './get'
 import {
-  MethodCreateAgent,
-  MethodCreateAgentPermissions,
+  MethodAgentCreate,
+  MethodAgentCreatePermissions,
 } from './methods/agent'
-import { MethodCreateApp } from './methods/app'
+import { MethodAppCreate } from './methods/app'
 import {
-  MethodCreateGroup,
-  MethodGetGroupById,
-  MethodUpdateGroupById,
+  MethodGroupCreate,
+  MethodGroupFindById,
+  MethodGroupUpdateById,
 } from './methods/group'
-import { MethodCreateIdLookup } from './methods/idLookup'
+import { MethodLookupIds } from './methods/idLookup'
 import {
-  MethodCreateProperty,
-  MethodGetPropertyById,
-  MethodUpdatePropertyById,
+  MethodPropertyCreate,
+  MethodPropertyFindById,
+  MethodPropertyUpdateById,
 } from './methods/property'
 import {
-  MethodCreateRegistrationCode,
+  MethodRegistrationCodeCreate,
   MethodRegistrationCodeDelete,
   MethodRegistrationCodeFindById,
 } from './methods/registrationCode'
 import {
-  MethodCreateUnit,
-  MethodGetUnitById,
-  MethodUpdateUnitById,
+  MethodUnitCreate,
+  MethodUnitFindById,
+  MethodUnitUpdateById,
 } from './methods/unit'
 import {
-  MethodCreateUser,
-  MethodCreateUserPermission,
-  MethodDeleteUserPermission,
   MethodGetCurrentUser,
-  MethodGetUserById,
-  MethodGetUserPermissions,
   MethodGetUsers,
-  MethodUpdateUserById,
   MethodUserCheckInToUtilisationPeriod,
+  MethodUserCreate,
+  MethodUserCreatePermission,
+  MethodUserDeletePermission,
+  MethodUserFindById,
+  MethodUserFindPermissions,
   MethodUserGetUtilisationPeriods,
+  MethodUserUpdateById,
 } from './methods/user'
 import {
-  MethodCreateUtilisationPeriod,
-  MethodGetUtilisationPeriodById,
-  MethodUpdateUtilisationPeriodById,
   MethodUtilisationPeriodCheckInUser,
+  MethodUtilisationPeriodCreate,
+  MethodUtilisationPeriodFindById,
+  MethodUtilisationPeriodUpdateById,
 } from './methods/utilisationPeriod'
 import { MethodHttpPatch } from './patch'
 import { MethodHttpPost } from './post'
@@ -114,68 +114,68 @@ export interface InterfaceAllthingsRestClient {
    * Create a new agent. This is a convenience function around
    * creating a user and adding that user to a property-manager's team
    */
-  readonly createAgent: MethodCreateAgent
+  readonly agentCreate: MethodAgentCreate
 
   /**
    * Create agent permissions. This is a convenience function around
    * creating two user permission's: one "admin" and the other "pinboard"
    */
-  readonly createAgentPermissions: MethodCreateAgentPermissions
+  readonly agentCreatePermissions: MethodAgentCreatePermissions
 
   // App
 
   /**
    * Create a new App.
    */
-  readonly createApp: MethodCreateApp
+  readonly appCreate: MethodAppCreate
 
   // ID Lookup
 
   /**
    * Map one or more externalId's to API ObjectId's within the scope of a specified App
    */
-  readonly createIdLookup: MethodCreateIdLookup
+  readonly lookupIds: MethodLookupIds
 
   // Group
 
   /**
    * Create a new group within a property
    */
-  readonly createGroup: MethodCreateGroup
+  readonly groupCreate: MethodGroupCreate
 
   /**
-   * Get a group by it's ID
+   * Get a group by its ID
    */
-  readonly getGroupById: MethodGetGroupById
+  readonly groupFindById: MethodGroupFindById
 
   /**
-   * Update a group by it's ID
+   * Update a group by its ID
    */
-  readonly updateGroupById: MethodUpdateGroupById
+  readonly groupUpdateById: MethodGroupUpdateById
 
   // Property
 
   /**
    * Create a new property
    */
-  readonly createProperty: MethodCreateProperty
+  readonly propertyCreate: MethodPropertyCreate
 
   /**
-   * Get a property by it's ID
+   * Get a property by its ID
    */
-  readonly getPropertyById: MethodGetPropertyById
+  readonly propertyFindById: MethodPropertyFindById
 
   /**
-   * Update a property by it's ID
+   * Update a property by its ID
    */
-  readonly updatePropertyById: MethodUpdatePropertyById
+  readonly propertyUpdateById: MethodPropertyUpdateById
 
   // Registration Code
 
   /**
    * Create a new registration code
    */
-  readonly createRegistrationCode: MethodCreateRegistrationCode
+  readonly registrationCodeCreate: MethodRegistrationCodeCreate
 
   /**
    * Find a registration code by it
@@ -192,34 +192,34 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Create a unit within a group
    */
-  readonly createUnit: MethodCreateUnit
+  readonly unitCreate: MethodUnitCreate
 
   /**
-   * Get a unit by it's ID
+   * Get a unit by its ID
    */
-  readonly getUnitById: MethodGetUnitById
+  readonly unitFindById: MethodUnitFindById
 
   /**
-   * Update a unit by it's ID
+   * Update a unit by its ID
    */
-  readonly updateUnitById: MethodUpdateUnitById
+  readonly unitUpdateById: MethodUnitUpdateById
 
   // User
 
   /**
    * Create a new User.
    */
-  readonly createUser: MethodCreateUser
+  readonly userCreate: MethodUserCreate
 
   /**
-   * Give a user a permission/role on an given object of specified type
+   * Get a user by their ID
    */
-  readonly createUserPermission: MethodCreateUserPermission
+  readonly userFindById: MethodUserFindById
 
   /**
-   * Delete a user a permission/role on an given object of specified type
+   * Update a user by their ID
    */
-  readonly deleteUserPermission: MethodDeleteUserPermission
+  readonly userUpdateById: MethodUserUpdateById
 
   /**
    * Get a list of users
@@ -232,24 +232,24 @@ export interface InterfaceAllthingsRestClient {
   readonly getCurrentUser: MethodGetCurrentUser
 
   /**
-   * Get a user by their ID
+   * Give a user a permission/role on an given object of specified type
    */
-  readonly getUserById: MethodGetUserById
+  readonly userCreatePermission: MethodUserCreatePermission
 
   /**
    * Get a list of user's permissions
    */
-  readonly getUserPermissions: MethodGetUserPermissions
+  readonly userFindPermissions: MethodUserFindPermissions
+
+  /**
+   * Delete a user a permission/role on an given object of specified type
+   */
+  readonly userDeletePermission: MethodUserDeletePermission
 
   /**
    * Get a list of user's current utilisation - periods
    */
   readonly userGetUtilisationPeriods: MethodUserGetUtilisationPeriods
-
-  /**
-   * Update a user by their ID
-   */
-  readonly updateUserById: MethodUpdateUserById
 
   /**
    * Checkin a user into a Utilisation-Period with userId and
@@ -262,21 +262,20 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Create a new utilisation period within a Unit
    */
-  readonly createUtilisationPeriod: MethodCreateUtilisationPeriod
+  readonly utilisationPeriodCreate: MethodUtilisationPeriodCreate
 
   /**
-   * Get a utilisation period by it's ID
+   * Get a utilisation period by its ID
    */
-  readonly getUtilisationPeriodById: MethodGetUtilisationPeriodById
+  readonly utilisationPeriodFindById: MethodUtilisationPeriodFindById
 
-  /**
-   * Update a utilisation period by it's ID
+  /*
+   * Update a utilisation period by its ID
    */
-  readonly updateUtilisationPeriodById: MethodUpdateUtilisationPeriodById
+  readonly utilisationPeriodUpdateById: MethodUtilisationPeriodUpdateById
 
   /**
    * Check-in a user to a utilisation period with the users email
    */
-
   readonly utilisationPeriodCheckInUser: MethodUtilisationPeriodCheckInUser
 }

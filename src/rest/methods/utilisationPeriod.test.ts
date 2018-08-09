@@ -9,19 +9,19 @@ let sharedUnitId: string // tslint:disable-line no-let
 
 const client = restClient()
 
-describe('createUtilisationPeriod()', () => {
+describe('utilisationPeriodCreate()', () => {
   beforeAll(async () => {
-    const property = await client.createProperty(APP_ID, {
+    const property = await client.propertyCreate(APP_ID, {
       name: 'Foobar Property',
       timezone: EnumTimezone.EuropeBerlin,
     })
 
-    const group = await client.createGroup(property.id, {
+    const group = await client.groupCreate(property.id, {
       name: 'Foobar Group',
       propertyManagerId: APP_PROPERTY_MANAGER_ID,
     })
 
-    const unit = await client.createUnit(group.id, {
+    const unit = await client.unitCreate(group.id, {
       name: 'Foobar Unit',
       type: EnumUnitType.rented,
     })
@@ -35,36 +35,36 @@ describe('createUtilisationPeriod()', () => {
       externalId: generateId(),
       startDate: '2050-01-01',
     }
-    const result = await client.createUtilisationPeriod(sharedUnitId, data)
+    const result = await client.utilisationPeriodCreate(sharedUnitId, data)
 
     expect(result.startDate).toEqual(data.startDate)
     expect(result.externalId).toEqual(data.externalId)
   })
 })
 
-describe('getUtilisationPeriodById()', () => {
+describe('utilisationPeriodFindById()', () => {
   it('should be able to get a utilisation period by ID', async () => {
     const data = {
       endDate: '2050-01-02',
       externalId: generateId(),
       startDate: '2050-01-02',
     }
-    const { id } = await client.createUtilisationPeriod(sharedUnitId, data)
-    const result = await client.getUtilisationPeriodById(id)
+    const { id } = await client.utilisationPeriodCreate(sharedUnitId, data)
+    const result = await client.utilisationPeriodFindById(id)
 
     expect(result.startDate).toEqual(data.startDate)
     expect(result.externalId).toEqual(data.externalId)
   })
 })
 
-describe('updateUtilisationPeriodById()', () => {
+describe('utilisationPeriodUpdateById()', () => {
   it('should be able to update a utilisation period by ID', async () => {
     const initialData = {
       endDate: '2050-01-03',
       externalId: generateId(),
       startDate: '2050-01-03',
     }
-    const utilisationPeriod = await client.createUtilisationPeriod(
+    const utilisationPeriod = await client.utilisationPeriodCreate(
       sharedUnitId,
       initialData,
     )
@@ -78,7 +78,7 @@ describe('updateUtilisationPeriodById()', () => {
       startDate: '2100-01-02',
     }
 
-    const result = await client.updateUtilisationPeriodById(
+    const result = await client.utilisationPeriodUpdateById(
       utilisationPeriod.id,
       updateData,
     )
@@ -89,21 +89,21 @@ describe('updateUtilisationPeriodById()', () => {
   })
 })
 
-describe('checkInUserToUtilisationPeriod()', () => {
+describe('utilisationPeriodCheckInUser()', () => {
   it('should checkIn and existing user to a utilisationPeriod by email', async () => {
     const initialData = {
       endDate: '2450-01-03',
       externalId: generateId(),
       startDate: '2449-01-03',
     }
-    const utilisationPeriod = await client.createUtilisationPeriod(
+    const utilisationPeriod = await client.utilisationPeriodCreate(
       sharedUnitId,
       initialData,
     )
 
     const userEmail = generateId() + '@test.com'
 
-    const user = await client.createUser(APP_ID, generateId(), generateId(), {
+    const user = await client.userCreate(APP_ID, generateId(), generateId(), {
       email: userEmail,
       locale: EnumLocale.de_DE,
     })
