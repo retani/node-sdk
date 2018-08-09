@@ -7,8 +7,9 @@ Allthings Node/Javascript SDK
 1.  [Installation & Usage](#installation--usage)
 1.  [Configuration](#configuration)
     1.  [Options](#configuration-options)
-2.  [API](#api)
-3.  [OAuth Implicit Grant Example](#oauth-implicit-grant-example-example)
+2.  [Authentication](#authentication)
+3.  [API](#api)
+4.  [OAuth Implicit Grant Example](#oauth-implicit-grant-example-example)
 
 ## Installation & Usage
 
@@ -58,6 +59,14 @@ The available configuration options are outlined here:
 | **concurrency**  |         | Number of concurrent requests to perform in parallel. Default behavior is burst of 30/s, 1/s thereafter |
 
 
+## Authentication
+
+@TODO
+
+process.env.ALLTHINGS_OAUTH_CLIENT_ID
+process.env.ALLTHINGS_OAUTH_CLIENT_SECRET,
+process.env.ALLTHINGS_OAUTH_PASSWORD,
+process.env.ALLTHINGS_OAUTH_USERNAME,
 
 ## OAuth Implicit Grant Example
 
