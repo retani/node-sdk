@@ -16,7 +16,11 @@ import {
   MethodPropertyFindById,
   MethodPropertyUpdateById,
 } from './methods/property'
-import { MethodRegistrationCodeCreate } from './methods/registrationCode'
+import {
+  MethodRegistrationCodeCreate,
+  MethodRegistrationCodeDelete,
+  MethodRegistrationCodeFindById,
+} from './methods/registrationCode'
 import {
   MethodUnitCreate,
   MethodUnitFindById,
@@ -47,6 +51,7 @@ import { MethodHttpPost } from './post'
 export enum EnumResource {
   property = 'property',
   group = 'group',
+  registrationCode = 'registrationCode',
   unit = 'unit',
   utilisationPeriod = 'utilisationPeriod',
   user = 'user',
@@ -171,6 +176,16 @@ export interface InterfaceAllthingsRestClient {
    * Create a new registration code
    */
   readonly registrationCodeCreate: MethodRegistrationCodeCreate
+
+  /**
+   * Find a registration code by it
+   */
+  readonly registrationCodeFindById: MethodRegistrationCodeFindById
+
+  /**
+   * Delete a registration code by it
+   */
+  readonly registrationCodeDelete: MethodRegistrationCodeDelete
 
   // Unit
 

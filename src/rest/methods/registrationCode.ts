@@ -56,3 +56,32 @@ export async function registrationCodeCreate(
     externalId: resultExternalId,
   }
 }
+
+/*
+  find a registration code by id
+*/
+
+export type MethodRegistrationCodeFindById = (
+  registrationCodeId: string,
+) => RegistrationCodeResult
+
+export async function registrationCodeFindById(
+  client: InterfaceAllthingsRestClient,
+  registrationCodeId: string,
+): RegistrationCodeResult {
+  return client.get(`/v1/invitations/${registrationCodeId}`)
+}
+
+/*
+  Delete registration code by id
+*/
+export type MethodRegistrationCodeDelete = (
+  registrationCodeId: string,
+) => RegistrationCodeResult
+
+export async function registrationCodeDelete(
+  client: InterfaceAllthingsRestClient,
+  registrationCodeId: string,
+): RegistrationCodeResult {
+  return client.delete(`/v1/invitations/${registrationCodeId}`)
+}
