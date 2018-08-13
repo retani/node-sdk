@@ -1,6 +1,6 @@
 {
   "name": "@allthings/sdk",
-  "version": "0.1.0-12",
+  "version": "0.1.0-13",
   "description": "",
   "author": "Allthings GmbH",
   "maintainers": [
@@ -66,11 +66,11 @@
     "@types/got": "8.3.3",
     "@types/jest": "23.3.1",
     "@types/mem": "1.1.2",
-    "@types/node": "10.5.7",
+    "@types/node": "10.5.8",
     "@types/shortid": "0.0.29",
     "coveralls": "3.0.2",
     "husky": "0.14.3",
-    "jest": "23.4.2",
+    "jest": "23.5.0",
     "lint-staged": "7.2.0",
     "nsp": "3.2.1",
     "nyc": "12.0.2",
@@ -117,7 +117,7 @@
     ],
     "setupTestFrameworkScriptFile": "<rootDir>/test/setup.ts",
     "transform": {
-      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      "^.+\\.tsx?$": "ts-jest"
     },
     "testEnvironment": "node",
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
