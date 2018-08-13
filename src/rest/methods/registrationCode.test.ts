@@ -133,7 +133,7 @@ describe('registrationCodeFindById()', async () => {
 })
 
 describe('registrationCodeDelete()', async () => {
-  it('should delete a registrationCode', async () => {
+  it.only('should delete a registrationCode', async () => {
     const testExternalId = generateId()
 
     const createdRegistrationCode = await client.registrationCodeCreate(
@@ -153,12 +153,15 @@ describe('registrationCodeDelete()', async () => {
     expect(createdRegistrationCode.id).toBeTruthy()
     expect(foundRegistrationCode.id).toEqual(createdRegistrationCode.id)
 
-    await client.registrationCodeDelete(createdRegistrationCode.id)
+    const deletedResult = await client.registrationCodeDelete(
+      createdRegistrationCode.id,
+    )
 
     const wasRegCodeDeleted = client.registrationCodeFindById(
       createdRegistrationCode.id,
     )
 
+    expect(deletedResult).toBeTruthy()
     await expect(wasRegCodeDeleted).rejects.toThrow('404')
   })
 })
