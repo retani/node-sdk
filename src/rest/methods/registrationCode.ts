@@ -84,6 +84,4 @@ export async function registrationCodeDelete(
   registrationCodeId: string,
 ): Promise<boolean> {
   return (await client.delete(`/v1/invitations/${registrationCodeId}`)) === ''
-    ? true
-    : false
 }

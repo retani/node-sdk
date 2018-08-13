@@ -133,7 +133,7 @@ describe('registrationCodeFindById()', async () => {
 })
 
 describe('registrationCodeDelete()', async () => {
-  it.only('should delete a registrationCode', async () => {
+  it('should delete a registrationCode', async () => {
     const testExternalId = generateId()
 
     const createdRegistrationCode = await client.registrationCodeCreate(
