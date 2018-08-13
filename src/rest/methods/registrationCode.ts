@@ -82,6 +82,6 @@ export type MethodRegistrationCodeDelete = (
 export async function registrationCodeDelete(
   client: InterfaceAllthingsRestClient,
   registrationCodeId: string,
-): RegistrationCodeResult {
-  return client.delete(`/v1/invitations/${registrationCodeId}`)
+): Promise<boolean> {
+  return (await client.delete(`/v1/invitations/${registrationCodeId}`)) === ''
 }

@@ -153,12 +153,15 @@ describe('registrationCodeDelete()', async () => {
     expect(createdRegistrationCode.id).toBeTruthy()
     expect(foundRegistrationCode.id).toEqual(createdRegistrationCode.id)
 
-    await client.registrationCodeDelete(createdRegistrationCode.id)
+    const deletedResult = await client.registrationCodeDelete(
+      createdRegistrationCode.id,
+    )
 
     const wasRegCodeDeleted = client.registrationCodeFindById(
       createdRegistrationCode.id,
     )
 
+    expect(deletedResult).toBeTruthy()
     await expect(wasRegCodeDeleted).rejects.toThrow('404')
   })
 })
