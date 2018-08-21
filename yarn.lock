@@ -869,9 +869,9 @@ boom@5.x.x:
   dependencies:
     hoek "4.x.x"
 
-bottleneck@2.7.2:
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/bottleneck/-/bottleneck-2.7.2.tgz#965837e92382007609a5a4575884cc686968950a"
+bottleneck@2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/bottleneck/-/bottleneck-2.8.0.tgz#8cbacd533ab3da15e397f066100c108ded3a2912"
 
 bottleneck@^2.0.1:
   version "2.2.2"
