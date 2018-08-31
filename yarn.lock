@@ -4170,6 +4170,12 @@ makeerror@1.0.x:
   dependencies:
     tmpl "1.0.x"
 
+map-age-cleaner@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/map-age-cleaner/-/map-age-cleaner-0.1.1.tgz#4ccb0eb60bf5b96bbe8ee3dc2c7e3e497efc7b1a"
+  dependencies:
+    p-defer "^1.0.0"
+
 map-cache@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/map-cache/-/map-cache-0.2.2.tgz#c32abd0bd6525d9b051645bb4f26ac5dc98a0dbf"
@@ -4216,10 +4222,11 @@ meant@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/meant/-/meant-1.0.1.tgz#66044fea2f23230ec806fb515efea29c44d2115d"
 
-mem@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/mem/-/mem-3.0.1.tgz#152410d0d7e835e4a4363e626238d9e5be3d6f5a"
+mem@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/mem/-/mem-4.0.0.tgz#6437690d9471678f6cc83659c00cbafcd6b0cdaf"
   dependencies:
+    map-age-cleaner "^0.1.1"
     mimic-fn "^1.0.0"
     p-is-promise "^1.1.0"
 
@@ -5021,6 +5028,10 @@ osenv@0, osenv@^0.1.4, osenv@^0.1.5:
 p-cancelable@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/p-cancelable/-/p-cancelable-0.5.0.tgz#65b8dfbcacf27983421ee4c044ebf5e35816c7c8"
+
+p-defer@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/p-defer/-/p-defer-1.0.0.tgz#9f6eb182f6c9aa8cd743004a7d4f96b196b0fb0c"
 
 p-filter@^1.0.0:
   version "1.0.0"
