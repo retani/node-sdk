@@ -337,6 +337,12 @@
   dependencies:
     symbol-observable "^1.2.0"
 
+"@szmarczak/http-timer@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@szmarczak/http-timer/-/http-timer-1.1.0.tgz#9d57e87a07bbf36bc69f295063265eefec7e5045"
+  dependencies:
+    defer-to-connect "^1.0.1"
+
 "@types/estree@0.0.39":
   version "0.0.39"
   resolved "https://registry.npmjs.org/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
@@ -1663,6 +1669,10 @@ defaults@^1.0.3:
   dependencies:
     clone "^1.0.2"
 
+defer-to-connect@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/defer-to-connect/-/defer-to-connect-1.0.1.tgz#41ec1dd670dc4c6dcbe7e54c9e44d784d025fe63"
+
 define-properties@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/define-properties/-/define-properties-1.1.2.tgz#83a73f2fea569898fb737193c8f873caf6d45c94"
@@ -2452,11 +2462,12 @@ globby@^8.0.0:
     pify "^3.0.0"
     slash "^1.0.0"
 
-got@9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/got/-/got-9.1.0.tgz#e31aa530bf953ca51599c5722039f891e49cf2ca"
+got@9.2.0:
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/got/-/got-9.2.0.tgz#f6aa4e26c984a3175f1073c421e2e40640f8295c"
   dependencies:
     "@sindresorhus/is" "^0.11.0"
+    "@szmarczak/http-timer" "^1.1.0"
     cacheable-request "^4.0.1"
     decompress-response "^3.3.0"
     duplexer3 "^0.1.4"
