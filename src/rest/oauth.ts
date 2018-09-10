@@ -1,5 +1,6 @@
-import * as got from 'got'
+import fetch from 'cross-fetch'
 import memoize from 'mem'
+import querystring from 'query-string'
 import { USER_AGENT } from '../constants'
 import makeLogger from '../utils/logger'
 
@@ -16,24 +17,27 @@ export const getNewTokenUsingPasswordGrant = memoize(
     password: string,
   ): Promise<string | undefined> => {
     try {
-      const {
-        body: { access_token: accessToken },
-      } = await got.post(`${oauthUrl}/oauth/token`, {
-        body: {
+      const response = await fetch(`${oauthUrl}/oauth/token`, {
+        body: querystring.stringify({
           client_id: clientId,
           ...(clientSecret && { client_secret: clientSecret }),
           grant_type: 'password',
           password,
           scope: 'user:profile',
           username,
-        },
-        // OAuth 2 requires request content-type to be application/x-www-form-urlencoded
-        form: true,
+        }),
+        cache: 'no-cache',
+        credentials: 'omit',
         headers: {
+          // OAuth 2 requires request content-type to be application/x-www-form-urlencoded
+          'Content-Type': 'application/x-www-form-urlencoded',
           'user-agent': USER_AGENT,
         },
-        json: true,
+        method: 'POST',
+        mode: 'cors',
       })
+
+      const { access_token: accessToken } = await response.json()
 
       return accessToken
     } catch (error) {

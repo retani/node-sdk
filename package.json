@@ -1,6 +1,6 @@
 {
   "name": "@allthings/sdk",
-  "version": "0.1.0-14",
+  "version": "0.1.0-18",
   "description": "",
   "author": "Allthings GmbH",
   "maintainers": [
@@ -41,11 +41,11 @@
     "lint:tslint": "tslint -p tsconfig.json -t stylish",
     "lint:tsc": "tsc --noEmit --pretty",
     "prebuild": "npm run clean",
-    "build": "tsc -d && rollup -c",
+    "build": "tsc -d ; rollup -c",
     "dev": "tsc -w",
     "preversion": "git pull && yarn check --integrity && yarn security-check && yarn lint && yarn test",
     "postversion": "git push --tags origin HEAD",
-    "prepublishOnly": "npm run lint && npm test && npm run security-check && npm run build",
+    "_prepublishOnly": "npm run lint && npm test && npm run security-check && npm run build",
     "precommit": "lint-staged",
     "prettier": "prettier --write",
     "security-check": "nsp check",
@@ -55,8 +55,9 @@
   },
   "dependencies": {
     "bottleneck": "2.8.0",
-    "got": "9.2.1",
+    "cross-fetch": "2.2.2",
     "mem": "4.0.0",
+    "query-string": "6.1.0",
     "shortid": "2.2.13"
   },
   "devDependencies": {
@@ -67,6 +68,7 @@
     "@types/jest": "23.3.1",
     "@types/mem": "1.1.2",
     "@types/node": "10.9.4",
+    "@types/query-string": "6.1.0",
     "@types/shortid": "0.0.29",
     "coveralls": "3.0.2",
     "husky": "0.14.3",

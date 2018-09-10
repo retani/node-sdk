@@ -19,7 +19,7 @@ describe('Rest API Client', () => {
       clientSecret: '',
     })
 
-    await expect(client.get('/me')).rejects.toThrow()
+    await expect(client.get('/v1/me')).rejects.toThrow()
   })
 
   it('should throw error when apiUrl parameter is not provided', async () => {

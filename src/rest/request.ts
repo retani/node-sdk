@@ -1,5 +1,6 @@
 import Bottleneck from 'bottleneck'
-import * as got from 'got'
+//import fetch from 'cross-fetch'
+import querystring from 'query-string'
 import {
   QUEUE_CONCURRENCY,
   QUEUE_DELAY,
@@ -92,7 +93,7 @@ export function makeApiRequest(
   apiMethod: string,
   accessToken: string,
   payload?: IRequestOptions,
-): (previousResult: any, iteration: number) => Promise<got.Response<object>> {
+): (previousResult: any, iteration: number) => Promise<Fetch.Response<object>> {
   return async (previousResult, retryCount) => {
     if (retryCount > 0) {
       if (retryCount > options.requestMaxRetries) {
@@ -121,18 +122,37 @@ export function makeApiRequest(
     try {
       return (
         refillReservoir() &&
-        (await queue.schedule(async () =>
-          (got as IndexSignature)[httpMethod](`${apiUrl}/api${apiMethod}`, {
+        (await queue.schedule(async () => {
+          const url = `${apiUrl}/api${apiMethod}${
+            payload && payload.query
+              ? '?' + querystring.stringify(payload.query)
+              : ''
+          }`
+
+          const response = await fetch(url, {
+            cache: 'no-cache',
+            credentials: 'omit',
             headers: {
               Authorization: `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
               'user-agent': USER_AGENT,
             },
-            json: true,
-            ...payload,
-          }),
-        ))
+            method: httpMethod.toUpperCase(),
+            mode: 'cors',
+            ...(payload &&
+              payload.body && { body: JSON.stringify(payload.body) }),
+          })
+
+          console.log(url, { response })
+
+          return {
+            body: await response.json(), //.catch(() => ({})), // @TODO: not sure this catch {} is a good idea...
+            statusCode: response.status,
+          }
+        }))
       )
     } catch (error) {
+      console.log('HAHAHAHAAHAHA', error)
       return error
     }
   }
@@ -196,13 +216,7 @@ export default async function request(
 
   if (result instanceof Error) {
     // tslint:disable-next-line:no-expression-statement
-    logger.log(
-      'Request Error',
-      result,
-      // @ts-ignore
-      result.response && result.response.body,
-      payload,
-    )
+    logger.log('Request Error', result, payload)
 
     throw result
   }
