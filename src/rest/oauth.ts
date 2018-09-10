@@ -17,7 +17,8 @@ export const getNewTokenUsingPasswordGrant = memoize(
     password: string,
   ): Promise<string | undefined> => {
     try {
-      const response = await fetch(`${oauthUrl}/oauth/token`, {
+      const url = `${oauthUrl}/oauth/token`
+      const response = await fetch(url, {
         body: querystring.stringify({
           client_id: clientId,
           ...(clientSecret && { client_secret: clientSecret }),
@@ -31,31 +32,32 @@ export const getNewTokenUsingPasswordGrant = memoize(
         headers: {
           // OAuth 2 requires request content-type to be application/x-www-form-urlencoded
           'Content-Type': 'application/x-www-form-urlencoded',
+          accept: 'application/json',
           'user-agent': USER_AGENT,
         },
         method: 'POST',
         mode: 'cors',
       })
 
-      const { access_token: accessToken } = await response.json()
+      const resp = await response.json()
+      console.log(response)
+      if (response.status !== 200) {
+        throw response
+      }
 
-      return accessToken
+      return resp.access_token
     } catch (error) {
-      if (!error.statusCode) {
+      if (!error.status) {
         throw error
       }
 
-      const errorName = `HTTP ${error.statusCode} — ${error.statusMessage}`
+      const errorName = `HTTP ${error.status} — ${error.statusText}`
 
       // tslint:disable-next-line:no-expression-statement
       logger.error(errorName, error.response && error.response.body)
 
       throw new Error(
-        `HTTP ${error.statusCode} — ${error.statusMessage}. ${
-          error.response && error.response.body && error.response.body.message
-            ? `OAuth ${error.response.body.message}`
-            : ''
-        }`,
+        `HTTP ${error.status} — ${error.statusText}. Could not get token`,
       )
     }
   },

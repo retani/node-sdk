@@ -12,7 +12,7 @@ describe('Rest API Client', () => {
     expect(typeof client).toBe('object')
   })
 
-  it('should use accessToken when provided in options object', async () => {
+  it.only('should use accessToken when provided in options object', async () => {
     const client = restClient({
       accessToken: mockAccessToken,
       clientId: mockClientId,

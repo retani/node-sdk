@@ -1,5 +1,5 @@
 import Bottleneck from 'bottleneck'
-//import fetch from 'cross-fetch'
+import fetch from 'cross-fetch'
 import querystring from 'query-string'
 import {
   QUEUE_CONCURRENCY,
