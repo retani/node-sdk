@@ -19,6 +19,8 @@ describe('Rest API Client', () => {
       clientSecret: '',
     })
 
+    const asd = await client.get('/v1/me')
+    console.log(asd)
     await expect(client.get('/v1/me')).rejects.toThrow()
   })
 

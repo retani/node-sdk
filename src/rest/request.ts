@@ -135,6 +135,7 @@ export function makeApiRequest(
             headers: {
               Authorization: `Bearer ${accessToken}`,
               'Content-Type': 'application/json',
+              accept: 'application/json',
               'user-agent': USER_AGENT,
             },
             method: httpMethod.toUpperCase(),
@@ -143,16 +144,18 @@ export function makeApiRequest(
               payload.body && { body: JSON.stringify(payload.body) }),
           })
 
-          console.log(url, { response })
+          if (response.status === 404) {
+            throw new Error('404 Not Found')
+          }
 
           return {
-            body: await response.json(), //.catch(() => ({})), // @TODO: not sure this catch {} is a good idea...
+            body: response.status === 204 ? '' : await response.json(), //.catch(() => ({})), // @TODO: not sure this catch {} is a good idea...
             statusCode: response.status,
           }
         }))
       )
     } catch (error) {
-      console.log('HAHAHAHAAHAHA', error)
+      console.log('HAHAHAHAAHAHA', error.message)
       return error
     }
   }

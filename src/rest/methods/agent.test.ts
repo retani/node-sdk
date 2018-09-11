@@ -17,7 +17,7 @@ const testData = {
 }
 
 describe('agentCreate()', () => {
-  it.only('should be able to create a new agent', async () => {
+  it('should be able to create a new agent', async () => {
     const data = {
       ...testData,
       email: generateId() + '@foobar.test',
