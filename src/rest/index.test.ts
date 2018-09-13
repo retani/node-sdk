@@ -1,5 +1,6 @@
 // tslint:disable:no-expression-statement
 import restClient from '.'
+import { getNewTokenUsingImplicitFlow } from './oauth'
 
 const mockAccessToken = 'foobar-token'
 const mockClientId = 'foobar-clientId'
@@ -65,6 +66,25 @@ describe('Rest API Client', () => {
   })
 
   it('should throw error when unable to get access token', async () => {
+    const client = restClient({
+      accessToken: undefined,
+      password: undefined,
+      username: undefined,
+    })
+
+    await expect(
+      client.appCreate('foobar', { name: 'foobar', siteUrl: 'foobar.test' }),
+    ).rejects.toThrow('Issue getting OAuth2 authentication token.')
+  })
+
+  it.only('should get an access token from implicit grant flow, then create restclient', async () => {
+    const accessToken = await getNewTokenUsingImplicitFlow(
+      'https://accounts.allthings.me/oauth',
+      process.env.ALLTHINGS_OAUTH_CLIENT_ID as string,
+      'https://api-doc.dev.allthings.me/o2c.htm',
+    )
+
+    console.log('access token was', accessToken)
     const client = restClient({
       accessToken: undefined,
       password: undefined,

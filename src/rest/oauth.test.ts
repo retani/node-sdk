@@ -1,5 +1,8 @@
 // tslint:disable:no-expression-statement
-import { getNewTokenUsingPasswordGrant } from './oauth'
+import {
+  getNewTokenUsingImplicitFlow,
+  getNewTokenUsingPasswordGrant,
+} from './oauth'
 
 describe('getNewTokenUsingPasswordGrant()', () => {
   it('should return a token given valid credentials', async () => {
@@ -38,5 +41,16 @@ describe('getNewTokenUsingPasswordGrant()', () => {
     await expect(
       getNewTokenUsingPasswordGrant('foobarHost', '', '', '', ''),
     ).rejects.toThrow('ENOTFOUND')
+  })
+
+  it.only('should return a token given valid credentials', async () => {
+    console.log(global.window)
+    const accessToken = await getNewTokenUsingImplicitFlow(
+      'https://accounts.allthings.me/oauth',
+      process.env.ALLTHINGS_OAUTH_CLIENT_ID as string,
+      'https://api-doc.dev.allthings.me/o2c.htm',
+    )
+
+    expect(typeof accessToken).toBe('string')
   })
 })
