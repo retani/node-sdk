@@ -25,7 +25,7 @@ export const DEFAULT_API_WRAPPER_OPTIONS: InterfaceAllthingsRestClientOptions = 
   username: process.env.ALLTHINGS_OAUTH_USERNAME,
 }
 
-export const USER_AGENT = `Allthings Node REST Client/${
+export const USER_AGENT = `Allthings Node SDK REST Client/${
   // tslint:disable-next-line no-var-requires
   require('../package.json').version // less than ideal hack
 }`
