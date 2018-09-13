@@ -44,7 +44,15 @@ describe('getNewTokenUsingPasswordGrant()', () => {
   })
 
   it.only('should return a token given valid credentials', async () => {
-    console.log(global.window)
+    // tslint:disable
+    var got = require('got')
+    got.get = jest.fn()
+    got.get.mockReturnValue('hello')
+    // tslint:enable
+
+    console.log(got.get())
+    //const asd =      'https://accounts.allthings.me/oauth/authorize?client_id=56decfea06e2d46b008b456b_33ym85mc88u8o8okcsog8k8k0og8sgowgs48ksggksw84s8gkg&scope=user:profile&response_type=token&redirect_uri=https://api-doc.dev.allthings.me/#!/Assets47ContactPersons/get_assets_contact_persons&state=1'
+    // console.log(global.window)
     const accessToken = await getNewTokenUsingImplicitFlow(
       'https://accounts.allthings.me/oauth',
       process.env.ALLTHINGS_OAUTH_CLIENT_ID as string,
@@ -54,3 +62,9 @@ describe('getNewTokenUsingPasswordGrant()', () => {
     expect(typeof accessToken).toBe('string')
   })
 })
+
+/*
+
+https://accounts.allthings.me/oauth/authorize?client_id=56decfea06e2d46b008b456b_33ym85mc88u8o8okcsog8k8k0og8sgowgs48ksggksw84s8gkg&scope=user:profile&state=1&response_type=token&redirect_uri=https://api-doc.dev.allthings.me/o2c.html
+https%3A%2F%2Fapi-doc.dev.allthings.me%2Fo2c.html&
+*/
