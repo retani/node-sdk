@@ -12,16 +12,16 @@ describe('Rest API Client', () => {
     expect(typeof client).toBe('object')
   })
 
-  it.only('should use accessToken when provided in options object', async () => {
+  it('should use accessToken when provided in options object', async () => {
     const client = restClient({
       accessToken: mockAccessToken,
       clientId: mockClientId,
       clientSecret: '',
     })
 
-    const asd = await client.get('/v1/me')
-    console.log(asd)
-    await expect(client.get('/v1/me')).rejects.toThrow()
+    const response = await client.get('/v1/me')
+    expect(response).toHaveProperty('error')
+    expect(response.error).toBe('invalid_grant')
   })
 
   it('should throw error when apiUrl parameter is not provided', async () => {

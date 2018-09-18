@@ -77,7 +77,7 @@ function refillReservoir(): IntervalSet {
  * _not_ a 503 error.
  */
 export function responseWasSuccessful(result: any): boolean {
-  return ![503].includes(result.statusCode)
+  return ![503].includes(result.status)
 }
 
 /**
@@ -147,15 +147,17 @@ export function makeApiRequest(
           if (response.status === 404) {
             throw new Error('404 Not Found')
           }
+          if (response.status === 503) {
+            return response
+          }
 
           return {
-            body: response.status === 204 ? '' : await response.json(), //.catch(() => ({})), // @TODO: not sure this catch {} is a good idea...
+            body: response.status === 204 ? '' : await response.json(),
             statusCode: response.status,
           }
         }))
       )
     } catch (error) {
-      console.log('HAHAHAHAAHAHA', error.message)
       return error
     }
   }
