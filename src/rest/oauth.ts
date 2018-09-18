@@ -40,7 +40,6 @@ export const getNewTokenUsingPasswordGrant = memoize(
       })
 
       const resp = await response.json()
-
       if (response.status !== 200) {
         throw response
       }
@@ -54,7 +53,7 @@ export const getNewTokenUsingPasswordGrant = memoize(
       const errorName = `HTTP ${error.status} — ${error.statusText}`
 
       // tslint:disable-next-line:no-expression-statement
-      logger.error(errorName, error.response && error.response.body)
+      logger.error(errorName, error.response)
 
       throw new Error(
         `HTTP ${error.status} — ${error.statusText}. Could not get token`,

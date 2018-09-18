@@ -36,7 +36,7 @@ describe('getNewTokenUsingPasswordGrant()', () => {
     ).rejects.toThrow('HTTP 404 — Not Found')
 
     await expect(
-      getNewTokenUsingPasswordGrant('http://foobarHost', '123', '', '', ''),
+      getNewTokenUsingPasswordGrant('http://foobarHost', '', '', '', ''),
     ).rejects.toThrow('ENOTFOUND')
   })
 })

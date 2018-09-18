@@ -8,12 +8,12 @@ describe('Request', () => {
       until(
         () => false,
         makeApiRequest(
-          { requestMaxRetries: 1, requestBackOffInterval: 0 } as any,
+          { requestMaxRetries: 2, requestBackOffInterval: 0 } as any,
           'get',
           '',
           '',
           '',
-          {},
+          { query: {} },
         ),
         { statusCode: 503 },
         1,
