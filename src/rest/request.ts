@@ -50,7 +50,7 @@ const refillIntervalSet: IntervalSet = new Set()
  */
 function refillReservoir(): IntervalSet {
   if (refillIntervalSet.size === 0) {
-    const interval = setInterval(async () => {
+    const interval: NodeJS.Timer = setInterval(async () => {
       const reservoir = (await queue.currentReservoir()) as number
 
       if (queue.empty() && (await queue.running()) === 0 && reservoir > 10) {
@@ -93,7 +93,7 @@ export function makeApiRequest(
   apiMethod: string,
   accessToken: string,
   payload?: IRequestOptions,
-): (previousResult: any, iteration: number) => Promise<Fetch.Response<object>> {
+): (previousResult: any, iteration: number) => Promise<Response> {
   return async (previousResult, retryCount) => {
     if (retryCount > 0) {
       if (retryCount > options.requestMaxRetries) {
