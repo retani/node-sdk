@@ -13,7 +13,7 @@ describe('Request', () => {
           '',
           '',
           '',
-          {},
+          { query: {} },
         ),
         { statusCode: 503 },
         1,

@@ -1,45 +1,75 @@
 import commonjs from 'rollup-plugin-commonjs'
 import hashbang from 'rollup-plugin-hashbang'
 import resolve from 'rollup-plugin-node-resolve'
-// import json from 'rollup-plugin-json'
+import json from 'rollup-plugin-json'
+import { terser } from 'rollup-plugin-terser'
+import replace from 'rollup-plugin-replace'
+//import typescript from 'rollup-plugin-typescript'
+import packageJson from './package.json'
 
-const external = ['bottleneck', 'got', 'mem', 'readline', 'shortid']
+const external = ['bottleneck', 'mem', 'readline', 'nanoid']
 
 const plugins = [
-  hashbang(),
   resolve({
-    extensions: ['.js'],
     jsnext: true,
     main: true,
     module: true,
   }),
-  // json({
-  //   indent: '  ',
-  //   preferConst: true,
-  // }),
+  json({
+    indent: '  ',
+    preferConst: true,
+  }),
   commonjs({
-    extensions: ['.js'],
     ignoreGlobal: false,
-    namedExports: { 'node_modules/shortid/index.js': ['generate'] },
     preferBuiltins: true,
     sourceMap: false,
   }),
 ]
 
 export default [
+  // node
   {
     external,
     input: 'dist/src/index.js',
     output: [
-      { file: 'dist/lib.cjs.js', format: 'cjs' },
-      { file: 'dist/lib.es.js', format: 'es' },
+      { file: packageJson.main, format: 'cjs' },
+      { file: packageJson.module, format: 'es' },
     ],
     plugins,
   },
+  // The SDKs CLI
   {
     external,
     input: 'dist/src/cli.js',
     output: [{ file: 'dist/cli.js', format: 'cjs' }],
-    plugins,
+    plugins: [hashbang(), ...plugins],
+  },
+  // For modern browsers
+  {
+    input: 'dist/src/index.js',
+    output: [{ name: 'allthings', file: packageJson.browser, format: 'umd' }],
+    plugins: [
+      //typescript({lib: ["dom", "es2018", "esnext"], target: "es2015"}),
+      resolve({
+        browser: true,
+        jsnext: true,
+        main: true,
+        module: true,
+      }),
+      json({
+        preferConst: true,
+      }),
+      commonjs({
+        ignoreGlobal: false,
+        preferBuiltins: true,
+        sourceMap: false,
+      }),
+      replace({
+        'process.env.NODE_ENV': JSON.stringify('production'),
+        // tslint:disable-next-line:object-literal-sort-keys
+        'process.env': JSON.stringify({}),
+      }),
+      terser(),
+    ],
   },
 ]

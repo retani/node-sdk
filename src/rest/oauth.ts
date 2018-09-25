@@ -1,4 +1,4 @@
-import * as got from 'got'
+import fetch from 'cross-fetch'
 import memoize from 'mem'
 import querystring from 'query-string'
 import { DEFAULT_API_WRAPPER_OPTIONS, USER_AGENT } from '../constants'
@@ -18,42 +18,46 @@ export const getNewTokenUsingPasswordGrant = memoize(
     password: string,
   ): Promise<string | undefined> => {
     try {
-      const {
-        body: { access_token: accessToken },
-      } = await got.post(`${oauthUrl}/oauth/token`, {
-        body: {
+      const url = `${oauthUrl}/oauth/token`
+      const response = await fetch(url, {
+        body: querystring.stringify({
           client_id: clientId,
           ...(clientSecret && { client_secret: clientSecret }),
           grant_type: 'password',
           password,
           scope: 'user:profile',
           username,
-        },
-        // OAuth 2 requires request content-type to be application/x-www-form-urlencoded
-        form: true,
+        }),
+        cache: 'no-cache',
+        credentials: 'omit',
         headers: {
+          // OAuth 2 requires request content-type to be application/x-www-form-urlencoded
+          'Content-Type': 'application/x-www-form-urlencoded',
+          accept: 'application/json',
           'user-agent': USER_AGENT,
         },
-        json: true,
+        method: 'POST',
+        mode: 'cors',
       })
 
-      return accessToken
+      const resp = await response.json()
+      if (response.status !== 200) {
+        throw response
+      }
+
+      return resp.access_token
     } catch (error) {
-      if (!error.statusCode) {
+      if (!error.status) {
         throw error
       }
 
-      const errorName = `HTTP ${error.statusCode} — ${error.statusMessage}`
+      const errorName = `HTTP ${error.status} — ${error.statusText}`
 
       // tslint:disable-next-line:no-expression-statement
-      logger.error(errorName, error.response && error.response.body)
+      logger.error(errorName, error.response)
 
       throw new Error(
-        `HTTP ${error.statusCode} — ${error.statusMessage}. ${
-          error.response && error.response.body && error.response.body.message
-            ? `OAuth ${error.response.body.message}`
-            : ''
-        }`,
+        `HTTP ${error.status} — ${error.statusText}. Could not get token`,
       )
     }
   },

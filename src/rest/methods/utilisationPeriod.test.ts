@@ -73,9 +73,9 @@ describe('utilisationPeriodUpdateById()', () => {
     expect(utilisationPeriod.externalId).toEqual(initialData.externalId)
 
     const updateData = {
-      endDate: '2100-01-01',
+      endDate: '2100-01-02',
       externalId: generateId(),
-      startDate: '2100-01-02',
+      startDate: '2100-01-01',
     }
 
     const result = await client.utilisationPeriodUpdateById(

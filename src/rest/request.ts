@@ -1,5 +1,6 @@
 import Bottleneck from 'bottleneck'
-import * as got from 'got'
+import fetch from 'cross-fetch'
+import querystring from 'query-string'
 import {
   QUEUE_CONCURRENCY,
   QUEUE_DELAY,
@@ -49,7 +50,7 @@ const refillIntervalSet: IntervalSet = new Set()
  */
 function refillReservoir(): IntervalSet {
   if (refillIntervalSet.size === 0) {
-    const interval = setInterval(async () => {
+    const interval: NodeJS.Timer = setInterval(async () => {
       const reservoir = (await queue.currentReservoir()) as number
 
       if (queue.empty() && (await queue.running()) === 0 && reservoir > 10) {
@@ -76,7 +77,7 @@ function refillReservoir(): IntervalSet {
  * _not_ a 503 error.
  */
 export function responseWasSuccessful(result: any): boolean {
-  return ![503].includes(result.statusCode)
+  return ![503].includes(result.status)
 }
 
 /**
@@ -92,7 +93,7 @@ export function makeApiRequest(
   apiMethod: string,
   accessToken: string,
   payload?: IRequestOptions,
-): (previousResult: any, iteration: number) => Promise<got.Response<object>> {
+): (previousResult: any, iteration: number) => Promise<Response> {
   return async (previousResult, retryCount) => {
     if (retryCount > 0) {
       if (retryCount > options.requestMaxRetries) {
@@ -121,16 +122,40 @@ export function makeApiRequest(
     try {
       return (
         refillReservoir() &&
-        (await queue.schedule(async () =>
-          (got as IndexSignature)[httpMethod](`${apiUrl}/api${apiMethod}`, {
+        (await queue.schedule(async () => {
+          const url = `${apiUrl}/api${apiMethod}${
+            payload && payload.query
+              ? '?' + querystring.stringify(payload.query)
+              : ''
+          }`
+
+          const response = await fetch(url, {
+            cache: 'no-cache',
+            credentials: 'omit',
             headers: {
               Authorization: `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+              accept: 'application/json',
               'user-agent': USER_AGENT,
             },
-            json: true,
-            ...payload,
-          }),
-        ))
+            method: httpMethod.toUpperCase(),
+            mode: 'cors',
+            ...(payload &&
+              payload.body && { body: JSON.stringify(payload.body) }),
+          })
+
+          if (response.status === 404) {
+            throw new Error('404 Not Found')
+          }
+          if (response.status === 503) {
+            return response
+          }
+
+          return {
+            body: response.status === 204 ? '' : await response.json(),
+            statusCode: response.status,
+          }
+        }))
       )
     } catch (error) {
       return error
@@ -196,13 +221,7 @@ export default async function request(
 
   if (result instanceof Error) {
     // tslint:disable-next-line:no-expression-statement
-    logger.log(
-      'Request Error',
-      result,
-      // @ts-ignore
-      result.response && result.response.body,
-      payload,
-    )
+    logger.log('Request Error', result, payload)
 
     throw result
   }

@@ -26,7 +26,7 @@ describe('getNewTokenUsingPasswordGrant()', () => {
         '',
         '',
       ),
-    ).rejects.toThrow('HTTP 400 — Bad Request. OAuth')
+    ).rejects.toThrow('HTTP 400 — Bad Request')
 
     await expect(
       getNewTokenUsingPasswordGrant(
@@ -39,7 +39,7 @@ describe('getNewTokenUsingPasswordGrant()', () => {
     ).rejects.toThrow('HTTP 404 — Not Found')
 
     await expect(
-      getNewTokenUsingPasswordGrant('foobarHost', '', '', '', ''),
+      getNewTokenUsingPasswordGrant('http://foobarHost', '', '', '', ''),
     ).rejects.toThrow('ENOTFOUND')
   })
 

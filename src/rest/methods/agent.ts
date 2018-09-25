@@ -1,4 +1,4 @@
-import { generate as generateId } from 'shortid'
+import generateId from 'nanoid'
 import { EnumLocale, InterfaceAllthingsRestClient } from '../types'
 import {
   EnumUserPermissionObjectType,
