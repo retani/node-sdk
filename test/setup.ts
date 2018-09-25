@@ -14,8 +14,6 @@ process.env.ALLTHINGS_OAUTH_PASSWORD =
 
 process.env.ALLTHINGS_REST_API_URL = 'https://api.dev.allthings.me'
 process.env.ALLTHINGS_OAUTH_URL = 'https://accounts.dev.allthings.me'
-global.window = ''
-
 // tslint:enable no-object-mutation
 
 jest.setTimeout(1000 * 60 * 5)

@@ -1,8 +1,9 @@
 import * as got from 'got'
 import memoize from 'mem'
-import * as querystring from 'querystring'
-import { USER_AGENT } from '../constants'
+import querystring from 'query-string'
+import { DEFAULT_API_WRAPPER_OPTIONS, USER_AGENT } from '../constants'
 import makeLogger from '../utils/logger'
+import { InterfaceAllthingsRestClientOptions } from './types'
 
 const logger = makeLogger('API Request')
 
@@ -59,67 +60,39 @@ export const getNewTokenUsingPasswordGrant = memoize(
   MEMOIZE_OPTIONS,
 )
 
+export const unmemoizedGetNewTokenUsingImplicitFlow = async (
+  clientOptions: InterfaceAllthingsRestClientOptions,
+): Promise<string | undefined> => {
+  const redirectUri = window.location.origin
+  const payload = querystring.parse(window.location.hash)
+  const accessToken = payload && payload.access_token
+
+  console.log(window)
+  const oauthUrl = `${clientOptions.oauthUrl}/authorize?${querystring.stringify(
+    {
+      client_id: DEFAULT_API_WRAPPER_OPTIONS.clientId,
+      redirect_uri: redirectUri,
+      response_type: 'token',
+      scope: 'user:profile',
+      state: 1,
+    },
+  )}`
+
+  if (!accessToken) {
+    window.location = oauthUrl
+
+    return undefined
+  }
+
+  console.log(window)
+
+  window.location.hash = ''
+
+  return accessToken
+}
+
 export const getNewTokenUsingImplicitFlow = memoize(
-  async (
-    oauthUrl: string,
-    clientId: string,
-    redirectUri: string,
-  ): Promise<string | undefined> => {
-    try {
-      const url = `${oauthUrl}/authorize?${querystring.stringify({
-        client_id: clientId,
-        //  grant_type: 'token',
-        redirect_uri: redirectUri,
-        // referrer: 'oauth/authorize',
-        response_type: 'token',
-        scope: 'user:profile',
-        state: 1,
-      })}`
-      console.log(url)
-      const respo = await got.get(url, {
-        // OAuth 2 requires request content-type to be application/x-www-form-urlencoded
-        form: true,
-        headers: {
-          'user-agent': USER_AGENT,
-        },
-        json: true,
-      })
-      console.log(respo)
-      const asdasd = 'asdewiqsdfdfgsdfmklgjsjeorawefv#access_token=123234123'
-      //asdasd.split(#)[-1]
-
-      console.log(
-        asdasd
-          .split('#')
-          .slice(-1)[0]
-          .split('=')
-          .slice(-1)[0],
-      )
-
-      //const payload = querystring.parse(respo.hash)
-      //const accessToken = payload && payload.access_token
-      return 'aasd'
-      //  return accessToken
-    } catch (error) {
-      if (!error.statusCode) {
-        throw error
-      }
-
-      const errorName = `HTTP ${error.statusCode} — ${error.statusMessage}`
-
-      // tslint:disable-next-line:no-expression-statement
-      logger.error(errorName, error.response && error.response.body)
-
-      console.log(error)
-      throw new Error(
-        `HTTP ${error.statusCode} — ${error.statusMessage}. ${
-          error.response && error.response.body && error.response.body.message
-            ? `OAuth ${error.response.body.message}`
-            : ''
-        }`,
-      )
-    }
-  },
+  unmemoizedGetNewTokenUsingImplicitFlow,
   MEMOIZE_OPTIONS,
 )
 
