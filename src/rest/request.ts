@@ -11,7 +11,10 @@ import {
 import { until } from '../utils/functional'
 import makeLogger from '../utils/logger'
 import sleep from '../utils/sleep'
-import { getNewTokenUsingPasswordGrant } from './oauth'
+import {
+  getNewTokenUsingImplicitFlow,
+  getNewTokenUsingPasswordGrant,
+} from './oauth'
 import { InterfaceAllthingsRestClientOptions } from './types'
 
 const logger = makeLogger('REST API Request')
@@ -196,7 +199,9 @@ export default async function request(
           username,
           password,
         )
-      : maybeAccessToken
+      : maybeAccessToken ||
+        (typeof window !== 'undefined' &&
+          (await getNewTokenUsingImplicitFlow(options)))
 
   if (!accessToken) {
     throw new Error('Issue getting OAuth2 authentication token.')

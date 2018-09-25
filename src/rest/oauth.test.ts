@@ -1,8 +1,9 @@
 // tslint:disable:no-expression-statement
 import {
-  getNewTokenUsingImplicitFlow,
   getNewTokenUsingPasswordGrant,
+  unmemoizedGetNewTokenUsingImplicitFlow,
 } from './oauth'
+import { InterfaceAllthingsRestClientOptions } from './types'
 
 describe('getNewTokenUsingPasswordGrant()', () => {
   it('should return a token given valid credentials', async () => {
@@ -43,68 +44,40 @@ describe('getNewTokenUsingPasswordGrant()', () => {
     ).rejects.toThrow('ENOTFOUND')
   })
 
-  it.only('should return a token given valid credentials', async () => {
-    /* const mockFetch = jest.fn()
-    const mockJson = jest.fn()
-
-    //  window.location.origin
-    const REDIRECT_URL = 'https://codesandbox.testio/s/3ykzjvx2n5'
-    // /const OAUTH_URL = `https://accounts.allthings.me/oauth/authorize?client_id=${OAUTH_CLIENT}&scope=user:profile&response_type=token&redirect_uri=${REDIRECT_URL}&state=1`
+  it('should return a token given valid credentials', async () => {
+    const clientOptions: InterfaceAllthingsRestClientOptions = {
+      apiUrl: '',
+      clientId: process.env.client_id,
+      clientSecret: '',
+      oauthUrl: 'https://accounts.dev.allthings.me/oauth',
+      password: '',
+      requestBackOffInterval: 0,
+      requestMaxRetries: 0,
+      username: '',
+    }
 
     // tslint:disable no-object-mutation
-
+    global.window = {
+      location: { hash: '', href: '', origin: '' },
+    }
+    global.window.location.origin = 'https://codesandbox.testio/s/3ykzjvx2n5'
     // tslint:enable no-object-mutation
 
-    jest.doMock('cross-fetch', () => {
-      mockJson.mockResolvedValueOnce({ accessToken: '123 Welt' })
-      mockFetch.mockResolvedValue({
-        url: 'https://api-doc.dev.allthings.me/o2c.htm#accessToken=123',
-      })
+    const token = await unmemoizedGetNewTokenUsingImplicitFlow(clientOptions)
 
-      return mockFetch
-    })
-
-    jest.resetModules()
-    jest.resetAllMocks()*/
-    const oauth = require('./oauth')
-
-    global.window = { location: { hash: '', origin: '' } }
-    global.window.location.origin = 'https://codesandbox.testio/s/3ykzjvx2n5'
-    console.log(global.window.location.origin)
-
-    const token = await oauth.unmemoizedGetNewTokenUsingImplicitFlow({
-      clientId: process.env.client_id,
-      clientSecret: '',
-      oauthUrl: 'https://accounts.dev.allthings.me/oauth',
-      password: '',
-      username: '',
-    })
-
-    console.log(token)
-    global.window = { location: { hash: '', origin: '' } }
+    expect(token).toBe(undefined)
+    // tslint:disable no-object-mutation
+    global.window = {
+      location: { hash: '', href: '', origin: '' },
+    }
     global.window.location.hash =
       'access_token=fa778460246d25857234aff086a82fc0e83f6f1f'
+    // tslint:enable no-object-mutation
 
-    console.log(window.location)
+    const accessToken = await unmemoizedGetNewTokenUsingImplicitFlow(
+      clientOptions,
+    )
 
-    const token23 = await oauth.unmemoizedGetNewTokenUsingImplicitFlow({
-      clientId: process.env.client_id,
-      clientSecret: '',
-      oauthUrl: 'https://accounts.dev.allthings.me/oauth',
-      password: '',
-      username: '',
-    })
-
-    console.log(token23)
-    /*  expect(typeof responseUrl).toBe('string')
-    expect(responseUrl).toBe(
-      'https://api-doc.dev.allthings.me/o2c.htm#accessToken=123',
-    )*/
+    expect(accessToken).toBe('fa778460246d25857234aff086a82fc0e83f6f1f')
   })
 })
-
-/*
-
-https://accounts.allthings.me/oauth/authorize?client_id=56decfea06e2d46b008b456b_33ym85mc88u8o8okcsog8k8k0og8sgowgs48ksggksw84s8gkg&scope=user:profile&state=1&response_type=token&redirect_uri=https://api-doc.dev.allthings.me/o2c.html
-https%3A%2F%2Fapi-doc.dev.allthings.me%2Fo2c.html&
-*/
