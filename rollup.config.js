@@ -47,9 +47,7 @@ export default [
   // For modern browsers
   {
     input: 'dist/src/index.js',
-    output: [
-      { name: 'allthings-sdk', file: packageJson.browser, format: 'umd' },
-    ],
+    output: [{ name: 'allthings', file: packageJson.browser, format: 'umd' }],
     plugins: [
       //typescript({lib: ["dom", "es2018", "esnext"], target: "es2015"}),
       resolve({

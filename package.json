@@ -1,6 +1,6 @@
 {
   "name": "@allthings/sdk",
-  "version": "0.1.0-19",
+  "version": "0.1.0-22",
   "description": "",
   "author": "Allthings GmbH",
   "maintainers": [
@@ -27,7 +27,8 @@
   "browser": "dist/lib.umd.min.js",
   "types": "dist/src/index.d.ts",
   "files": [
-    "dist/"
+    "dist/*.js",
+    "dist/**/*.d.ts"
   ],
   "bin": {
     "allthings": "dist/cli.js"
@@ -42,7 +43,7 @@
     "lint:tslint": "tslint -p tsconfig.json -t stylish",
     "lint:tsc": "tsc --noEmit --pretty",
     "prebuild": "npm run clean",
-    "build": "tsc -d && cp package.json dist/ && rollup -c",
+    "build": "tsc -d && cp package.json dist/ && rollup -c && rm dist/package.json",
     "dev": "tsc -w",
     "preversion": "git pull && yarn check --integrity && yarn security-check && yarn lint && yarn test",
     "postversion": "git push --tags origin HEAD",
@@ -59,8 +60,7 @@
     "cross-fetch": "2.2.2",
     "mem": "4.0.0",
     "nanoid": "1.2.3",
-    "query-string": "6.1.0",
-    "shortid": "2.2.13"
+    "query-string": "6.1.0"
   },
   "devDependencies": {
     "@allthings/tslint-preset": "1.10.1",
@@ -89,6 +89,7 @@
     "rollup-plugin-replace": "2.0.0",
     "rollup-plugin-terser": "3.0.0",
     "semantic-release": "15.9.12",
+    "shortid": "2.2.13",
     "ts-jest": "23.1.4",
     "tslint": "5.11.0",
     "typescript": "3.0.3"
