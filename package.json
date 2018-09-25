@@ -56,7 +56,7 @@
     "semantic-release": "semantic-release -d"
   },
   "dependencies": {
-    "bottleneck": "2.10.0",
+    "bottleneck": "2.11.0",
     "cross-fetch": "2.2.2",
     "mem": "4.0.0",
     "nanoid": "1.2.3",
