@@ -97,6 +97,7 @@ export interface InterfaceAllthingsRestClientOptions {
   readonly redirectUri?: string
   readonly requestBackOffInterval: number
   readonly requestMaxRetries: number
+  readonly scope?: string
   readonly username?: string
 }
 

@@ -18,6 +18,7 @@ export const getNewTokenUsingPasswordGrant = memoize(
       clientSecret,
       oauthUrl,
       password,
+      scope,
       username,
     } = clientOptions
 
@@ -29,7 +30,7 @@ export const getNewTokenUsingPasswordGrant = memoize(
           ...(clientSecret && { client_secret: clientSecret }),
           grant_type: 'password',
           password,
-          scope: 'user:profile',
+          scope,
           username,
         }),
         cache: 'no-cache',
@@ -79,7 +80,7 @@ export const unmemoizedGetNewTokenUsingImplicitFlow = async (
       client_id: clientOptions.clientId,
       redirect_uri: redirectUri,
       response_type: 'token',
-      scope: 'user:profile',
+      scope: clientOptions.scope,
       state: 1,
     },
   )}`

@@ -23,6 +23,7 @@ export const DEFAULT_API_WRAPPER_OPTIONS: InterfaceAllthingsRestClientOptions = 
   password: process.env.ALLTHINGS_OAUTH_PASSWORD,
   requestBackOffInterval: REQUEST_BACK_OFF_INTERVAL,
   requestMaxRetries: REQUEST_MAX_RETRIES,
+  scope: 'user:profile',
   username: process.env.ALLTHINGS_OAUTH_USERNAME,
 }
 
