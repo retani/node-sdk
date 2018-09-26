@@ -94,6 +94,7 @@ export interface InterfaceAllthingsRestClientOptions {
   readonly clientSecret?: string
   readonly oauthUrl: string
   readonly password?: string
+  readonly redirectUri?: string
   readonly requestBackOffInterval: number
   readonly requestMaxRetries: number
   readonly username?: string

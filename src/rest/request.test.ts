@@ -1,4 +1,5 @@
 // tslint:disable:no-expression-statement
+import { DEFAULT_API_WRAPPER_OPTIONS } from '../constants'
 import { until } from '../utils/functional'
 import { getNewTokenUsingPasswordGrant } from './oauth'
 import request, { HttpVerb, makeApiRequest } from './request'
@@ -24,33 +25,17 @@ describe('Request', () => {
   })
 
   it('should get an oauth token on request from implicit grant', async () => {
-    // get a legis access token with the password grant, so we can mock it in the implicit
-    const accessToken = await getNewTokenUsingPasswordGrant(
-      process.env.ALLTHINGS_OAUTH_URL as string,
-      process.env.ALLTHINGS_OAUTH_CLIENT_ID as string,
-      process.env.ALLTHINGS_OAUTH_CLIENT_SECRET as string,
-      process.env.ALLTHINGS_OAUTH_USERNAME as string,
-      process.env.ALLTHINGS_OAUTH_PASSWORD as string,
-    )
+    // get a legit access token with the password grant, so we can mock it in the implicit flow
+    const clientOptions: InterfaceAllthingsRestClientOptions = DEFAULT_API_WRAPPER_OPTIONS
+    const accessToken = await getNewTokenUsingPasswordGrant(clientOptions)
 
-    // tslint:disable no-object-mutation
+    // tslint:disable-next-line:no-object-mutation
     global.window = {
       location: {
         hash: `access_token=${accessToken}`,
         href: '',
         origin: '',
       },
-    }
-    // tslint:enable no-object-mutation
-    const clientOptions: InterfaceAllthingsRestClientOptions = {
-      apiUrl: process.env.ALLTHINGS_REST_API_URL || '',
-      clientId: process.env.client_id,
-      clientSecret: '',
-      oauthUrl: 'https://accounts.dev.allthings.me/oauth',
-      password: '',
-      requestBackOffInterval: 0,
-      requestMaxRetries: 0,
-      username: '',
     }
 
     const response = await request(clientOptions, 'get' as HttpVerb, '/v1/me')
@@ -59,15 +44,16 @@ describe('Request', () => {
     expect(response).toHaveProperty('_embedded')
   })
 
-  it('should get an oauth token on request from implicit grant', async () => {
-    // tslint:disable no-object-mutation
+  it('should redirect to the oauth url in a window context', async () => {
+    // tslint:disable-next-line:no-object-mutation
     global.window = {
       location: { hash: '', href: '', origin: '' },
     }
+
     // tslint:enable no-object-mutation
     const clientOptions: InterfaceAllthingsRestClientOptions = {
       apiUrl: '',
-      clientId: process.env.client_id,
+      clientId: process.env.ALLTHINGS_OAUTH_CLIENT_ID,
       clientSecret: '',
       oauthUrl: 'https://accounts.dev.allthings.me/oauth',
       password: '',
@@ -77,8 +63,9 @@ describe('Request', () => {
     }
 
     await expect(
-      request(clientOptions, 'get' as HttpVerb, 'myapimethod'),
+      request(clientOptions, 'get' as HttpVerb, '/v1/me'),
     ).rejects.toThrow('Issue getting OAuth2 authentication token.')
+
     expect(global.window.location.href).toBeTruthy()
     expect(global.window.location.href).toContain(clientOptions.oauthUrl)
   })

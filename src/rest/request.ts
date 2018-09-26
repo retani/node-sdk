@@ -180,28 +180,12 @@ export default async function request(
   // tslint:disable-next-line:no-expression-statement
   logger.log(httpMethod, apiMethod, payload)
 
-  const {
-    apiUrl,
-    accessToken: maybeAccessToken,
-    clientId,
-    clientSecret,
-    oauthUrl,
-    password,
-    username,
-  } = options
+  const { apiUrl, accessToken: maybeAccessToken } = options
 
   const accessToken =
-    clientId && clientSecret && username && password
-      ? await getNewTokenUsingPasswordGrant(
-          oauthUrl,
-          clientId,
-          clientSecret,
-          username,
-          password,
-        )
-      : maybeAccessToken ||
-        (typeof window !== 'undefined' &&
-          (await getNewTokenUsingImplicitFlow(options)))
+    typeof window === 'undefined'
+      ? maybeAccessToken || (await getNewTokenUsingPasswordGrant(options))
+      : maybeAccessToken || (await getNewTokenUsingImplicitFlow(options))
 
   if (!accessToken) {
     throw new Error('Issue getting OAuth2 authentication token.')

@@ -1,7 +1,7 @@
 import fetch from 'cross-fetch'
 import memoize from 'mem'
 import querystring from 'query-string'
-import { DEFAULT_API_WRAPPER_OPTIONS, USER_AGENT } from '../constants'
+import { USER_AGENT } from '../constants'
 import makeLogger from '../utils/logger'
 import { InterfaceAllthingsRestClientOptions } from './types'
 
@@ -11,12 +11,16 @@ const MEMOIZE_OPTIONS = { cachePromiseRejection: false, maxAge: 3600 * 1000 }
 
 export const getNewTokenUsingPasswordGrant = memoize(
   async (
-    oauthUrl: string,
-    clientId: string,
-    clientSecret: string,
-    username: string,
-    password: string,
+    clientOptions: InterfaceAllthingsRestClientOptions,
   ): Promise<string | undefined> => {
+    const {
+      clientId,
+      clientSecret,
+      oauthUrl,
+      password,
+      username,
+    } = clientOptions
+
     try {
       const url = `${oauthUrl}/oauth/token`
       const response = await fetch(url, {
@@ -67,13 +71,12 @@ export const getNewTokenUsingPasswordGrant = memoize(
 export const unmemoizedGetNewTokenUsingImplicitFlow = async (
   clientOptions: InterfaceAllthingsRestClientOptions,
 ): Promise<string | undefined> => {
-  const redirectUri = window.location.origin
+  const redirectUri = clientOptions.redirectUri || window.location.origin
   const payload = querystring.parse(window.location.hash)
   const accessToken = payload && payload.access_token
-
   const oauthUrl = `${clientOptions.oauthUrl}/authorize?${querystring.stringify(
     {
-      client_id: DEFAULT_API_WRAPPER_OPTIONS.clientId,
+      client_id: clientOptions.clientId,
       redirect_uri: redirectUri,
       response_type: 'token',
       scope: 'user:profile',
