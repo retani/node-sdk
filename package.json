@@ -120,6 +120,13 @@
   "jest": {
     "bail": false,
     "collectCoverage": true,
+    "globals": {
+      "ts-jest": {
+        "diagnostics": {
+          "warnOnly": true
+        }
+      }
+    },
     "roots": [
       "src/"
     ],
