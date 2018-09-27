@@ -1,14 +1,9 @@
 // tslint:disable:no-expression-statement
-import fetch from 'cross-fetch'
 import { DEFAULT_API_WRAPPER_OPTIONS } from '../constants'
 import { until } from '../utils/functional'
 import { getNewTokenUsingPasswordGrant } from './oauth'
 import request, { HttpVerb, makeApiRequest } from './request'
 import { InterfaceAllthingsRestClientOptions } from './types'
-
-jest.mock('cross-fetch')
-
-const mockFetch = fetch as any
 
 describe('Request', () => {
   it('should throw when options.requestMaxRetries reached', async () => {
@@ -75,13 +70,20 @@ describe('Request', () => {
   })
 
   it('should throw when response is not JSON or HTTP 204', async () => {
+    jest.resetModules()
+    jest.resetAllMocks()
+    jest.mock('cross-fetch')
+
+    const mockFetch = require('cross-fetch').default
+    const mockMakeApiRequest = require('./request').makeApiRequest
+
     mockFetch.mockResolvedValueOnce({
       headers: new Map([['content-type', 'text/html']]),
       ok: true,
       status: 200,
     })
 
-    const error = await makeApiRequest(
+    const error = await mockMakeApiRequest(
       DEFAULT_API_WRAPPER_OPTIONS,
       'get',
       DEFAULT_API_WRAPPER_OPTIONS.oauthUrl,
