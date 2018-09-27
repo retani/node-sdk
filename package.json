@@ -1,6 +1,6 @@
 {
   "name": "@allthings/sdk",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "author": "Allthings GmbH",
   "maintainers": [
@@ -59,7 +59,7 @@
     "bottleneck": "2.11.0",
     "cross-fetch": "2.2.2",
     "mem": "4.0.0",
-    "nanoid": "1.2.3",
+    "nanoid": "1.2.4",
     "query-string": "6.1.0"
   },
   "devDependencies": {
@@ -90,7 +90,7 @@
     "rollup-plugin-terser": "3.0.0",
     "semantic-release": "15.9.16",
     "shortid": "2.2.13",
-    "ts-jest": "23.10.1",
+    "ts-jest": "23.10.2",
     "tslint": "5.11.0",
     "typescript": "3.0.3"
   },
