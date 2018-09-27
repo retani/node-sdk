@@ -59,7 +59,7 @@
     "bottleneck": "2.11.0",
     "cross-fetch": "2.2.2",
     "mem": "4.0.0",
-    "nanoid": "1.2.3",
+    "nanoid": "1.2.4",
     "query-string": "6.1.0"
   },
   "devDependencies": {
