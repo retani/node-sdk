@@ -76,8 +76,8 @@ function refillReservoir(): IntervalSet {
  * Determine if the result was successful. Here, successful means
  * _not_ a 503 error.
  */
-export function responseWasSuccessful(result: any): boolean {
-  return ![503].includes(result.status)
+export function responseWasSuccessful(response: any): boolean {
+  return ![503].includes(response.status)
 }
 
 /**
@@ -144,11 +144,26 @@ export function makeApiRequest(
               payload.body && { body: JSON.stringify(payload.body) }),
           })
 
-          if (response.status === 404) {
-            throw new Error('404 Not Found')
-          }
+          // Retry 503s as it was likely a rate-limited request
           if (response.status === 503) {
             return response
+          }
+
+          if (!response.ok) {
+            return new Error(`${response.status} ${response.statusText}`)
+          }
+
+          // The API only returns JSON, so if it's something else there was
+          // probably an error.
+          if (
+            response.headers.get('content-type') !== 'application/json' &&
+            response.status !== 204
+          ) {
+            return new Error(
+              `Response content type was "${response.headers.get(
+                'content-type',
+              )}" but expected JSON`,
+            )
           }
 
           return {
