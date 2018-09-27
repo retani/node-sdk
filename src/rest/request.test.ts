@@ -52,14 +52,8 @@ describe('Request', () => {
 
     // tslint:enable no-object-mutation
     const clientOptions: InterfaceAllthingsRestClientOptions = {
+      ...DEFAULT_API_WRAPPER_OPTIONS,
       apiUrl: '',
-      clientId: process.env.ALLTHINGS_OAUTH_CLIENT_ID,
-      clientSecret: '',
-      oauthUrl: 'https://accounts.dev.allthings.me/oauth',
-      password: '',
-      requestBackOffInterval: 0,
-      requestMaxRetries: 0,
-      username: '',
     }
 
     await expect(

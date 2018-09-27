@@ -16,15 +16,16 @@ describe('getNewTokenUsingPasswordGrant()', () => {
   })
 
   it('should throw given invalid credentials', async () => {
-    const clientOptions: InterfaceAllthingsRestClientOptions = {
-      apiUrl: '',
+    const idSecretUserPass = {
       clientId: '',
       clientSecret: '',
-      oauthUrl: process.env.ALLTHINGS_OAUTH_URL || '',
       password: '',
-      requestBackOffInterval: 0,
-      requestMaxRetries: 0,
       username: '',
+    }
+
+    const clientOptions: InterfaceAllthingsRestClientOptions = {
+      ...DEFAULT_API_WRAPPER_OPTIONS,
+      ...idSecretUserPass,
     }
 
     await expect(getNewTokenUsingPasswordGrant(clientOptions)).rejects.toThrow(
@@ -32,14 +33,9 @@ describe('getNewTokenUsingPasswordGrant()', () => {
     )
 
     const clientOptions2: InterfaceAllthingsRestClientOptions = {
-      apiUrl: '',
-      clientId: '',
-      clientSecret: '',
+      ...DEFAULT_API_WRAPPER_OPTIONS,
+      ...idSecretUserPass,
       oauthUrl: `${process.env.ALLTHINGS_OAUTH_URL}/foobar` || '',
-      password: '',
-      requestBackOffInterval: 0,
-      requestMaxRetries: 0,
-      username: '',
     }
 
     await expect(getNewTokenUsingPasswordGrant(clientOptions2)).rejects.toThrow(
@@ -47,14 +43,9 @@ describe('getNewTokenUsingPasswordGrant()', () => {
     )
 
     const clientOptions3: InterfaceAllthingsRestClientOptions = {
-      apiUrl: '',
-      clientId: '',
-      clientSecret: '',
+      ...DEFAULT_API_WRAPPER_OPTIONS,
+      ...idSecretUserPass,
       oauthUrl: 'http://foobarHost',
-      password: '',
-      requestBackOffInterval: 0,
-      requestMaxRetries: 0,
-      username: '',
     }
 
     await expect(getNewTokenUsingPasswordGrant(clientOptions3)).rejects.toThrow(
@@ -65,16 +56,7 @@ describe('getNewTokenUsingPasswordGrant()', () => {
 
 describe('getNewTokenUsingImplicitFlow()', () => {
   it('should return a token given valid credentials', async () => {
-    const clientOptions: InterfaceAllthingsRestClientOptions = {
-      apiUrl: '',
-      clientId: process.env.client_id,
-      clientSecret: '',
-      oauthUrl: 'https://accounts.dev.allthings.me/oauth',
-      password: '',
-      requestBackOffInterval: 0,
-      requestMaxRetries: 0,
-      username: '',
-    }
+    const clientOptions: InterfaceAllthingsRestClientOptions = DEFAULT_API_WRAPPER_OPTIONS
 
     // tslint:disable-next-line no-object-mutation
     global.window = {
