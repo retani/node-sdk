@@ -72,18 +72,18 @@ export const getNewTokenUsingPasswordGrant = memoize(
 export const unmemoizedGetNewTokenUsingImplicitFlow = async (
   clientOptions: InterfaceAllthingsRestClientOptions,
 ): Promise<string | undefined> => {
-  const redirectUri = clientOptions.redirectUri || window.location.origin
+  const redirectUri = clientOptions.redirectUri || window.location
   const payload = querystring.parse(window.location.hash)
   const accessToken = payload && payload.access_token
-  const oauthUrl = `${clientOptions.oauthUrl}/authorize?${querystring.stringify(
-    {
-      client_id: clientOptions.clientId,
-      redirect_uri: redirectUri,
-      response_type: 'token',
-      scope: clientOptions.scope,
-      state: 1,
-    },
-  )}`
+  const oauthUrl = `${
+    clientOptions.oauthUrl
+  }/oauth/authorize?${querystring.stringify({
+    client_id: clientOptions.clientId,
+    redirect_uri: redirectUri,
+    response_type: 'token',
+    scope: clientOptions.scope,
+    state: 1,
+  })}`
 
   if (!accessToken) {
     // tslint:disable-next-line:no-expression-statement no-object-mutation
