@@ -198,9 +198,10 @@ export default async function request(
   const { apiUrl, accessToken: maybeAccessToken } = options
 
   const accessToken =
-    typeof window === 'undefined'
-      ? maybeAccessToken || (await getNewTokenUsingPasswordGrant(options))
-      : maybeAccessToken || (await getNewTokenUsingImplicitFlow(options))
+    maybeAccessToken ||
+    (typeof window !== 'undefined'
+      ? await getNewTokenUsingImplicitFlow(options)
+      : await getNewTokenUsingPasswordGrant(options))
 
   if (!accessToken) {
     throw new Error('Issue getting OAuth2 authentication token.')
