@@ -24,6 +24,7 @@ export const DEFAULT_API_WRAPPER_OPTIONS: InterfaceAllthingsRestClientOptions = 
   requestBackOffInterval: REQUEST_BACK_OFF_INTERVAL,
   requestMaxRetries: REQUEST_MAX_RETRIES,
   scope: 'user:profile',
+  state: '1',
   username: process.env.ALLTHINGS_OAUTH_USERNAME,
 }
 

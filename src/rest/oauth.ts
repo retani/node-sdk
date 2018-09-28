@@ -82,7 +82,7 @@ export const unmemoizedGetNewTokenUsingImplicitFlow = async (
     redirect_uri: redirectUri,
     response_type: 'token',
     scope: clientOptions.scope,
-    state: 1,
+    state: clientOptions.state,
   })}`
 
   if (!accessToken) {

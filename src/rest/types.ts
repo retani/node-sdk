@@ -98,6 +98,7 @@ export interface InterfaceAllthingsRestClientOptions {
   readonly requestBackOffInterval: number
   readonly requestMaxRetries: number
   readonly scope?: string
+  readonly state?: string
   readonly username?: string
 }
 
