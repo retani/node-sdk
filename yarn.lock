@@ -360,9 +360,13 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@10.11.0":
+"@types/node@*":
   version "10.11.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.0.tgz#ddd0d67a3b6c3810dd1a59e36675fa82de5e19ae"
+
+"@types/node@10.11.2":
+  version "10.11.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.2.tgz#59508b88ce90fe2742f7b8414c6f5db3e359570d"
 
 "@types/query-string@6.1.0":
   version "6.1.0"
@@ -831,7 +835,11 @@ boom@5.x.x:
   dependencies:
     hoek "4.x.x"
 
-bottleneck@2.11.0, bottleneck@^2.0.1:
+bottleneck@2.11.1:
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/bottleneck/-/bottleneck-2.11.1.tgz#432d075ea2ee74802666f2556f0f07f12a84e618"
+
+bottleneck@^2.0.1:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/bottleneck/-/bottleneck-2.11.0.tgz#d91e194ef071ddb88312f13454405e52067ea9cc"
 
