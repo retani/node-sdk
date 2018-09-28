@@ -1,6 +1,6 @@
 {
   "name": "@allthings/sdk",
-  "version": "0.3.0-1",
+  "version": "0.3.0",
   "description": "",
   "author": "Allthings GmbH",
   "maintainers": [
@@ -54,7 +54,7 @@
     "upgrade-dependencies": "yarn upgrade-interactive --latest --exact",
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "semantic-release": "semantic-release -d",
-    "serve":"npx serve -l 3333",
+    "serve": "npx serve -l 3333",
     "test:implicit-flow": "open http://localhost:3333/test/fixtures/implicit-flow?clientId=$ALLTHINGS_OAUTH_CLIENT_ID"
   },
   "dependencies": {
