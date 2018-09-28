@@ -3,6 +3,7 @@ import memoize from 'mem'
 import querystring from 'query-string'
 import { USER_AGENT } from '../constants'
 import makeLogger from '../utils/logger'
+import { InterfaceAllthingsRestClientOptions } from './types'
 
 const logger = makeLogger('API Request')
 
@@ -10,12 +11,17 @@ const MEMOIZE_OPTIONS = { cachePromiseRejection: false, maxAge: 3600 * 1000 }
 
 export const getNewTokenUsingPasswordGrant = memoize(
   async (
-    oauthUrl: string,
-    clientId: string,
-    clientSecret: string,
-    username: string,
-    password: string,
+    clientOptions: InterfaceAllthingsRestClientOptions,
   ): Promise<string | undefined> => {
+    const {
+      clientId,
+      clientSecret,
+      oauthUrl,
+      password,
+      scope,
+      username,
+    } = clientOptions
+
     try {
       const url = `${oauthUrl}/oauth/token`
       const response = await fetch(url, {
@@ -24,7 +30,7 @@ export const getNewTokenUsingPasswordGrant = memoize(
           ...(clientSecret && { client_secret: clientSecret }),
           grant_type: 'password',
           password,
-          scope: 'user:profile',
+          scope,
           username,
         }),
         cache: 'no-cache',
@@ -60,5 +66,39 @@ export const getNewTokenUsingPasswordGrant = memoize(
       )
     }
   },
+  MEMOIZE_OPTIONS,
+)
+
+export const unmemoizedGetNewTokenUsingImplicitFlow = async (
+  clientOptions: InterfaceAllthingsRestClientOptions,
+): Promise<string | undefined> => {
+  const redirectUri = clientOptions.redirectUri || window.location
+  const payload = querystring.parse(window.location.hash)
+  const accessToken = payload && payload.access_token
+  const oauthUrl = `${
+    clientOptions.oauthUrl
+  }/oauth/authorize?${querystring.stringify({
+    client_id: clientOptions.clientId,
+    redirect_uri: redirectUri,
+    response_type: 'token',
+    scope: clientOptions.scope,
+    state: clientOptions.state,
+  })}`
+
+  if (!accessToken) {
+    // tslint:disable-next-line:no-expression-statement no-object-mutation
+    window.location.href = oauthUrl
+
+    return undefined
+  }
+
+  // tslint:disable-next-line:no-expression-statement no-object-mutation
+  window.location.hash = ''
+
+  return accessToken
+}
+
+export const getNewTokenUsingImplicitFlow = memoize(
+  unmemoizedGetNewTokenUsingImplicitFlow,
   MEMOIZE_OPTIONS,
 )

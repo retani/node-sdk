@@ -73,6 +73,6 @@ describe('Rest API Client', () => {
 
     await expect(
       client.appCreate('foobar', { name: 'foobar', siteUrl: 'foobar.test' }),
-    ).rejects.toThrow('Issue getting OAuth2 authentication token.')
+    ).rejects.toThrow('Could not get token')
   })
 })

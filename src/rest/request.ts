@@ -11,7 +11,10 @@ import {
 import { until } from '../utils/functional'
 import makeLogger from '../utils/logger'
 import sleep from '../utils/sleep'
-import { getNewTokenUsingPasswordGrant } from './oauth'
+import {
+  getNewTokenUsingImplicitFlow,
+  getNewTokenUsingPasswordGrant,
+} from './oauth'
 import { InterfaceAllthingsRestClientOptions } from './types'
 
 const logger = makeLogger('REST API Request')
@@ -192,26 +195,13 @@ export default async function request(
   // tslint:disable-next-line:no-expression-statement
   logger.log(httpMethod, apiMethod, payload)
 
-  const {
-    apiUrl,
-    accessToken: maybeAccessToken,
-    clientId,
-    clientSecret,
-    oauthUrl,
-    password,
-    username,
-  } = options
+  const { apiUrl, accessToken: maybeAccessToken } = options
 
   const accessToken =
-    clientId && clientSecret && username && password
-      ? await getNewTokenUsingPasswordGrant(
-          oauthUrl,
-          clientId,
-          clientSecret,
-          username,
-          password,
-        )
-      : maybeAccessToken
+    maybeAccessToken ||
+    (typeof window !== 'undefined'
+      ? await getNewTokenUsingImplicitFlow(options)
+      : await getNewTokenUsingPasswordGrant(options))
 
   if (!accessToken) {
     throw new Error('Issue getting OAuth2 authentication token.')
