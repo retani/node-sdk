@@ -77,6 +77,7 @@ describe('agentCreatePermissions()', () => {
       agent.id,
       APP_ID,
       EnumUserPermissionObjectType.app,
+      [EnumUserPermissionRole.admin, EnumUserPermissionRole.pinboard],
     )
 
     // appAdminPermission
@@ -105,6 +106,7 @@ describe('agentCreatePermissions()', () => {
       agent.id,
       property.id,
       EnumUserPermissionObjectType.property,
+      [EnumUserPermissionRole.admin, EnumUserPermissionRole.pinboard],
     )
 
     // propertyAdminPermission
