@@ -52,6 +52,7 @@ export enum EnumUserPermissionRole {
   assetAdmin = 'asset-admin',
   assetContact = 'asset-contact-person',
   documents = 'document-admin',
+  externalTicketCollaborator = 'external-ticket-collaborator',
   pinboard = 'community-article-admin',
 }
 
