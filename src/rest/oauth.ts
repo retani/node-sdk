@@ -22,8 +22,9 @@ export const getNewTokenUsingPasswordGrant = memoize(
       username,
     } = clientOptions
 
+    const url = `${oauthUrl}/oauth/token`
+
     try {
-      const url = `${oauthUrl}/oauth/token`
       const response = await fetch(url, {
         body: querystring.stringify({
           client_id: clientId,
@@ -45,12 +46,13 @@ export const getNewTokenUsingPasswordGrant = memoize(
         mode: 'cors',
       })
 
-      const resp = await response.json()
+      const data = await response.json()
+
       if (response.status !== 200) {
         throw response
       }
 
-      return resp.access_token
+      return data.access_token
     } catch (error) {
       if (!error.status) {
         throw error
@@ -62,7 +64,7 @@ export const getNewTokenUsingPasswordGrant = memoize(
       logger.error(errorName, error.response)
 
       throw new Error(
-        `HTTP ${error.status} — ${error.statusText}. Could not get token`,
+        `HTTP ${error.status} — ${error.statusText}. Could not get token.`,
       )
     }
   },
@@ -75,6 +77,7 @@ export const unmemoizedGetNewTokenUsingImplicitFlow = async (
   const redirectUri = clientOptions.redirectUri || window.location
   const payload = querystring.parse(window.location.hash)
   const accessToken = payload && payload.access_token
+
   const oauthUrl = `${
     clientOptions.oauthUrl
   }/oauth/authorize?${querystring.stringify({
@@ -92,8 +95,8 @@ export const unmemoizedGetNewTokenUsingImplicitFlow = async (
     return undefined
   }
 
-  // tslint:disable-next-line:no-expression-statement no-object-mutation
-  window.location.hash = ''
+  // tslint:disable-next-line:no-expression-statement
+  window.history.replaceState({}, undefined, window.location.href.split('#')[0])
 
   return accessToken
 }

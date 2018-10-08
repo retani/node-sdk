@@ -60,6 +60,7 @@ describe('getNewTokenUsingImplicitFlow()', () => {
 
     // tslint:disable-next-line no-object-mutation
     global.window = {
+      history: { replaceState: () => null },
       location: { hash: '', href: '', origin: 'https://foobar.test/foo/bar' },
     }
 
@@ -68,6 +69,7 @@ describe('getNewTokenUsingImplicitFlow()', () => {
     expect(token).toBe(undefined)
     // tslint:disable-next-line no-object-mutation
     global.window = {
+      history: { replaceState: () => null },
       location: {
         hash: 'access_token=fa778460246d25857234aff086a82fc0e83f6f1f',
         href: '',

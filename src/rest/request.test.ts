@@ -32,6 +32,7 @@ describe('Request', () => {
 
     // tslint:disable-next-line:no-object-mutation
     global.window = {
+      history: { replaceState: () => null },
       location: {
         hash: `access_token=${accessToken}`,
         href: '',
@@ -52,6 +53,7 @@ describe('Request', () => {
   it('should redirect to the oauth url in a window context', async () => {
     // tslint:disable-next-line:no-object-mutation
     global.window = {
+      history: { replaceState: () => null },
       location: { hash: '', href: '', origin: '' },
     }
 
