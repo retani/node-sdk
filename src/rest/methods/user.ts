@@ -48,7 +48,7 @@ export type UserResultList = Promise<{
 
 export enum EnumUserPermissionRole {
   admin = 'admin',
-  articlesAdmin = 'article-admin',
+  articleAdmin = 'article-admin',
   assetAdmin = 'asset-admin',
   assetContact = 'asset-contact-person',
   documentAdmin = 'document-admin',
