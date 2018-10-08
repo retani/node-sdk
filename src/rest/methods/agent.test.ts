@@ -77,7 +77,7 @@ describe('agentCreatePermissions()', () => {
       agent.id,
       APP_ID,
       EnumUserPermissionObjectType.app,
-      [EnumUserPermissionRole.admin, EnumUserPermissionRole.pinboard],
+      [EnumUserPermissionRole.admin, EnumUserPermissionRole.pinboardAdmin],
     )
 
     // appAdminPermission
@@ -92,7 +92,9 @@ describe('agentCreatePermissions()', () => {
     expect(appPinboardPermission.objectType).toEqual(
       EnumUserPermissionObjectType.app,
     )
-    expect(appPinboardPermission.role).toEqual(EnumUserPermissionRole.pinboard)
+    expect(appPinboardPermission.role).toEqual(
+      EnumUserPermissionRole.pinboardAdmin,
+    )
 
     const property = await client.propertyCreate(APP_ID, {
       name: generateId(),
@@ -106,7 +108,7 @@ describe('agentCreatePermissions()', () => {
       agent.id,
       property.id,
       EnumUserPermissionObjectType.property,
-      [EnumUserPermissionRole.admin, EnumUserPermissionRole.pinboard],
+      [EnumUserPermissionRole.admin, EnumUserPermissionRole.pinboardAdmin],
     )
 
     // propertyAdminPermission
@@ -122,7 +124,7 @@ describe('agentCreatePermissions()', () => {
       EnumUserPermissionObjectType.property,
     )
     expect(propertyPinboardPermission.role).toEqual(
-      EnumUserPermissionRole.pinboard,
+      EnumUserPermissionRole.pinboardAdmin,
     )
   })
 })
