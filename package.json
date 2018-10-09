@@ -62,7 +62,7 @@
     "cross-fetch": "2.2.2",
     "mem": "4.0.0",
     "nanoid": "1.2.6",
-    "query-string": "6.1.0"
+    "query-string": "6.2.0"
   },
   "devDependencies": {
     "@allthings/tslint-preset": "1.10.1",
