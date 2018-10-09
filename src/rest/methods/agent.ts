@@ -66,6 +66,7 @@ export type MethodAgentCreatePermissions = (
   agentId: string,
   objectId: string,
   objectType: EnumUserPermissionObjectType,
+  permissions: ReadonlyArray<EnumUserPermissionRole>,
 ) => AgentPermissionsResult
 
 /**
@@ -76,19 +77,16 @@ export async function agentCreatePermissions(
   agentId: string,
   objectId: string,
   objectType: EnumUserPermissionObjectType,
+  permissions: ReadonlyArray<EnumUserPermissionRole>,
 ): AgentPermissionsResult {
-  return Promise.all([
-    client.userCreatePermission(agentId, {
-      objectId,
-      objectType,
-      restrictions: [],
-      role: EnumUserPermissionRole.admin,
-    }),
-    client.userCreatePermission(agentId, {
-      objectId,
-      objectType,
-      restrictions: [],
-      role: EnumUserPermissionRole.pinboard,
-    }),
-  ])
+  return Promise.all(
+    permissions.map(async permission =>
+      client.userCreatePermission(agentId, {
+        objectId,
+        objectType,
+        restrictions: [],
+        role: permission,
+      }),
+    ),
+  )
 }
