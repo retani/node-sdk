@@ -58,7 +58,7 @@
     "test:implicit-flow": "open http://localhost:3333/test/fixtures/implicit-flow?clientId=$ALLTHINGS_OAUTH_CLIENT_ID"
   },
   "dependencies": {
-    "bottleneck": "2.12.0",
+    "bottleneck": "2.12.1",
     "cross-fetch": "2.2.2",
     "mem": "4.0.0",
     "nanoid": "1.2.6",
@@ -66,7 +66,7 @@
   },
   "devDependencies": {
     "@allthings/tslint-preset": "1.10.1",
-    "@commitlint/cli": "7.2.0",
+    "@commitlint/cli": "7.2.1",
     "@commitlint/config-conventional": "7.1.2",
     "@types/got": "8.3.4",
     "@types/jest": "23.3.5",
