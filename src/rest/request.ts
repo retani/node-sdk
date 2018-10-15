@@ -20,7 +20,8 @@ import { InterfaceAllthingsRestClientOptions } from './types'
 const logger = makeLogger('REST API Request')
 
 export interface IRequestOptions {
-  readonly body?: { readonly [key: string]: any }
+  readonly body?: FormData | { readonly [key: string]: any }
+  readonly headers?: { readonly [key: string]: any }
   readonly query?: { readonly [parameter: string]: string }
 }
 
@@ -132,19 +133,26 @@ export function makeApiRequest(
               : ''
           }`
 
+          const body = payload && payload.body
+          const isBodyFormData = body && typeof body.append === 'function'
+
+          const requestBody = {
+            body: isBodyFormData ? (body as FormData) : JSON.stringify(body),
+          }
+
           const response = await fetch(url, {
             cache: 'no-cache',
             credentials: 'omit',
             headers: {
               Authorization: `Bearer ${accessToken}`,
-              'Content-Type': 'application/json',
               accept: 'application/json',
+              'content-type': 'application/json',
               'user-agent': USER_AGENT,
+              ...((payload && payload.headers) || {}),
             },
             method: httpMethod.toUpperCase(),
             mode: 'cors',
-            ...(payload &&
-              payload.body && { body: JSON.stringify(payload.body) }),
+            ...(body && requestBody),
           })
 
           // Retry 503s as it was likely a rate-limited request
