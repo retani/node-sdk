@@ -962,10 +962,10 @@ boom@5.x.x:
   dependencies:
     hoek "4.x.x"
 
-bottleneck@2.12.0:
-  version "2.12.0"
-  resolved "https://registry.yarnpkg.com/bottleneck/-/bottleneck-2.12.0.tgz#fd7d62d6ccb7de995fa0b3b54397718b133fadba"
-  integrity sha512-CzWFYKNrZT31beo+Iq5qMGgpS62DiQRYX2HrzWrtIqxtIuf9zQUwOH8launNYJnevlh2xsDHPUpZxC5sKh5wmQ==
+bottleneck@2.12.1:
+  version "2.12.1"
+  resolved "https://registry.yarnpkg.com/bottleneck/-/bottleneck-2.12.1.tgz#7269626c9ab2ce1b206a2fcafe7434b44a1218fc"
+  integrity sha512-wPHlAip5O1Po5AoDIyMRb7K2LgxmkOviAS91wsOgaa3hg0D8tOHuctQdg1F5fWG9Csi1wYQlU6sTSAp2PhejCw==
 
 bottleneck@^2.0.1:
   version "2.11.2"
