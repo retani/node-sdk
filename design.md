@@ -4,18 +4,25 @@
 
 ### Action Verbs
 
-✅delete 
-❌remove
+✅get <br/>
+❌read <br/>
 
-✅update 
-❌change
-❌set
 
-✅create 
-❌generate
+✅delete <br/>
+❌remove <br/>
 
-✅add 
-❌link
+
+✅update <br/>
+❌change <br/>
+❌set <br/>
+
+
+✅create <br/>
+❌generate <br/>
+
+
+✅add <br/>
+❌link<br/>
 
 ### Methods
 
