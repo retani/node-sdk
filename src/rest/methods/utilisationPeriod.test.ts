@@ -120,6 +120,13 @@ describe('utilisationPeriodCheckInUser()', () => {
       { id: usersUtilisationPeriodId },
     ] = await client.userGetUtilisationPeriods(user.id)
 
+    const checkedInUtilisationPeriod = await client.utilisationPeriodFindById(
+      usersUtilisationPeriodId,
+    )
+
+    expect(checkedInUtilisationPeriod._embedded.users[0]).toHaveProperty(
+      'tenantIds',
+    )
     expect(user.id).toEqual(checkedInUserId)
     expect(usersUtilisationPeriodId).toEqual(utilisationPeriod.id)
   })

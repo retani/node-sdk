@@ -63,11 +63,30 @@ export async function utilisationPeriodFindById(
   client: InterfaceAllthingsRestClient,
   utilisationPeriodId: string,
 ): UtilisationPeriodResult {
-  const { tenantIDs: tenantIds, ...result } = await client.get(
+  const { tenantIDs: tenantIds, _embedded, ...result } = await client.get(
     `/v1/utilisation-periods/${utilisationPeriodId}`,
   )
 
-  return { ...result, tenantIds }
+  const embeddedUsers = _embedded.users.map(
+    ({
+      tenantIDs: usersTenantIds,
+      ...rest
+    }: {
+      readonly [key: string]: any
+    }) => ({
+      ...rest,
+      tenantIds: usersTenantIds,
+    }),
+  )
+
+  return {
+    ...result,
+    _embedded: {
+      ..._embedded,
+      users: embeddedUsers,
+    },
+    tenantIds,
+  }
 }
 
 /*
