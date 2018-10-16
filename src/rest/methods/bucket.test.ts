@@ -42,7 +42,7 @@ describe('bucketGet()', () => {
       expect(createBucket.id).not.toBeNull()
       await client.bucketAddFile(createBucket.id, createdFile.id)
       const bucketWithFile = await client.bucketGet(createBucket.id)
-      expect(bucketWithFile.files).not.toContain(createdFile.id)
+      expect(bucketWithFile.files).toContain(createdFile.id)
 
       await client.bucketDeleteFile(createBucket.id, createdFile.id)
       const bucketWithoutFile = await client.bucketGet(createBucket.id)
@@ -84,7 +84,7 @@ describe('bucketGet()', () => {
       const bucketWithoutFile = await client.bucketGet(createBucket.id)
       expect(bucketWithoutFile.files).not.toContain(file1.id)
       expect(bucketWithoutFile.files).not.toContain(file2.id)
-      expect(bucketWithoutFile.files).not.toContain(file3.id)
+      expect(bucketWithoutFile.files).toContain(file3.id)
     })
   })
 })

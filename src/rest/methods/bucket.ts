@@ -55,25 +55,27 @@ export async function bucketAddFile(
 export type MethodBucketDeleteFile = (
   bucketId: string,
   fileId: string,
-) => Promise<string>
+) => Promise<boolean>
 export async function bucketDeleteFile(
   client: InterfaceAllthingsRestClient,
   bucketId: string,
   fileId: string,
-): BucketResult {
-  return client.delete(`/v1/buckets/${bucketId}/files/${fileId}`)
+): Promise<boolean> {
+  return (await client.delete(`/v1/buckets/${bucketId}/files/${fileId}`)) === ''
 }
 
 export type MethodBucketDeleteFilesInPath = (
   bucketId: string,
   data: { readonly path: string },
-) => Promise<string>
+) => Promise<boolean>
 export async function bucketDeleteFilesInPath(
   client: InterfaceAllthingsRestClient,
   bucketId: string,
   data: { readonly path: string },
-): BucketResult {
-  return client.delete(`/v1/buckets/${bucketId}/files`, {
-    folder: data.path,
-  })
+): Promise<boolean> {
+  return (
+    (await client.delete(`/v1/buckets/${bucketId}/files`, {
+      folder: data.path,
+    })) === ''
+  )
 }
