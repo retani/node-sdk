@@ -21,7 +21,7 @@ const logger = makeLogger('REST API Request')
 
 export interface IRequestOptions {
   readonly body?: FormData | { readonly [key: string]: any }
-  readonly headers?: { readonly [key: string]: any }
+  readonly headers?: { readonly [key: string]: string }
   readonly query?: { readonly [parameter: string]: string }
 }
 
