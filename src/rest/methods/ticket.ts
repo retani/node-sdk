@@ -132,13 +132,19 @@ function stringToDate(s: string): Date {
   return new Date(Date.parse(s))
 }
 
-export function mapTicketDateFields(ticket: IPreprocessedTicket): ITicket {
+function mapTicketDateFields({
+  createdAt,
+  customerWaitingSince,
+  lastStatusUpdate,
+  updatedAt,
+  ...ticket
+}: IPreprocessedTicket): ITicket {
   return {
     ...ticket,
-    createdAt: stringToDate(ticket.createdAt),
-    customerWaitingSince: stringToDate(ticket.customerWaitingSince),
-    lastStatusUpdate: stringToDate(ticket.lastStatusUpdate),
-    updatedAt: stringToDate(ticket.updatedAt),
+    createdAt: stringToDate(createdAt),
+    customerWaitingSince: stringToDate(customerWaitingSince),
+    lastStatusUpdate: stringToDate(lastStatusUpdate),
+    updatedAt: stringToDate(updatedAt),
   }
 }
 

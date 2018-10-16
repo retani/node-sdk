@@ -88,10 +88,13 @@ export function mapConversationDateFields(
   }
 }
 
-export function mapMessageDateFields(message: IPreprocessedMessage): IMessage {
+export function mapMessageDateFields({
+  createdAt,
+  ...message
+}: IPreprocessedMessage): IMessage {
   return {
     ...message,
-    createdAt: stringToDate(message.createdAt),
+    createdAt: stringToDate(createdAt),
   }
 }
 

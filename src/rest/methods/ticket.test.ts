@@ -42,7 +42,6 @@ beforeAll(async () => {
 
   const utilisationPeriod = await client.utilisationPeriodCreate(unit.id, {
     endDate: '2050-01-01',
-    externalId: generateId(),
     startDate: '2050-01-01',
   })
 
@@ -99,7 +98,6 @@ describe('ticketUpdateById()', () => {
     const agentData = {
       description: 'Foobar User',
       email: generateId() + '@foobar.test',
-      externalId: generateId(),
       locale: EnumLocale.en_US,
     }
     const agent = await client.agentCreate(
@@ -126,7 +124,6 @@ describe('ticketsGetByUser()', () => {
     const userData = {
       description: 'Foobar User',
       email: generateId() + '@foobar.test',
-      externalId: generateId(),
       locale: EnumLocale.en_US,
     }
     const password = generateId()
@@ -164,7 +161,6 @@ describe('ticketRemoveExternalAgent()', () => {
     const agentData = {
       description: 'Foobar User',
       email: generateId() + '@foobar.test',
-      externalId: generateId(),
       locale: EnumLocale.en_US,
     }
     const agent = await client.agentCreate(
@@ -210,14 +206,12 @@ describe('ticketStatsGetByUser()', () => {
 
     const utilisationPeriod = await client.utilisationPeriodCreate(unit.id, {
       endDate: '2050-01-01',
-      externalId: generateId(),
       startDate: '2050-01-01',
     })
 
     const userData = {
       description: 'Foobar User',
       email: generateId() + '@foobar.test',
-      externalId: generateId(),
       locale: EnumLocale.en_US,
     }
     const password = generateId()
