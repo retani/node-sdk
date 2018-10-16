@@ -107,6 +107,7 @@ describe('userUpdateById()', () => {
     const updateData = {
       externalId: generateId(),
       locale: EnumLocale.de_DE,
+      tenantIds: { appid: '123345' },
     }
 
     const result = await client.userUpdateById(user.id, updateData)

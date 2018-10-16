@@ -77,6 +77,12 @@ export type PartialUserPermission = Partial<IUserPermission>
 
 export type UserPermissionResult = Promise<IUserPermission>
 
+const remapUserResponse = (user: any) => {
+  const { tenantIDs: tenantIds, ...result } = user
+
+  return { ...result, tenantIds }
+}
+
 /*
   Create new user
 */
@@ -120,7 +126,12 @@ export async function getUsers(
   page = 1,
   limit = -1,
 ): UserResultList {
-  return client.get(`/v1/users?page=${page}&limit=${limit}`)
+  const {
+    _embedded: { items: users },
+    total,
+  } = await client.get(`/v1/users?page=${page}&limit=${limit}`)
+
+  return { _embedded: { items: users.map(remapUserResponse) }, total }
 }
 
 /*
@@ -132,7 +143,7 @@ export type MethodGetCurrentUser = () => UserResult
 export async function getCurrentUser(
   client: InterfaceAllthingsRestClient,
 ): UserResult {
-  return client.get('/v1/me')
+  return remapUserResponse(await client.get('/v1/me'))
 }
 
 /*
@@ -145,7 +156,7 @@ export async function userFindById(
   client: InterfaceAllthingsRestClient,
   userId: string,
 ): UserResult {
-  return client.get(`/v1/users/${userId}`)
+  return remapUserResponse(await client.get(`/v1/users/${userId}`))
 }
 
 /*
@@ -162,7 +173,9 @@ export async function userUpdateById(
   userId: string,
   data: PartialUser,
 ): UserResult {
-  return client.patch(`/v1/users/${userId}`, data)
+  const { tenantIds: tenantIDs, ...rest } = data
+
+  return client.patch(`/v1/users/${userId}`, { ...rest, tenantIDs })
 }
 
 /*
