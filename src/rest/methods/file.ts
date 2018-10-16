@@ -47,7 +47,11 @@ export async function fileCreate(
   // tslint:disable-next-line:no-expression-statement
   data.append('path', path || '')
 
-  return client.post('/v1/files', data, data.getHeaders())
+  return client.post(
+    '/v1/files',
+    data,
+    data.getHeaders ? data.getHeaders() : {},
+  )
 }
 
 export type MethodFileDelete = (fileId: string) => string
