@@ -47,9 +47,9 @@ export async function unitCreate(
   Get a unit by its ID
 */
 
-export type MethodUnitFindById = (id: string) => UnitResult
+export type MethodUnitGetById = (id: string) => UnitResult
 
-export async function unitFindById(
+export async function unitGetById(
   client: InterfaceAllthingsRestClient,
   unitId: string,
 ): UnitResult {

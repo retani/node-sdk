@@ -42,7 +42,7 @@ describe('utilisationPeriodCreate()', () => {
   })
 })
 
-describe('utilisationPeriodFindById()', () => {
+describe('utilisationPeriodGetById()', () => {
   it('should be able to get a utilisation period by ID', async () => {
     const data = {
       endDate: '2050-01-02',
@@ -50,7 +50,7 @@ describe('utilisationPeriodFindById()', () => {
       startDate: '2050-01-02',
     }
     const { id } = await client.utilisationPeriodCreate(sharedUnitId, data)
-    const result = await client.utilisationPeriodFindById(id)
+    const result = await client.utilisationPeriodGetById(id)
 
     expect(result.startDate).toEqual(data.startDate)
     expect(result.externalId).toEqual(data.externalId)

@@ -4,22 +4,22 @@ import httpDelete from './delete'
 import httpGet from './get'
 import { agentCreate, agentCreatePermissions } from './methods/agent'
 import { appCreate } from './methods/app'
-import { groupCreate, groupFindById, groupUpdateById } from './methods/group'
+import { groupCreate, groupGetById, groupUpdateById } from './methods/group'
 import { lookupIds } from './methods/idLookup'
 import {
   propertyCreate,
-  propertyFindById,
+  propertyGetById,
   propertyUpdateById,
 } from './methods/property'
 import {
   registrationCodeCreate,
   registrationCodeDelete,
-  registrationCodeFindById,
+  registrationCodeGetById,
 } from './methods/registrationCode'
 import {
   EnumUnitType,
   unitCreate,
-  unitFindById,
+  unitGetById,
   unitUpdateById,
 } from './methods/unit'
 import {
@@ -31,15 +31,15 @@ import {
   userCreate,
   userCreatePermission,
   userDeletePermission,
-  userFindById,
   userFindPermissions,
+  userGetById,
   userGetUtilisationPeriods,
   userUpdateById,
 } from './methods/user'
 import {
   utilisationPeriodCheckInUser,
   utilisationPeriodCreate,
-  utilisationPeriodFindById,
+  utilisationPeriodGetById,
   utilisationPeriodUpdateById,
 } from './methods/utilisationPeriod'
 import httpPatch from './patch'
@@ -63,27 +63,27 @@ const API_METHODS: ReadonlyArray<any> = [
 
   // Group
   groupCreate,
-  groupFindById,
+  groupGetById,
   groupUpdateById,
 
   // Property
   propertyCreate,
-  propertyFindById,
+  propertyGetById,
   propertyUpdateById,
 
   // Registration Code
   registrationCodeCreate,
   registrationCodeDelete,
-  registrationCodeFindById,
+  registrationCodeGetById,
 
   // Unit
   unitCreate,
-  unitFindById,
+  unitGetById,
   unitUpdateById,
 
   // User
   userCreate,
-  userFindById,
+  userGetById,
   userUpdateById,
   userCreatePermission,
   userFindPermissions,
@@ -95,7 +95,7 @@ const API_METHODS: ReadonlyArray<any> = [
 
   // Utilisation Periods
   utilisationPeriodCreate,
-  utilisationPeriodFindById,
+  utilisationPeriodGetById,
   utilisationPeriodUpdateById,
   utilisationPeriodCheckInUser,
 ]

@@ -61,11 +61,11 @@ export async function registrationCodeCreate(
   find a registration code by id
 */
 
-export type MethodRegistrationCodeFindById = (
+export type MethodRegistrationCodeGetById = (
   registrationCodeId: string,
 ) => RegistrationCodeResult
 
-export async function registrationCodeFindById(
+export async function registrationCodeGetById(
   client: InterfaceAllthingsRestClient,
   registrationCodeId: string,
 ): RegistrationCodeResult {

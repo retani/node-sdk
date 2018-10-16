@@ -139,9 +139,9 @@ export async function getCurrentUser(
   Get a user by their ID
 */
 
-export type MethodUserFindById = (id: string) => UserResult
+export type MethodUserGetById = (id: string) => UserResult
 
-export async function userFindById(
+export async function userGetById(
   client: InterfaceAllthingsRestClient,
   userId: string,
 ): UserResult {
@@ -272,7 +272,7 @@ export async function userCheckInToUtilisationPeriod(
   userId: string,
   utilisationPeriodId: string,
 ): UtilisationPeriodResults {
-  const { email: userEmail } = await client.userFindById(userId)
+  const { email: userEmail } = await client.userGetById(userId)
 
   const {
     _embedded: { items: utilisationPeriods },

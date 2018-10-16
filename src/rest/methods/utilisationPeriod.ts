@@ -55,11 +55,11 @@ export async function utilisationPeriodCreate(
   Get a Utilisation Period by its ID
 */
 
-export type MethodUtilisationPeriodFindById = (
+export type MethodUtilisationPeriodGetById = (
   id: string,
 ) => UtilisationPeriodResult
 
-export async function utilisationPeriodFindById(
+export async function utilisationPeriodGetById(
   client: InterfaceAllthingsRestClient,
   utilisationPeriodId: string,
 ): UtilisationPeriodResult {
@@ -109,6 +109,6 @@ export async function utilisationPeriodCheckInUser(
   return (
     (await client.post(`/v1/utilisation-periods/${utilisationPeriodId}/users`, {
       email: data.email,
-    })) && client.utilisationPeriodFindById(utilisationPeriodId)
+    })) && client.utilisationPeriodGetById(utilisationPeriodId)
   )
 }

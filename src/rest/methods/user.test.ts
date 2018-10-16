@@ -67,7 +67,7 @@ describe('userCreate()', () => {
   })
 })
 
-describe('userFindById()', () => {
+describe('userGetById()', () => {
   it('should be able to get a user by their ID', async () => {
     const data = {
       ...testData,
@@ -80,7 +80,7 @@ describe('userFindById()', () => {
       generateId(),
       data,
     )
-    const result = await client.userFindById(id)
+    const result = await client.userGetById(id)
 
     expect(result.email).toEqual(data.email)
     expect(result.externalId).toEqual(data.externalId)

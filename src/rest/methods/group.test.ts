@@ -36,13 +36,13 @@ describe('groupCreate()', () => {
   })
 })
 
-describe('groupFindById()', () => {
+describe('groupGetById()', () => {
   it('should be able to get a group by ID', async () => {
     const property = await client.propertyCreate(APP_ID, testPropertyData)
 
     const data = { ...testData, externalId: generateId() }
     const { id } = await client.groupCreate(property.id, data)
-    const result = await client.groupFindById(id)
+    const result = await client.groupGetById(id)
 
     expect(result.name).toEqual(data.name)
     expect(result.externalId).toEqual(data.externalId)

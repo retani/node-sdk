@@ -37,11 +37,11 @@ describe('unitCreate()', () => {
   })
 })
 
-describe('unitFindById()', () => {
+describe('unitGetById()', () => {
   it('should be able to get a unit by ID', async () => {
     const data = { ...testData, externalId: generateId() }
     const { id } = await client.unitCreate(sharedGroupId, data)
-    const result = await client.unitFindById(id)
+    const result = await client.unitGetById(id)
 
     expect(result.name).toEqual(data.name)
     expect(result.externalId).toEqual(data.externalId)

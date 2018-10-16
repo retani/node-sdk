@@ -35,9 +35,9 @@ export async function propertyCreate(
   https://api-doc.allthings.me/#!/Property/get_properties_propertyID
 */
 
-export type MethodPropertyFindById = (propertyId: string) => PropertyResult
+export type MethodPropertyGetById = (propertyId: string) => PropertyResult
 
-export async function propertyFindById(
+export async function propertyGetById(
   client: InterfaceAllthingsRestClient,
   propertyId: string,
 ): PropertyResult {

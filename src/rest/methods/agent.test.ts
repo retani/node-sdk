@@ -31,7 +31,7 @@ describe('agentCreate()', () => {
       data,
     )
 
-    const result = await client.userFindById(agent.id)
+    const result = await client.userGetById(agent.id)
 
     expect(result.email).toEqual(data.email)
     expect(result.externalId).toEqual(data.externalId)

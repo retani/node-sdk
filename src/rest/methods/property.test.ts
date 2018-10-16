@@ -20,11 +20,11 @@ describe('propertyCreate()', () => {
   })
 })
 
-describe('propertyFindById()', () => {
+describe('propertyGetById()', () => {
   it('should be able to get a property by ID', async () => {
     const data = { ...testData, externalId: generateId() }
     const { id } = await client.propertyCreate(APP_ID, data)
-    const result = await client.propertyFindById(id)
+    const result = await client.propertyGetById(id)
 
     expect(result.name).toEqual(data.name)
     expect(result.externalId).toEqual(data.externalId)

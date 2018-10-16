@@ -99,7 +99,7 @@ describe('registrationCodeCreate()', async () => {
   })
 })
 
-describe('registrationCodeFindById()', async () => {
+describe('registrationCodeGetById()', async () => {
   it('should be able to find a registration code by id', async () => {
     const testExternalId = generateId()
 
@@ -113,7 +113,7 @@ describe('registrationCodeFindById()', async () => {
       },
     )
 
-    const foundRegistrationCode = await client.registrationCodeFindById(
+    const foundRegistrationCode = await client.registrationCodeGetById(
       createdRegistrationCode.id,
     )
 
@@ -146,7 +146,7 @@ describe('registrationCodeDelete()', async () => {
       },
     )
 
-    const foundRegistrationCode = await client.registrationCodeFindById(
+    const foundRegistrationCode = await client.registrationCodeGetById(
       createdRegistrationCode.id,
     )
 
@@ -157,7 +157,7 @@ describe('registrationCodeDelete()', async () => {
       createdRegistrationCode.id,
     )
 
-    const wasRegCodeDeleted = client.registrationCodeFindById(
+    const wasRegCodeDeleted = client.registrationCodeGetById(
       createdRegistrationCode.id,
     )
 

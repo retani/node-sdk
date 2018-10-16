@@ -63,9 +63,9 @@ export async function groupCreate(
   https://api-doc.allthings.me/#!/Groups/get_groups_groupID
 */
 
-export type MethodGroupFindById = (id: string) => GroupResult
+export type MethodGroupGetById = (id: string) => GroupResult
 
-export async function groupFindById(
+export async function groupGetById(
   client: InterfaceAllthingsRestClient,
   groupId: string,
 ): GroupResult {

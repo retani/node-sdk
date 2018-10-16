@@ -7,23 +7,23 @@ import {
 import { MethodAppCreate } from './methods/app'
 import {
   MethodGroupCreate,
-  MethodGroupFindById,
+  MethodGroupGetById,
   MethodGroupUpdateById,
 } from './methods/group'
 import { MethodLookupIds } from './methods/idLookup'
 import {
   MethodPropertyCreate,
-  MethodPropertyFindById,
+  MethodPropertyGetById,
   MethodPropertyUpdateById,
 } from './methods/property'
 import {
   MethodRegistrationCodeCreate,
   MethodRegistrationCodeDelete,
-  MethodRegistrationCodeFindById,
+  MethodRegistrationCodeGetById,
 } from './methods/registrationCode'
 import {
   MethodUnitCreate,
-  MethodUnitFindById,
+  MethodUnitGetById,
   MethodUnitUpdateById,
 } from './methods/unit'
 import {
@@ -33,15 +33,15 @@ import {
   MethodUserCreate,
   MethodUserCreatePermission,
   MethodUserDeletePermission,
-  MethodUserFindById,
   MethodUserFindPermissions,
+  MethodUserGetById,
   MethodUserGetUtilisationPeriods,
   MethodUserUpdateById,
 } from './methods/user'
 import {
   MethodUtilisationPeriodCheckInUser,
   MethodUtilisationPeriodCreate,
-  MethodUtilisationPeriodFindById,
+  MethodUtilisationPeriodGetById,
   MethodUtilisationPeriodUpdateById,
 } from './methods/utilisationPeriod'
 import { MethodHttpPatch } from './patch'
@@ -149,7 +149,7 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Get a group by its ID
    */
-  readonly groupFindById: MethodGroupFindById
+  readonly groupGetById: MethodGroupGetById
 
   /**
    * Update a group by its ID
@@ -166,7 +166,7 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Get a property by its ID
    */
-  readonly propertyFindById: MethodPropertyFindById
+  readonly propertyGetById: MethodPropertyGetById
 
   /**
    * Update a property by its ID
@@ -183,7 +183,7 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Find a registration code by it
    */
-  readonly registrationCodeFindById: MethodRegistrationCodeFindById
+  readonly registrationCodeGetById: MethodRegistrationCodeGetById
 
   /**
    * Delete a registration code by it
@@ -200,7 +200,7 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Get a unit by its ID
    */
-  readonly unitFindById: MethodUnitFindById
+  readonly unitGetById: MethodUnitGetById
 
   /**
    * Update a unit by its ID
@@ -217,7 +217,7 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Get a user by their ID
    */
-  readonly userFindById: MethodUserFindById
+  readonly userGetById: MethodUserGetById
 
   /**
    * Update a user by their ID
@@ -270,7 +270,7 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Get a utilisation period by its ID
    */
-  readonly utilisationPeriodFindById: MethodUtilisationPeriodFindById
+  readonly utilisationPeriodGetById: MethodUtilisationPeriodGetById
 
   /*
    * Update a utilisation period by its ID
