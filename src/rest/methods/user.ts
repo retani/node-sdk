@@ -33,7 +33,7 @@ export interface IUser {
   readonly publicProfile: boolean
   readonly receiveAdminNotifications: boolean
   readonly roles: ReadonlyArray<string>
-  readonly tenantIds: ReadonlyArray<string>
+  readonly tenantIds: { readonly [key: string]: string }
   readonly type: EnumUserType | null
   readonly username: string
 }
