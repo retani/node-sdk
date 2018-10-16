@@ -12,3 +12,4 @@ export {
   InterfaceAllthingsRestClient,
   InterfaceAllthingsRestClientOptions,
 } from './rest/types'
+export { EnumTicketStatus } from './rest/methods/ticket'

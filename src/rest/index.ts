@@ -17,6 +17,16 @@ import {
   registrationCodeFindById,
 } from './methods/registrationCode'
 import {
+  ticketConversationCreate,
+  ticketConversationsList,
+  ticketCreate,
+  ticketFindAllByUser,
+  ticketFindById,
+  ticketGetStatsByUser,
+  ticketRemoveExternalAgent,
+  ticketUpdateById,
+} from './methods/ticket'
+import {
   EnumUnitType,
   unitCreate,
   unitFindById,
@@ -75,6 +85,16 @@ const API_METHODS: ReadonlyArray<any> = [
   registrationCodeCreate,
   registrationCodeDelete,
   registrationCodeFindById,
+
+  // Ticket
+  ticketConversationCreate,
+  ticketConversationsList,
+  ticketCreate,
+  ticketFindAllByUser,
+  ticketFindById,
+  ticketGetStatsByUser,
+  ticketRemoveExternalAgent,
+  ticketUpdateById,
 
   // Unit
   unitCreate,

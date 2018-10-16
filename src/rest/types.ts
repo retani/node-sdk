@@ -22,6 +22,16 @@ import {
   MethodRegistrationCodeFindById,
 } from './methods/registrationCode'
 import {
+  MethodTicketConversationCreate,
+  MethodTicketConversationsList,
+  MethodTicketCreate,
+  MethodTicketFindAllByUser,
+  MethodTicketFindById,
+  MethodTicketGetStatsByUser,
+  MethodTicketRemoveExternalAgent,
+  MethodTicketUpdateById,
+} from './methods/ticket'
+import {
   MethodUnitCreate,
   MethodUnitFindById,
   MethodUnitUpdateById,
@@ -189,6 +199,48 @@ export interface InterfaceAllthingsRestClient {
    * Delete a registration code by it
    */
   readonly registrationCodeDelete: MethodRegistrationCodeDelete
+
+  // Ticket
+
+  /**
+   * Create a new ticket within a utilisation period
+   */
+  readonly ticketCreate: MethodTicketCreate
+
+  /**
+   * Get a ticket by its ID
+   */
+  readonly ticketFindById: MethodTicketFindById
+
+  /**
+   * Update a ticket by its ID
+   */
+  readonly ticketUpdateById: MethodTicketUpdateById
+
+  /**
+   * List all tickets by user ID
+   */
+  readonly ticketFindAllByUser: MethodTicketFindAllByUser
+
+  /**
+   * Remove an external agent from a ticket
+   */
+  readonly ticketRemoveExternalAgent: MethodTicketRemoveExternalAgent
+
+  /**
+   * Get ticket stats by user ID
+   */
+  readonly ticketGetStatsByUser: MethodTicketGetStatsByUser
+
+  /**
+   * Create a new ticket conversation by ticket ID
+   */
+  readonly ticketConversationCreate: MethodTicketConversationCreate
+
+  /**
+   * List ticket conversations by ticket ID
+   */
+  readonly ticketConversationsList: MethodTicketConversationsList
 
   // Unit
 
