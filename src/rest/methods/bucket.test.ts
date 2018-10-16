@@ -4,6 +4,9 @@ import restClient from '..'
 
 const client = restClient()
 
+const getTestFile = () =>
+  readFileSync(__dirname + '/../../../test/fixtures/1x1.png')
+
 describe('bucketCreate()', () => {
   it('should be able to create a bucket', async () => {
     const createBucket = await client.bucketCreate(['Property-123'], 'Test')
@@ -40,20 +43,9 @@ describe('bucketGet()', () => {
 
   describe('bucketDeleteFilesInPath()', () => {
     it('should be able to delete the files in a path', async () => {
-      const file1 = await client.fileCreate(
-        readFileSync(__dirname + '/1x1.png'),
-        '2x2.png',
-        'test/',
-      )
-      const file2 = await client.fileCreate(
-        readFileSync(__dirname + '/1x1.png'),
-        '1x1.png',
-        'test/',
-      )
-      const file3 = await client.fileCreate(
-        readFileSync(__dirname + '/1x1.png'),
-        '2x2.png',
-      )
+      const file1 = await client.fileCreate(getTestFile(), '2x2.png', 'test/')
+      const file2 = await client.fileCreate(getTestFile(), '1x1.png', 'test/')
+      const file3 = await client.fileCreate(getTestFile(), '2x2.png')
       const createBucket = await client.bucketCreate(['Property-123'], 'Test')
 
       await client.bucketAddFile(createBucket.id, file1.id)

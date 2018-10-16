@@ -7,7 +7,7 @@ const client = restClient()
 describe('fileCreate(), fileDelete()', () => {
   it('should be able to upload a new file, and then remove it', async () => {
     const createdFile = await client.fileCreate(
-      readFileSync(__dirname + '/1x1.png'),
+      readFileSync(__dirname + '/../../../test/fixtures/1x1.png'),
       '2x2.png',
       'deers/',
     )
