@@ -31,26 +31,30 @@ export interface IFile {
 }
 
 export type MethodFileCreate = (
-  file: Blob | Buffer | ReadableStream,
-  name: string,
-  path?: string,
+  data: {
+    readonly file: Blob | Buffer | ReadableStream
+    readonly name: string
+    readonly path?: string
+  },
 ) => FileResult
 export async function fileCreate(
   client: InterfaceAllthingsRestClient,
-  file: Blob | Buffer | ReadableStream,
-  name: string,
-  path?: string,
+  data: {
+    readonly file: Blob | Buffer | ReadableStream
+    readonly name: string
+    readonly path?: string
+  },
 ): FileResult {
-  const data = new FormData()
+  const form = new FormData()
   // tslint:disable-next-line:no-expression-statement
-  data.append('file', file, name)
+  form.append('file', data.file, data.name)
   // tslint:disable-next-line:no-expression-statement
-  data.append('path', path || '')
+  form.append('path', data.path || '')
 
   return client.post(
     '/v1/files',
-    data,
-    data.getHeaders ? data.getHeaders() : {},
+    form,
+    form.getHeaders ? form.getHeaders() : {},
   )
 }
 

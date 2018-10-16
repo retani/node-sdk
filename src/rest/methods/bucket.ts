@@ -19,26 +19,34 @@ export async function bucketGet(
 }
 
 export type MethodBucketCreate = (
-  channels: ReadonlyArray<string>,
-  name: string,
+  data: {
+    readonly channels: ReadonlyArray<string>
+    readonly name: string
+  },
 ) => BucketResult
+
 export async function bucketCreate(
   client: InterfaceAllthingsRestClient,
-  channels: ReadonlyArray<string>,
-  name: string,
+  data: {
+    readonly channels: ReadonlyArray<string>
+    readonly name: string
+  },
 ): BucketResult {
   return client.post('/v1/buckets', {
-    channels,
-    name,
+    channels: data.channels,
+    name: data.name,
   })
 }
 
-export type MethodBucketAddFile = (bucketId: string, fileId: string) => string
+export type MethodBucketAddFile = (
+  bucketId: string,
+  fileId: string,
+) => Promise<string>
 export async function bucketAddFile(
   client: InterfaceAllthingsRestClient,
   bucketId: string,
   fileId: string,
-): BucketResult {
+): Promise<string> {
   return client.post(`/v1/buckets/${bucketId}/files`, {
     id: fileId,
   })
@@ -58,14 +66,14 @@ export async function bucketDeleteFile(
 
 export type MethodBucketDeleteFilesInPath = (
   bucketId: string,
-  path: string,
+  data: { readonly path: string },
 ) => Promise<string>
 export async function bucketDeleteFilesInPath(
   client: InterfaceAllthingsRestClient,
   bucketId: string,
-  path: string,
+  data: { readonly path: string },
 ): BucketResult {
   return client.delete(`/v1/buckets/${bucketId}/files`, {
-    folder: path,
+    folder: data.path,
   })
 }

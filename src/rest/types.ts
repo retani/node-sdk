@@ -223,8 +223,14 @@ export interface InterfaceAllthingsRestClient {
 
   // File
 
+  /**
+   * Creates a file
+   */
   readonly fileCreate: MethodFileCreate
 
+  /**
+   * Delets a file
+   */
   readonly fileDelete: MethodFileDelete
 
   // Unit
