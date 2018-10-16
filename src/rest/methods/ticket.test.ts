@@ -286,7 +286,7 @@ describe('ticketConversationCreate()', () => {
     })
 
     expect(result.id).toBeTruthy()
-    expect(result._embedded.createdBy.id).toEqual(USER_ID)
+    expect(result._embedded.participants[0].id).toEqual(USER_ID)
   })
 })
 
