@@ -4,6 +4,12 @@ import httpDelete from './delete'
 import httpGet from './get'
 import { agentCreate, agentCreatePermissions } from './methods/agent'
 import { appCreate } from './methods/app'
+import {
+  conversationFindById,
+  conversationMessageCreate,
+  conversationMessagesList,
+  conversationMessageUpdateById,
+} from './methods/conversation'
 import { groupCreate, groupFindById, groupUpdateById } from './methods/group'
 import { lookupIds } from './methods/idLookup'
 import {
@@ -67,6 +73,12 @@ const API_METHODS: ReadonlyArray<any> = [
 
   // App
   appCreate,
+
+  // Conversation
+  conversationFindById,
+  conversationMessageCreate,
+  conversationMessagesList,
+  conversationMessageUpdateById,
 
   // ID Lookup
   lookupIds,

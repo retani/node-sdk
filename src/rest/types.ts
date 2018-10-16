@@ -6,6 +6,12 @@ import {
 } from './methods/agent'
 import { MethodAppCreate } from './methods/app'
 import {
+  MethodConversationFindById,
+  MethodConversationMessageCreate,
+  MethodConversationMessagesList,
+  MethodConversationMessageUpdateById,
+} from './methods/conversation'
+import {
   MethodGroupCreate,
   MethodGroupFindById,
   MethodGroupUpdateById,
@@ -141,6 +147,28 @@ export interface InterfaceAllthingsRestClient {
    * Create a new App.
    */
   readonly appCreate: MethodAppCreate
+
+  // Conversation
+
+  /**
+   * Get a conversation by its ID
+   */
+  readonly conversationFindById: MethodConversationFindById
+
+  /**
+   * Create a new message by conversation ID
+   */
+  readonly conversationMessageCreate: MethodConversationMessageCreate
+
+  /**
+   * Get all messages of a conversation
+   */
+  readonly conversationMessagesList: MethodConversationMessagesList
+
+  /**
+   * Update message by message ID
+   */
+  readonly conversationMessageUpdateById: MethodConversationMessageUpdateById
 
   // ID Lookup
 
