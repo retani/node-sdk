@@ -5,10 +5,10 @@ import httpGet from './get'
 import { agentCreate, agentCreatePermissions } from './methods/agent'
 import { appCreate } from './methods/app'
 import {
-  conversationFindById,
-  conversationMessageCreate,
-  conversationMessagesList,
-  conversationMessageUpdateById,
+  conversationCreateMessage,
+  conversationGetById,
+  conversationListMessages,
+  conversationUpdateMessageById,
 } from './methods/conversation'
 import { groupCreate, groupFindById, groupUpdateById } from './methods/group'
 import { lookupIds } from './methods/idLookup'
@@ -23,13 +23,12 @@ import {
   registrationCodeFindById,
 } from './methods/registrationCode'
 import {
-  ticketConversationCreate,
-  ticketConversationsList,
   ticketCreate,
-  ticketFindAllByUser,
-  ticketFindById,
-  ticketGetStatsByUser,
+  ticketCreateConversation,
+  ticketGetById,
   ticketRemoveExternalAgent,
+  ticketsGetByUser,
+  ticketStatsGetByUser,
   ticketUpdateById,
 } from './methods/ticket'
 import {
@@ -75,10 +74,10 @@ const API_METHODS: ReadonlyArray<any> = [
   appCreate,
 
   // Conversation
-  conversationFindById,
-  conversationMessageCreate,
-  conversationMessagesList,
-  conversationMessageUpdateById,
+  conversationGetById,
+  conversationCreateMessage,
+  conversationListMessages,
+  conversationUpdateMessageById,
 
   // ID Lookup
   lookupIds,
@@ -99,12 +98,11 @@ const API_METHODS: ReadonlyArray<any> = [
   registrationCodeFindById,
 
   // Ticket
-  ticketConversationCreate,
-  ticketConversationsList,
+  ticketCreateConversation,
   ticketCreate,
-  ticketFindAllByUser,
-  ticketFindById,
-  ticketGetStatsByUser,
+  ticketsGetByUser,
+  ticketGetById,
+  ticketStatsGetByUser,
   ticketRemoveExternalAgent,
   ticketUpdateById,
 

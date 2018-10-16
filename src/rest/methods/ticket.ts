@@ -116,7 +116,7 @@ export interface ITicketCollection {
     readonly last: IGenericLink
   }
   readonly _embedded: {
-    readonly items: ReadonlyArray<IPreprocessedTicket>
+    readonly items: ReadonlyArray<IPreprocessedTicket> // this should be ITicket
   }
 }
 
@@ -176,9 +176,9 @@ export async function ticketCreate(
   https://api-doc.allthings.me/#/Tickets/get_tickets__ticketId
 */
 
-export type MethodTicketFindById = (ticketId: string) => TicketResult
+export type MethodTicketGetById = (ticketId: string) => TicketResult
 
-export async function ticketFindById(
+export async function ticketGetById(
   client: InterfaceAllthingsRestClient,
   ticketId: string,
 ): TicketResult {
@@ -210,12 +210,12 @@ export async function ticketUpdateById(
   https://api-doc.allthings.me/#/Tickets/get_users__userId__tickets
 */
 
-export type MethodTicketFindAllByUser = (
+export type MethodTicketsGetByUser = (
   userId: string,
   filter?: string,
 ) => TicketCollectionResult
 
-export async function ticketFindAllByUser(
+export async function ticketsGetByUser(
   client: InterfaceAllthingsRestClient,
   userId: string,
   filter?: string,
@@ -251,12 +251,12 @@ export async function ticketRemoveExternalAgent(
   https://api-doc.allthings.me/#/Tickets/Stats/get_users__userId__ticket_stats
 */
 
-export type MethodTicketGetStatsByUser = (
+export type MethodTicketStatsGetByUser = (
   userId: string,
   appFilter?: string,
 ) => TicketStatsResult
 
-export async function ticketGetStatsByUser(
+export async function ticketStatsGetByUser(
   client: InterfaceAllthingsRestClient,
   userId: string,
   appFilter?: string,
@@ -271,14 +271,14 @@ export async function ticketGetStatsByUser(
   https://api-doc.allthings.me/#/Ticket/Conversations/post_tickets__ticketId__conversations
 */
 
-export type MethodTicketConversationCreate = (
+export type MethodTicketCreateConversation = (
   ticketId: string,
   data?: {
     readonly participants: ReadonlyArray<string>
   },
 ) => ConversationResult
 
-export async function ticketConversationCreate(
+export async function ticketCreateConversation(
   client: InterfaceAllthingsRestClient,
   ticketId: string,
   data?: {
@@ -290,20 +290,4 @@ export async function ticketConversationCreate(
   )
 }
 
-/*
-  List ticket conversations by ticket ID
-  https://api-doc.allthings.me/#/Ticket/Conversations/get_tickets__ticketId__conversations
-*/
-
-export type MethodTicketConversationsList = (
-  ticketId: string,
-) => ConversationResult
-
-export async function ticketConversationsList(
-  client: InterfaceAllthingsRestClient,
-  ticketId: string,
-): ConversationResult {
-  return mapConversationDateFields(
-    await client.get(`/v1/tickets/${ticketId}/conversations`),
-  )
-}
+// @TODO - ticketListConversations

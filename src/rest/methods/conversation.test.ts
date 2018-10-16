@@ -52,64 +52,64 @@ beforeAll(async () => {
   sharedTicketId = ticket.id // tslint:disable-line no-expression-statement
 })
 
-describe('conversationFindById()', () => {
+describe('conversationGetById()', () => {
   it('should be able to get a conversation by ID', async () => {
-    const { id } = await client.ticketConversationCreate(sharedTicketId, {
+    const { id } = await client.ticketCreateConversation(sharedTicketId, {
       participants: [USER_ID],
     })
-    const result = await client.conversationFindById(id)
+    const result = await client.conversationGetById(id)
     expect(result.id).toEqual(id)
   })
 })
 
-describe('conversationMessageCreate()', () => {
+describe('conversationCreateMessage()', () => {
   it('should be able to create a new message in a conversation', async () => {
-    const { id } = await client.ticketConversationCreate(sharedTicketId, {
+    const { id } = await client.ticketCreateConversation(sharedTicketId, {
       participants: [USER_ID],
     })
 
-    const message = await client.conversationMessageCreate(id, testData)
+    const message = await client.conversationCreateMessage(id, testData)
     expect(message.id).toBeTruthy()
     expect(message.content.content).toEqual(testData.content.content)
   })
 })
 
-describe('conversationMessagesList()', () => {
+describe('conversationListMessages()', () => {
   it('should be able to get all messages of a conversation', async () => {
-    const { id } = await client.ticketConversationCreate(sharedTicketId, {
+    const { id } = await client.ticketCreateConversation(sharedTicketId, {
       participants: [USER_ID],
     })
 
-    const result = await client.conversationMessagesList(id)
+    const result = await client.conversationListMessages(id)
     expect(result.total).toEqual(0)
 
-    await client.conversationMessageCreate(id, testData)
-    const result2 = await client.conversationMessagesList(id)
+    await client.conversationCreateMessage(id, testData)
+    const result2 = await client.conversationListMessages(id)
     expect(result2.total).toEqual(1)
   })
 })
 
-describe('conversationMessageUpdateById()', () => {
+describe('conversationUpdateMessageById()', () => {
   it('should be able to update a message by message ID', async () => {
-    const conversation = await client.ticketConversationCreate(sharedTicketId, {
+    const conversation = await client.ticketCreateConversation(sharedTicketId, {
       participants: [USER_ID],
     })
-    const message = await client.conversationMessageCreate(
+    const message = await client.conversationCreateMessage(
       conversation.id,
       testData,
     )
 
-    const result = await client.conversationMessagesList(conversation.id)
+    const result = await client.conversationListMessages(conversation.id)
     const msgResult = result._embedded.items[0]
     expect(msgResult.read).toBe(false)
 
-    const msgUpdateResult = await client.conversationMessageUpdateById(
+    const msgUpdateResult = await client.conversationUpdateMessageById(
       message.id,
       { read: true },
     )
     expect(msgUpdateResult.read).toBe(true)
 
-    const result2 = await client.conversationMessagesList(conversation.id)
+    const result2 = await client.conversationListMessages(conversation.id)
     const msgResult2 = result2._embedded.items[0]
     expect(msgResult2.read).toBe(true)
   })

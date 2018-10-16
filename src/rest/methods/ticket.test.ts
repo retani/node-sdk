@@ -63,13 +63,13 @@ describe('ticketCreate()', () => {
   })
 })
 
-describe('ticketFindById()', () => {
+describe('ticketGetById()', () => {
   it('should be able to get a ticket by ID', async () => {
     const { id } = await client.ticketCreate(
       sharedUtilisationPeriodId,
       testData,
     )
-    const result = await client.ticketFindById(id)
+    const result = await client.ticketGetById(id)
 
     expect(result.id).toEqual(id)
     expect(result).toMatchObject(testData)
@@ -121,7 +121,7 @@ describe('ticketUpdateById()', () => {
   })
 })
 
-describe('ticketFindAllByUser()', () => {
+describe('ticketsGetByUser()', () => {
   it('should be able to list all tickets by user ID', async () => {
     const userData = {
       description: 'Foobar User',
@@ -146,11 +146,11 @@ describe('ticketFindAllByUser()', () => {
     const clientNewUser = restClient({ username: userData.email, password })
 
     await clientNewUser.ticketCreate(sharedUtilisationPeriodId, testData)
-    const result = await client.ticketFindAllByUser(user.id)
+    const result = await client.ticketsGetByUser(user.id)
     expect(result.total).toEqual(1)
 
     await clientNewUser.ticketCreate(sharedUtilisationPeriodId, testData)
-    const result2 = await client.ticketFindAllByUser(user.id)
+    const result2 = await client.ticketsGetByUser(user.id)
     expect(result2.total).toEqual(2)
   })
 })
@@ -186,12 +186,12 @@ describe('ticketRemoveExternalAgent()', () => {
     expect(ticket.assignedTo).toEqual(agent.id)
 
     await client.ticketRemoveExternalAgent(ticketId, agent.id)
-    const ticket2 = await client.ticketFindById(ticket.id)
+    const ticket2 = await client.ticketGetById(ticket.id)
     expect(ticket2.assignedTo).toBe(null)
   })
 })
 
-describe('ticketGetStatsByUser()', () => {
+describe('ticketStatsGetByUser()', () => {
   it('should be able to get ticket stats for a specific user', async () => {
     const property = await client.propertyCreate(APP_ID, {
       name: 'Foobar Property',
@@ -239,7 +239,7 @@ describe('ticketGetStatsByUser()', () => {
       utilisationPeriod.id,
       testData,
     )
-    const result = await client.ticketGetStatsByUser(user.id)
+    const result = await client.ticketStatsGetByUser(user.id)
     expect(result).toMatchObject({
       closed: 0,
       openAssignedToUser: 0,
@@ -252,7 +252,7 @@ describe('ticketGetStatsByUser()', () => {
     await clientNewUser.ticketUpdateById(ticketId, {
       status: EnumTicketStatus.closed,
     })
-    const result2 = await client.ticketGetStatsByUser(user.id)
+    const result2 = await client.ticketStatsGetByUser(user.id)
     expect(result2).toMatchObject({
       closed: 1,
       openAssignedToUser: 0,
@@ -263,7 +263,7 @@ describe('ticketGetStatsByUser()', () => {
     })
 
     await clientNewUser.ticketCreate(utilisationPeriod.id, testData)
-    const result3 = await client.ticketGetStatsByUser(user.id)
+    const result3 = await client.ticketStatsGetByUser(user.id)
     expect(result3).toMatchObject({
       closed: 1,
       openAssignedToUser: 0,
@@ -275,13 +275,13 @@ describe('ticketGetStatsByUser()', () => {
   })
 })
 
-describe('ticketConversationCreate()', () => {
+describe('ticketCreateConversation()', () => {
   it('should be able to create a ticket conversation', async () => {
     const { id } = await client.ticketCreate(
       sharedUtilisationPeriodId,
       testData,
     )
-    const result = await client.ticketConversationCreate(id, {
+    const result = await client.ticketCreateConversation(id, {
       participants: [USER_ID],
     })
 
@@ -290,15 +290,4 @@ describe('ticketConversationCreate()', () => {
   })
 })
 
-// @TODO - this endpoint doesn't seem to work right now
-// describe('ticketConversationsList()', () => {
-//   it('should be able to list ticket conversations', async () => {
-//     const { id } = await client.ticketCreate(sharedUtilisationPeriodId, testData)
-//     await client.ticketConversationCreate(id, { participants: [USER_ID] } )
-//     await client.ticketFindById(id)
-
-//     const result = await client.ticketConversationsList(id)
-//     console.log('ticketConversationsListResult:',result)
-//     expect(1).toEqual(1)
-//   })
-// })
+// @TODO - ticketListConversations

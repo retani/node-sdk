@@ -6,10 +6,10 @@ import {
 } from './methods/agent'
 import { MethodAppCreate } from './methods/app'
 import {
-  MethodConversationFindById,
-  MethodConversationMessageCreate,
-  MethodConversationMessagesList,
-  MethodConversationMessageUpdateById,
+  MethodConversationCreateMessage,
+  MethodConversationGetById,
+  MethodConversationListMessages,
+  MethodConversationUpdateMessageById,
 } from './methods/conversation'
 import {
   MethodGroupCreate,
@@ -28,13 +28,12 @@ import {
   MethodRegistrationCodeFindById,
 } from './methods/registrationCode'
 import {
-  MethodTicketConversationCreate,
-  MethodTicketConversationsList,
   MethodTicketCreate,
-  MethodTicketFindAllByUser,
-  MethodTicketFindById,
-  MethodTicketGetStatsByUser,
+  MethodTicketCreateConversation,
+  MethodTicketGetById,
   MethodTicketRemoveExternalAgent,
+  MethodTicketsGetByUser,
+  MethodTicketStatsGetByUser,
   MethodTicketUpdateById,
 } from './methods/ticket'
 import {
@@ -153,22 +152,22 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Get a conversation by its ID
    */
-  readonly conversationFindById: MethodConversationFindById
+  readonly conversationGetById: MethodConversationGetById
 
   /**
    * Create a new message by conversation ID
    */
-  readonly conversationMessageCreate: MethodConversationMessageCreate
+  readonly conversationCreateMessage: MethodConversationCreateMessage
 
   /**
    * Get all messages of a conversation
    */
-  readonly conversationMessagesList: MethodConversationMessagesList
+  readonly conversationListMessages: MethodConversationListMessages
 
   /**
    * Update message by message ID
    */
-  readonly conversationMessageUpdateById: MethodConversationMessageUpdateById
+  readonly conversationUpdateMessageById: MethodConversationUpdateMessageById
 
   // ID Lookup
 
@@ -238,7 +237,7 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Get a ticket by its ID
    */
-  readonly ticketFindById: MethodTicketFindById
+  readonly ticketGetById: MethodTicketGetById
 
   /**
    * Update a ticket by its ID
@@ -248,7 +247,7 @@ export interface InterfaceAllthingsRestClient {
   /**
    * List all tickets by user ID
    */
-  readonly ticketFindAllByUser: MethodTicketFindAllByUser
+  readonly ticketsGetByUser: MethodTicketsGetByUser
 
   /**
    * Remove an external agent from a ticket
@@ -258,17 +257,12 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Get ticket stats by user ID
    */
-  readonly ticketGetStatsByUser: MethodTicketGetStatsByUser
+  readonly ticketStatsGetByUser: MethodTicketStatsGetByUser
 
   /**
    * Create a new ticket conversation by ticket ID
    */
-  readonly ticketConversationCreate: MethodTicketConversationCreate
-
-  /**
-   * List ticket conversations by ticket ID
-   */
-  readonly ticketConversationsList: MethodTicketConversationsList
+  readonly ticketCreateConversation: MethodTicketCreateConversation
 
   // Unit
 

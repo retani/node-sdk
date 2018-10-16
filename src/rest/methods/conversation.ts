@@ -100,12 +100,12 @@ export function mapMessageDateFields(message: IPreprocessedMessage): IMessage {
   https://api-doc.allthings.me/#/Conversations/get_conversations__conversationId
 */
 
-export type MethodConversationFindById = (
+export type MethodConversationGetById = (
   conversationId: string,
   token?: string,
 ) => ConversationResult
 
-export async function conversationFindById(
+export async function conversationGetById(
   client: InterfaceAllthingsRestClient,
   conversationId: string,
   token?: string,
@@ -122,7 +122,7 @@ export async function conversationFindById(
   https://api-doc.allthings.me/#/Conversations/post_conversations__conversationId__messages
 */
 
-export type MethodConversationMessageCreate = (
+export type MethodConversationCreateMessage = (
   conversationId: string,
   data: {
     readonly type: string
@@ -133,7 +133,7 @@ export type MethodConversationMessageCreate = (
   token?: string,
 ) => MessageResult
 
-export async function conversationMessageCreate(
+export async function conversationCreateMessage(
   client: InterfaceAllthingsRestClient,
   conversationId: string,
   data: {
@@ -159,13 +159,13 @@ export async function conversationMessageCreate(
   https://api-doc.dev.allthings.me/#/Conversations/get_conversations__conversationId__messages
 */
 
-export type MethodConversationMessagesList = (
+export type MethodConversationListMessages = (
   conversationId: string,
   token?: string | null,
   filter?: string | null,
 ) => MessageCollectionResult
 
-export async function conversationMessagesList(
+export async function conversationListMessages(
   client: InterfaceAllthingsRestClient,
   conversationId: string,
   token?: string | null,
@@ -188,13 +188,13 @@ export async function conversationMessagesList(
   https://api-doc.dev.allthings.me/#/Conversations/patch_messages__messageId
 */
 
-export type MethodConversationMessageUpdateById = (
+export type MethodConversationUpdateMessageById = (
   messageId: string,
   data: PartialMessage,
   token?: string,
 ) => MessageResult
 
-export async function conversationMessageUpdateById(
+export async function conversationUpdateMessageById(
   client: InterfaceAllthingsRestClient,
   messageId: string,
   data: PartialMessage,
