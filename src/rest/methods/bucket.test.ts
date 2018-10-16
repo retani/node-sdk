@@ -31,7 +31,7 @@ describe('bucketGet()', () => {
   describe('bucketAddFile() bucketDeleteFile()', () => {
     it('should be able to add a file, then remove it', async () => {
       const createdFile = await client.fileCreate({
-        file: readFileSync(__dirname + '/1x1.png'),
+        file: getTestFile(),
         name: '2x2.png',
       })
       expect(createdFile.id).not.toBeNull()
@@ -42,7 +42,7 @@ describe('bucketGet()', () => {
       expect(createBucket.id).not.toBeNull()
       await client.bucketAddFile(createBucket.id, createdFile.id)
       const bucketWithFile = await client.bucketGet(createBucket.id)
-      expect(bucketWithFile.files.indexOf(createdFile.id)).toBe(0)
+      expect(bucketWithFile.files).not.toContain(createdFile.id)
 
       await client.bucketDeleteFile(createBucket.id, createdFile.id)
       const bucketWithoutFile = await client.bucketGet(createBucket.id)
@@ -82,9 +82,9 @@ describe('bucketGet()', () => {
         path: '/test/',
       })
       const bucketWithoutFile = await client.bucketGet(createBucket.id)
-      expect(bucketWithoutFile.files.indexOf(file1.id)).toBe(-1)
-      expect(bucketWithoutFile.files.indexOf(file2.id)).toBe(-1)
-      expect(bucketWithoutFile.files.indexOf(file3.id)).toBe(0)
+      expect(bucketWithoutFile.files).not.toContain(file1.id)
+      expect(bucketWithoutFile.files).not.toContain(file2.id)
+      expect(bucketWithoutFile.files).not.toContain(file3.id)
     })
   })
 })
