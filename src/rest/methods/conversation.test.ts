@@ -22,17 +22,17 @@ let sharedTicketId: string // tslint:disable-line no-let
 
 beforeAll(async () => {
   const property = await client.propertyCreate(APP_ID, {
-    name: 'Foobar Property',
+    name: 'Conversation Test Property',
     timezone: EnumTimezone.EuropeBerlin,
   })
 
   const group = await client.groupCreate(property.id, {
-    name: 'Foobar Group',
+    name: 'Conversation Test Group',
     propertyManagerId: APP_PROPERTY_MANAGER_ID,
   })
 
   const unit = await client.unitCreate(group.id, {
-    name: 'Foobar Unit',
+    name: 'Conversation Test Unit',
     type: EnumUnitType.rented,
   })
 
@@ -80,12 +80,12 @@ describe('conversationListMessages()', () => {
       participants: [USER_ID],
     })
 
-    const result = await client.conversationListMessages(id)
-    expect(result.total).toEqual(0)
+    const resultWithNoMessages = await client.conversationListMessages(id)
+    expect(resultWithNoMessages.total).toEqual(0)
 
     await client.conversationCreateMessage(id, testData)
-    const result2 = await client.conversationListMessages(id)
-    expect(result2.total).toEqual(1)
+    const resultWithOneMessage = await client.conversationListMessages(id)
+    expect(resultWithOneMessage.total).toEqual(1)
   })
 })
 
@@ -109,8 +109,9 @@ describe('conversationUpdateMessageById()', () => {
     )
     expect(msgUpdateResult.read).toBe(true)
 
-    const result2 = await client.conversationListMessages(conversation.id)
-    const msgResult2 = result2._embedded.items[0]
-    expect(msgResult2.read).toBe(true)
+    const resultWithReadMessage = await client.conversationListMessages(
+      conversation.id,
+    )
+    expect(resultWithReadMessage._embedded.items[0]).toBe(true)
   })
 })

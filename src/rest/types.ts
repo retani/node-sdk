@@ -150,14 +150,14 @@ export interface InterfaceAllthingsRestClient {
   // Conversation
 
   /**
-   * Get a conversation by its ID
-   */
-  readonly conversationGetById: MethodConversationGetById
-
-  /**
    * Create a new message by conversation ID
    */
   readonly conversationCreateMessage: MethodConversationCreateMessage
+
+  /**
+   * Get a conversation by its ID
+   */
+  readonly conversationGetById: MethodConversationGetById
 
   /**
    * Get all messages of a conversation
