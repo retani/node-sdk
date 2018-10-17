@@ -235,14 +235,14 @@ export interface InterfaceAllthingsRestClient {
   readonly ticketCreate: MethodTicketCreate
 
   /**
+   * Create a new ticket conversation by ticket ID
+   */
+  readonly ticketCreateConversation: MethodTicketCreateConversation
+
+  /**
    * Get a ticket by its ID
    */
   readonly ticketGetById: MethodTicketGetById
-
-  /**
-   * Update a ticket by its ID
-   */
-  readonly ticketUpdateById: MethodTicketUpdateById
 
   /**
    * List all tickets by user ID
@@ -260,9 +260,9 @@ export interface InterfaceAllthingsRestClient {
   readonly ticketStatsGetByUser: MethodTicketStatsGetByUser
 
   /**
-   * Create a new ticket conversation by ticket ID
+   * Update a ticket by its ID
    */
-  readonly ticketCreateConversation: MethodTicketCreateConversation
+  readonly ticketUpdateById: MethodTicketUpdateById
 
   // Unit
 

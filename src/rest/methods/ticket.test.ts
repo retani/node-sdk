@@ -26,17 +26,17 @@ let sharedUtilisationPeriodId: string // tslint:disable-line no-let
 
 beforeAll(async () => {
   const property = await client.propertyCreate(APP_ID, {
-    name: 'Foobar Property',
+    name: 'Ticket Test Property',
     timezone: EnumTimezone.EuropeBerlin,
   })
 
   const group = await client.groupCreate(property.id, {
-    name: 'Foobar Group',
+    name: 'Ticket Test Group',
     propertyManagerId: APP_PROPERTY_MANAGER_ID,
   })
 
   const unit = await client.unitCreate(group.id, {
-    name: 'Foobar Unit',
+    name: 'Ticket Test Unit',
     type: EnumUnitType.rented,
   })
 
@@ -81,22 +81,24 @@ describe('ticketUpdateById()', () => {
       sharedUtilisationPeriodId,
       testData,
     )
-    const result = await client.ticketUpdateById(id, {
+    const resultWithStatusClosed = await client.ticketUpdateById(id, {
       status: EnumTicketStatus.closed,
     })
 
-    expect(result.id).toEqual(id)
-    expect(result.status).toBe(EnumTicketStatus.closed)
+    expect(resultWithStatusClosed.id).toEqual(id)
+    expect(resultWithStatusClosed.status).toBe(EnumTicketStatus.closed)
 
-    const result2 = await client.ticketUpdateById(id, {
+    const resultWithStatusWaitingForAgent = await client.ticketUpdateById(id, {
       status: EnumTicketStatus.waitingForAgent,
     })
 
-    expect(result2.id).toEqual(id)
-    expect(result2.status).toBe(EnumTicketStatus.waitingForAgent)
+    expect(resultWithStatusWaitingForAgent.id).toEqual(id)
+    expect(resultWithStatusWaitingForAgent.status).toBe(
+      EnumTicketStatus.waitingForAgent,
+    )
 
     const agentData = {
-      description: 'Foobar User',
+      description: 'Ticket Test Agent',
       email: generateId() + '@foobar.test',
       locale: EnumLocale.en_US,
     }
@@ -112,17 +114,19 @@ describe('ticketUpdateById()', () => {
       restrictions: [],
       role: EnumUserPermissionRole.admin,
     })
-    const result3 = await client.ticketUpdateById(id, { assignedTo: agent.id })
+    const resultAssignedToAgent = await client.ticketUpdateById(id, {
+      assignedTo: agent.id,
+    })
 
-    expect(result3.id).toEqual(id)
-    expect(result3.assignedTo).toEqual(agent.id)
+    expect(resultAssignedToAgent.id).toEqual(id)
+    expect(resultAssignedToAgent.assignedTo).toEqual(agent.id)
   })
 })
 
 describe('ticketsGetByUser()', () => {
   it('should be able to list all tickets by user ID', async () => {
     const userData = {
-      description: 'Foobar User',
+      description: 'Ticket Test User',
       email: generateId() + '@foobar.test',
       locale: EnumLocale.en_US,
     }
@@ -143,12 +147,12 @@ describe('ticketsGetByUser()', () => {
     const clientNewUser = restClient({ username: userData.email, password })
 
     await clientNewUser.ticketCreate(sharedUtilisationPeriodId, testData)
-    const result = await client.ticketsGetByUser(user.id)
-    expect(result.total).toEqual(1)
+    const resultWithOneTicket = await client.ticketsGetByUser(user.id)
+    expect(resultWithOneTicket.total).toEqual(1)
 
     await clientNewUser.ticketCreate(sharedUtilisationPeriodId, testData)
-    const result2 = await client.ticketsGetByUser(user.id)
-    expect(result2.total).toEqual(2)
+    const resultWithTwoTickets = await client.ticketsGetByUser(user.id)
+    expect(resultWithTwoTickets.total).toEqual(2)
   })
 })
 
@@ -159,7 +163,7 @@ describe('ticketRemoveExternalAgent()', () => {
       testData,
     )
     const agentData = {
-      description: 'Foobar User',
+      description: 'Ticket Test Agent',
       email: generateId() + '@foobar.test',
       locale: EnumLocale.en_US,
     }
@@ -176,31 +180,31 @@ describe('ticketRemoveExternalAgent()', () => {
       restrictions: [],
       role: EnumUserPermissionRole.externalTicketCollaborator,
     })
-    const ticket = await client.ticketUpdateById(ticketId, {
+    const ticketWithAssignedAgent = await client.ticketUpdateById(ticketId, {
       assignedTo: agent.id,
     })
-    expect(ticket.assignedTo).toEqual(agent.id)
+    expect(ticketWithAssignedAgent.assignedTo).toEqual(agent.id)
 
     await client.ticketRemoveExternalAgent(ticketId, agent.id)
-    const ticket2 = await client.ticketGetById(ticket.id)
-    expect(ticket2.assignedTo).toBe(null)
+    const ticketWithRemovedAgent = await client.ticketGetById(ticketId)
+    expect(ticketWithRemovedAgent.assignedTo).toBe(null)
   })
 })
 
 describe('ticketStatsGetByUser()', () => {
   it('should be able to get ticket stats for a specific user', async () => {
     const property = await client.propertyCreate(APP_ID, {
-      name: 'Foobar Property',
+      name: 'Ticket Test Property',
       timezone: EnumTimezone.EuropeBerlin,
     })
 
     const group = await client.groupCreate(property.id, {
-      name: 'Foobar Group',
+      name: 'Ticket Test Group',
       propertyManagerId: APP_PROPERTY_MANAGER_ID,
     })
 
     const unit = await client.unitCreate(group.id, {
-      name: 'Foobar Unit',
+      name: 'Ticket Test Unit',
       type: EnumUnitType.rented,
     })
 
@@ -210,7 +214,7 @@ describe('ticketStatsGetByUser()', () => {
     })
 
     const userData = {
-      description: 'Foobar User',
+      description: 'Ticket Test User',
       email: generateId() + '@foobar.test',
       locale: EnumLocale.en_US,
     }
@@ -233,8 +237,10 @@ describe('ticketStatsGetByUser()', () => {
       utilisationPeriod.id,
       testData,
     )
-    const result = await client.ticketStatsGetByUser(user.id)
-    expect(result).toMatchObject({
+    const resultWithUnassignedTicket = await client.ticketStatsGetByUser(
+      user.id,
+    )
+    expect(resultWithUnassignedTicket).toMatchObject({
       closed: 0,
       openAssignedToUser: 0,
       unassigned: 1,
@@ -246,8 +252,8 @@ describe('ticketStatsGetByUser()', () => {
     await clientNewUser.ticketUpdateById(ticketId, {
       status: EnumTicketStatus.closed,
     })
-    const result2 = await client.ticketStatsGetByUser(user.id)
-    expect(result2).toMatchObject({
+    const resultWithClosedTicket = await client.ticketStatsGetByUser(user.id)
+    expect(resultWithClosedTicket).toMatchObject({
       closed: 1,
       openAssignedToUser: 0,
       unassigned: 1,
@@ -257,8 +263,8 @@ describe('ticketStatsGetByUser()', () => {
     })
 
     await clientNewUser.ticketCreate(utilisationPeriod.id, testData)
-    const result3 = await client.ticketStatsGetByUser(user.id)
-    expect(result3).toMatchObject({
+    const resultWithMultipleTickets = await client.ticketStatsGetByUser(user.id)
+    expect(resultWithMultipleTickets).toMatchObject({
       closed: 1,
       openAssignedToUser: 0,
       unassigned: 2,
