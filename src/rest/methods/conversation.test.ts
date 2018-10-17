@@ -112,6 +112,6 @@ describe('conversationUpdateMessageById()', () => {
     const resultWithReadMessage = await client.conversationListMessages(
       conversation.id,
     )
-    expect(resultWithReadMessage._embedded.items[0]).toBe(true)
+    expect(resultWithReadMessage._embedded.items[0].read).toBe(true)
   })
 })

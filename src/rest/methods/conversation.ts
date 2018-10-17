@@ -1,3 +1,4 @@
+import qs from 'query-string'
 import { InterfaceAllthingsRestClient } from '../types'
 import { IUser } from './user'
 
@@ -174,14 +175,8 @@ export async function conversationListMessages(
   token?: string | null,
   filter?: string | null,
 ): MessageCollectionResult {
-  const queryToken = token ? 'token=' + token : ''
-  const queryFilter = filter ? 'filter=' + filter : ''
-  const query =
-    queryToken && queryFilter
-      ? `?${queryToken}&${queryFilter}`
-      : queryToken || queryFilter
-        ? `?${queryToken}${queryFilter}`
-        : ''
+  const queryString = qs.stringify({ token, filter })
+  const query = queryString ? '?' + queryString : ''
 
   return client.get(`/v1/conversations/${conversationId}/messages${query}`)
 }
