@@ -101,6 +101,10 @@ export enum EnumTimezone {
   UTC = 'UTC',
 }
 
+export interface IGenericLink {
+  readonly href: string
+}
+
 // Describes the options with which to construct a new API wrapper instance
 export interface InterfaceAllthingsRestClientOptions {
   readonly apiUrl: string

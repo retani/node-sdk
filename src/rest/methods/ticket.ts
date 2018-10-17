@@ -1,4 +1,5 @@
-import { InterfaceAllthingsRestClient } from '../types'
+import { stringToDate } from '../../utils/stringToDate'
+import { IGenericLink, InterfaceAllthingsRestClient } from '../types'
 import {
   ConversationResult,
   IConversation,
@@ -29,10 +30,6 @@ export enum EnumTicketStatus {
   waitingForAgent = 'waiting-for-agent',
   waitingForCustomer = 'waiting-for-customer',
   waitingForExternal = 'waiting-for-external',
-}
-
-interface IGenericLink {
-  readonly href: string
 }
 
 export interface ITicketStats {
@@ -136,10 +133,6 @@ export type TicketResult = Promise<ITicket>
 export type TicketStatsResult = Promise<ITicketStats>
 
 export type TicketCollectionResult = Promise<ITicketCollection>
-
-function stringToDate(s: string): Date {
-  return new Date(Date.parse(s))
-}
 
 function mapTicketDateFields({
   createdAt,

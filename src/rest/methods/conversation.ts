@@ -1,10 +1,7 @@
 import qs from 'query-string'
-import { InterfaceAllthingsRestClient } from '../types'
+import { stringToDate } from '../../utils/stringToDate'
+import { IGenericLink, InterfaceAllthingsRestClient } from '../types'
 import { IUser } from './user'
-
-interface IGenericLink {
-  readonly href: string
-}
 
 export interface IBasicConversation {
   readonly id: string
@@ -75,10 +72,6 @@ export type PartialMessage = Partial<IPreprocessedMessage>
 export type MessageResult = Promise<IMessage>
 
 export type MessageCollectionResult = Promise<IMessageCollection>
-
-function stringToDate(s: string): Date {
-  return new Date(Date.parse(s))
-}
 
 export function mapConversationDateFields(
   conversation: IPreprocessedConversation,
