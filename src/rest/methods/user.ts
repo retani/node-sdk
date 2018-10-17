@@ -77,7 +77,7 @@ export type PartialUserPermission = Partial<IUserPermission>
 
 export type UserPermissionResult = Promise<IUserPermission>
 
-const remapUserResponse = (user: any) => {
+export const remapUserResponse = (user: any) => {
   const { tenantIDs: tenantIds, ...result } = user
 
   return { ...result, tenantIds }
@@ -175,7 +175,9 @@ export async function userUpdateById(
 ): UserResult {
   const { tenantIds: tenantIDs, ...rest } = data
 
-  return client.patch(`/v1/users/${userId}`, { ...rest, tenantIDs })
+  return remapUserResponse(
+    client.patch(`/v1/users/${userId}`, { ...rest, tenantIDs }),
+  )
 }
 
 /*
