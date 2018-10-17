@@ -104,7 +104,7 @@ export interface ITicket extends IBasicTicket {
   readonly lastStatusUpdate: Date
 }
 
-export interface ITicketCollection {
+export interface IBasicTicketCollection {
   readonly page: number
   readonly limit: number
   readonly pages: number
@@ -115,8 +115,17 @@ export interface ITicketCollection {
     readonly first: IGenericLink
     readonly last: IGenericLink
   }
+}
+
+export interface IPreprocessedTicketCollection extends IBasicTicketCollection {
   readonly _embedded: {
-    readonly items: ReadonlyArray<IPreprocessedTicket> // this should be ITicket
+    readonly items: ReadonlyArray<IPreprocessedTicket>
+  }
+}
+
+export interface ITicketCollection extends IBasicTicketCollection {
+  readonly _embedded: {
+    readonly items: ReadonlyArray<ITicket>
   }
 }
 
@@ -145,6 +154,17 @@ function mapTicketDateFields({
     customerWaitingSince: stringToDate(customerWaitingSince),
     lastStatusUpdate: stringToDate(lastStatusUpdate),
     updatedAt: stringToDate(updatedAt),
+  }
+}
+
+function mapTicketCollectionDateFields(
+  ticketCollection: IPreprocessedTicketCollection,
+): ITicketCollection {
+  return {
+    ...ticketCollection,
+    _embedded: {
+      items: ticketCollection._embedded.items.map(mapTicketDateFields),
+    },
   }
 }
 
@@ -228,7 +248,9 @@ export async function ticketsGetByUser(
 ): TicketCollectionResult {
   const query = filter ? '?filter=' + filter : ''
 
-  return client.get(`/v1/users/${userId}/tickets${query}`)
+  return mapTicketCollectionDateFields(
+    await client.get(`/v1/users/${userId}/tickets${query}`),
+  )
 }
 
 /*
