@@ -185,9 +185,15 @@ describe('ticketRemoveExternalAgent()', () => {
     })
     expect(ticketWithAssignedAgent.assignedTo).toEqual(agent.id)
 
-    await client.ticketRemoveExternalAgent(ticketId, agent.id)
+    expect(await client.ticketRemoveExternalAgent(ticketId, agent.id)).toEqual(
+      true,
+    )
     const ticketWithRemovedAgent = await client.ticketGetById(ticketId)
     expect(ticketWithRemovedAgent.assignedTo).toBe(null)
+
+    await expect(
+      client.ticketRemoveExternalAgent(ticketId, agent.id),
+    ).rejects.toThrow('400 Bad Request')
   })
 })
 

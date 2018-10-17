@@ -261,16 +261,17 @@ export async function ticketsGetByUser(
 export type MethodTicketRemoveExternalAgent = (
   ticketId: string,
   externalAgentId: string,
-) => Promise<any> // @TODO
+) => Promise<boolean>
 
 export async function ticketRemoveExternalAgent(
   client: InterfaceAllthingsRestClient,
   ticketId: string,
   externalAgentId: string,
-): Promise<any> {
-  // @TODO
-  return client.delete(
-    `/v1/tickets/${ticketId}/remove-external-agent/${externalAgentId}`,
+): Promise<boolean> {
+  return (
+    (await client.delete(
+      `/v1/tickets/${ticketId}/remove-external-agent/${externalAgentId}`,
+    )) === ''
   )
 }
 
