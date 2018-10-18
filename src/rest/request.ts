@@ -136,8 +136,8 @@ export function makeApiRequest(
           }`
 
           const body = payload && payload.body
-          const hasForm = payload && payload.form
-          const form = hasForm || {}
+          const hasForm = body && body.formData
+          const form = body && hasForm ? body.formData : {}
           const formData = Object.keys(form).reduce((prev, name) => {
             // tslint:disable-next-line
             prev.append.apply(prev, [name].concat(form[name]))
@@ -150,6 +150,7 @@ export function makeApiRequest(
           }
 
           const requestBody = {
+            // Sorry typescript you got it wrong this time
             body: hasForm ? (formData as any) : JSON.stringify(body),
           }
 

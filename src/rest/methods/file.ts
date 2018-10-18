@@ -44,12 +44,12 @@ export async function fileCreate(
     readonly path?: string
   },
 ): FileResult {
-  const form = {
-    file: [data.file, data.name],
-    path: data.path || '',
-  }
-
-  return client.post('/v1/files', undefined, form)
+  return client.post('/v1/files', {
+    formData: {
+      file: [data.file, data.name],
+      path: data.path || '',
+    },
+  })
 }
 
 export type MethodFileDelete = (fileId: string) => string
