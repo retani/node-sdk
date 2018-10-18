@@ -1,4 +1,3 @@
-import FormData from 'form-data'
 import { InterfaceAllthingsRestClient } from '../types'
 
 export type FileResult = Promise<IFile>
@@ -45,17 +44,12 @@ export async function fileCreate(
     readonly path?: string
   },
 ): FileResult {
-  const form = new FormData()
-  // tslint:disable-next-line:no-expression-statement
-  form.append('file', data.file, data.name)
-  // tslint:disable-next-line:no-expression-statement
-  form.append('path', data.path || '')
+  const form = {
+    file: [data.file, data.name],
+    path: data.path || '',
+  }
 
-  return client.post(
-    '/v1/files',
-    form,
-    form.getHeaders ? form.getHeaders() : {},
-  )
+  return client.post('/v1/files', undefined, form)
 }
 
 export type MethodFileDelete = (fileId: string) => string

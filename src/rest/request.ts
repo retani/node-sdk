@@ -1,5 +1,6 @@
 import Bottleneck from 'bottleneck'
 import fetch from 'cross-fetch'
+import FormDataModule from 'form-data'
 import querystring from 'query-string'
 import {
   QUEUE_CONCURRENCY,
@@ -20,7 +21,8 @@ import { InterfaceAllthingsRestClientOptions } from './types'
 const logger = makeLogger('REST API Request')
 
 export interface IRequestOptions {
-  readonly body?: FormData | { readonly [key: string]: any }
+  readonly body?: { readonly [key: string]: any }
+  readonly form?: { readonly [key: string]: any }
   readonly headers?: { readonly [key: string]: string }
   readonly query?: { readonly [parameter: string]: string }
 }
@@ -134,10 +136,21 @@ export function makeApiRequest(
           }`
 
           const body = payload && payload.body
-          const isBodyFormData = body && typeof body.append === 'function'
+          const hasForm = payload && payload.form
+          const form = hasForm || {}
+          const formData = Object.keys(form).reduce((prev, name) => {
+            // tslint:disable-next-line
+            prev.append.apply(prev, [name].concat(form[name]))
+
+            return prev
+          }, new FormDataModule())
+
+          const requestHeaders = {
+            ...(hasForm ? formData.getHeaders() : null),
+          }
 
           const requestBody = {
-            body: isBodyFormData ? (body as FormData) : JSON.stringify(body),
+            body: hasForm ? (formData as any) : JSON.stringify(body),
           }
 
           const response = await fetch(url, {
@@ -149,10 +162,11 @@ export function makeApiRequest(
               'content-type': 'application/json',
               'user-agent': USER_AGENT,
               ...((payload && payload.headers) || {}),
+              ...requestHeaders,
             },
             method: httpMethod.toUpperCase(),
             mode: 'cors',
-            ...(body && requestBody),
+            ...((hasForm || body) && requestBody),
           })
 
           // Retry 503s as it was likely a rate-limited request
