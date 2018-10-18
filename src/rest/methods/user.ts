@@ -1,5 +1,8 @@
 import { EnumLocale, InterfaceAllthingsRestClient } from '../types'
-import { UtilisationPeriodResults } from './utilisationPeriod'
+import {
+  UtilisationPeriodResult,
+  UtilisationPeriodResults,
+} from './utilisationPeriod'
 
 export enum EnumGender {
   female = 'female',
@@ -176,7 +179,7 @@ export async function userUpdateById(
   const { tenantIds: tenantIDs, ...rest } = data
 
   return remapUserResponse(
-    client.patch(`/v1/users/${userId}`, { ...rest, tenantIDs }),
+    await client.patch(`/v1/users/${userId}`, { ...rest, tenantIDs }),
   )
 }
 
@@ -286,14 +289,10 @@ export async function userCheckInToUtilisationPeriod(
   client: InterfaceAllthingsRestClient,
   userId: string,
   utilisationPeriodId: string,
-): UtilisationPeriodResults {
+): UtilisationPeriodResult {
   const { email: userEmail } = await client.userFindById(userId)
 
-  const {
-    _embedded: { items: utilisationPeriods },
-  } = await client.utilisationPeriodCheckInUser(utilisationPeriodId, {
+  return client.utilisationPeriodCheckInUser(utilisationPeriodId, {
     email: userEmail,
   })
-
-  return utilisationPeriods
 }
