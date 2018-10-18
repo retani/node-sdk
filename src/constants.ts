@@ -11,7 +11,7 @@ export const QUEUE_RESERVOIR = 30
 export const QUEUE_RESERVOIR_REFILL_INTERVAL = 500
 
 // Request error handling options
-export const REQUEST_BACK_OFF_INTERVAL = 500
+export const REQUEST_BACK_OFF_INTERVAL = 200
 export const REQUEST_MAX_RETRIES = 50
 
 // Default options passed to the api wrapper on instansiation
