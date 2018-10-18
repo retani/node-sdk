@@ -136,7 +136,7 @@ export function makeApiRequest(
           }`
 
           const body = payload && payload.body
-          const hasForm = body && body.formData
+          const hasForm = !!(body && body.formData)
           const form = body && hasForm ? body.formData : {}
           const formData = Object.keys(form).reduce((prev, name) => {
             // tslint:disable-next-line
