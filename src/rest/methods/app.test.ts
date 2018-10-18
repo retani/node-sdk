@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { generate as generateId } from 'shortid'
+import generateId from 'nanoid'
 import restClient from '..'
 import { USER_ID } from '../../../test/constants'
 
