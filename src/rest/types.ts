@@ -8,9 +8,9 @@ import { MethodAppCreate } from './methods/app'
 import {
   MethodBucketAddFile,
   MethodBucketCreate,
-  MethodBucketDeleteFile,
-  MethodBucketDeleteFilesInPath,
   MethodBucketGet,
+  MethodBucketRemoveFile,
+  MethodBucketRemoveFilesInPath,
 } from './methods/bucket'
 import { MethodFileCreate, MethodFileDelete } from './methods/file'
 import {
@@ -153,11 +153,11 @@ export interface InterfaceAllthingsRestClient {
   /**
    * Deletes a file from a bucket.
    */
-  readonly bucketDeleteFile: MethodBucketDeleteFile
+  readonly bucketRemoveFile: MethodBucketRemoveFile
   /**
    * Deletes all files within that bucket that are in the passed path.
    */
-  readonly bucketDeleteFilesInPath: MethodBucketDeleteFilesInPath
+  readonly bucketRemoveFilesInPath: MethodBucketRemoveFilesInPath
   /**
    * Gets a Bucket.
    */

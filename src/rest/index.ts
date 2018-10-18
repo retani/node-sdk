@@ -7,9 +7,9 @@ import { appCreate } from './methods/app'
 import {
   bucketAddFile,
   bucketCreate,
-  bucketDeleteFile,
-  bucketDeleteFilesInPath,
   bucketGet,
+  bucketRemoveFile,
+  bucketRemoveFilesInPath,
 } from './methods/bucket'
 import { fileCreate, fileDelete } from './methods/file'
 import { groupCreate, groupFindById, groupUpdateById } from './methods/group'
@@ -69,8 +69,8 @@ const API_METHODS: ReadonlyArray<any> = [
   // Bucket
   bucketCreate,
   bucketAddFile,
-  bucketDeleteFile,
-  bucketDeleteFilesInPath,
+  bucketRemoveFile,
+  bucketRemoveFilesInPath,
   bucketGet,
 
   // ID Lookup

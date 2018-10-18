@@ -146,7 +146,9 @@ export function makeApiRequest(
           }, new FormDataModule())
 
           const requestHeaders = {
-            ...(hasForm ? formData.getHeaders() : null),
+            ...(hasForm && typeof formData.getHeaders === 'function'
+              ? formData.getHeaders()
+              : {}),
           }
 
           const requestBody = {

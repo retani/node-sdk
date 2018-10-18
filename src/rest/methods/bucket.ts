@@ -52,11 +52,11 @@ export async function bucketAddFile(
   })
 }
 
-export type MethodBucketDeleteFile = (
+export type MethodBucketRemoveFile = (
   bucketId: string,
   fileId: string,
 ) => Promise<boolean>
-export async function bucketDeleteFile(
+export async function bucketRemoveFile(
   client: InterfaceAllthingsRestClient,
   bucketId: string,
   fileId: string,
@@ -64,11 +64,11 @@ export async function bucketDeleteFile(
   return (await client.delete(`/v1/buckets/${bucketId}/files/${fileId}`)) === ''
 }
 
-export type MethodBucketDeleteFilesInPath = (
+export type MethodBucketRemoveFilesInPath = (
   bucketId: string,
   data: { readonly path: string },
 ) => Promise<boolean>
-export async function bucketDeleteFilesInPath(
+export async function bucketRemoveFilesInPath(
   client: InterfaceAllthingsRestClient,
   bucketId: string,
   data: { readonly path: string },

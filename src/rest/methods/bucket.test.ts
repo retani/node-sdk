@@ -28,7 +28,7 @@ describe('bucketGet()', () => {
     expect(bucket.id).toBe(createBucket.id)
   })
 
-  describe('bucketAddFile() bucketDeleteFile()', () => {
+  describe('bucketAddFile() bucketRemoveFile()', () => {
     it('should be able to add a file, then remove it', async () => {
       const createdFile = await client.fileCreate({
         file: getTestFile(),
@@ -44,13 +44,13 @@ describe('bucketGet()', () => {
       const bucketWithFile = await client.bucketGet(createBucket.id)
       expect(bucketWithFile.files).toContain(createdFile.id)
 
-      await client.bucketDeleteFile(createBucket.id, createdFile.id)
+      await client.bucketRemoveFile(createBucket.id, createdFile.id)
       const bucketWithoutFile = await client.bucketGet(createBucket.id)
       expect(bucketWithoutFile.files).toHaveLength(0)
     })
   })
 
-  describe('bucketDeleteFilesInPath()', () => {
+  describe('bucketRemoveFilesInPath()', () => {
     it('should be able to delete the files in a path', async () => {
       const file1 = await client.fileCreate({
         file: getTestFile(),
@@ -78,7 +78,7 @@ describe('bucketGet()', () => {
       const bucket = await client.bucketGet(createBucket.id)
       expect(bucket.files).toHaveLength(3)
 
-      await client.bucketDeleteFilesInPath(createBucket.id, {
+      await client.bucketRemoveFilesInPath(createBucket.id, {
         path: '/test/',
       })
       const bucketWithoutFile = await client.bucketGet(createBucket.id)
