@@ -122,7 +122,7 @@ export function makeApiRequest(
 
       // disabling linter here for better readabiliy
       // tslint:disable-next-line:no-expression-statement
-      await sleep(options.requestBackOffInterval * retryCount)
+      await sleep(options.requestBackOffInterval * 2 ** retryCount)
     }
 
     try {
