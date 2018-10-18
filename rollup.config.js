@@ -7,7 +7,7 @@ import replace from 'rollup-plugin-replace'
 //import typescript from 'rollup-plugin-typescript'
 import packageJson from './package.json'
 
-const external = ['bottleneck', 'mem', 'readline', 'nanoid']
+const external = [...Object.keys(packageJson.dependencies), 'readline']
 
 const plugins = [
   resolve({
