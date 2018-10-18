@@ -1,4 +1,4 @@
-import qs from 'query-string'
+import { getQueryString } from '../../utils/getQueryString'
 import { stringToDate } from '../../utils/stringToDate'
 import { IGenericLink, InterfaceAllthingsRestClient } from '../types'
 import { IUser } from './user'
@@ -107,7 +107,7 @@ export async function conversationGetById(
   conversationId: string,
   token?: string,
 ): ConversationResult {
-  const query = token ? '?token=' + token : ''
+  const query = getQueryString({ token })
 
   return mapConversationDateFields(
     await client.get(`/v1/conversations/${conversationId}${query}`),
@@ -141,7 +141,7 @@ export async function conversationCreateMessage(
   },
   token?: string,
 ): MessageResult {
-  const query = token ? '?token=' + token : ''
+  const query = getQueryString({ token })
 
   return mapMessageDateFields(
     await client.post(
@@ -168,8 +168,7 @@ export async function conversationListMessages(
   token?: string | null,
   filter?: string | null,
 ): MessageCollectionResult {
-  const queryString = qs.stringify({ token, filter })
-  const query = queryString ? '?' + queryString : ''
+  const query = getQueryString({ token, filter })
 
   return client.get(`/v1/conversations/${conversationId}/messages${query}`)
 }
@@ -191,7 +190,7 @@ export async function conversationUpdateMessageById(
   data: PartialMessage,
   token?: string,
 ): MessageResult {
-  const query = token ? '?token=' + token : ''
+  const query = getQueryString({ token })
 
   return mapMessageDateFields(
     await client.patch(`/v1/messages/${messageId}${query}`, data),

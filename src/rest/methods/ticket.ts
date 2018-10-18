@@ -1,3 +1,4 @@
+import { getQueryString } from '../../utils/getQueryString'
 import { stringToDate } from '../../utils/stringToDate'
 import { IGenericLink, InterfaceAllthingsRestClient } from '../types'
 import {
@@ -239,7 +240,7 @@ export async function ticketsGetByUser(
   userId: string,
   filter?: string,
 ): TicketCollectionResult {
-  const query = filter ? '?filter=' + filter : ''
+  const query = getQueryString({ filter })
 
   return mapTicketCollectionDateFields(
     await client.get(`/v1/users/${userId}/tickets${query}`),
@@ -283,7 +284,7 @@ export async function ticketStatsGetByUser(
   userId: string,
   appFilter?: string,
 ): TicketStatsResult {
-  const query = appFilter ? '?appFilter=' + appFilter : ''
+  const query = getQueryString({ appFilter })
 
   return client.get(`/v1/users/${userId}/ticket-stats${query}`)
 }
