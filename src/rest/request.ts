@@ -1,5 +1,6 @@
 import Bottleneck from 'bottleneck'
 import fetch from 'cross-fetch'
+import FormDataModule from 'form-data'
 import querystring from 'query-string'
 import {
   QUEUE_CONCURRENCY,
@@ -19,8 +20,21 @@ import { InterfaceAllthingsRestClientOptions } from './types'
 
 const logger = makeLogger('REST API Request')
 
+interface IFormOptions {
+  readonly [key: string]: ReadonlyArray<any>
+}
+
+interface IBodyFormData {
+  readonly formData: IFormOptions
+}
+
+interface IBody {
+  readonly [key: string]: any
+}
+
 export interface IRequestOptions {
-  readonly body?: { readonly [key: string]: any }
+  readonly body?: IBodyFormData | IBody
+  readonly headers?: { readonly [key: string]: string }
   readonly query?: { readonly [parameter: string]: string }
 }
 
@@ -43,6 +57,10 @@ const queue = new Bottleneck({
 export type IntervalSet = Set<NodeJS.Timer>
 
 const refillIntervalSet: IntervalSet = new Set()
+
+function isFormData(body: IBodyFormData | IBody): body is IBodyFormData {
+  return body.formData !== undefined
+}
 
 /**
  * refillReservoir() refills the queue's reservoir
@@ -132,19 +150,47 @@ export function makeApiRequest(
               : ''
           }`
 
+          const body = payload && payload.body
+          const hasForm = !!(body && body.formData)
+          const form = body && isFormData(body) ? body.formData : {}
+          const formData = Object.entries(form).reduce(
+            (previous, [name, value]) => {
+              // tslint:disable-next-line
+              previous.append.apply(previous, [name].concat(value))
+
+              return previous
+            },
+            new FormDataModule(),
+          )
+
+          const requestHeaders = {
+            ...(hasForm && {
+              'content-type': 'multipart/form-data',
+              ...(typeof formData.getHeaders === 'function' &&
+                formData.getHeaders()),
+            }),
+          }
+
+          const requestBody = {
+            // "form-data" module is missing some methods to be compliant with w3c FormData spec,
+            // however it works fine here.
+            body: hasForm ? (formData as any) : JSON.stringify(body),
+          }
+
           const response = await fetch(url, {
             cache: 'no-cache',
             credentials: 'omit',
             headers: {
               Authorization: `Bearer ${accessToken}`,
-              'Content-Type': 'application/json',
               accept: 'application/json',
+              'content-type': 'application/json',
               'user-agent': USER_AGENT,
+              ...((payload && payload.headers) || {}),
+              ...requestHeaders,
             },
             method: httpMethod.toUpperCase(),
             mode: 'cors',
-            ...(payload &&
-              payload.body && { body: JSON.stringify(payload.body) }),
+            ...((hasForm || body) && requestBody),
           })
 
           // Retry 503s as it was likely a rate-limited request
