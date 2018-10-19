@@ -24,11 +24,16 @@ interface IFormOptions {
   readonly [key: string]: ReadonlyArray<any>
 }
 
+interface IBodyFormData {
+  readonly formData: IFormOptions
+}
+
+interface IBody {
+  readonly [key: string]: any
+}
+
 export interface IRequestOptions {
-  readonly body?:
-    | { readonly [key: string]: any }
-    | { readonly ['formData']: IFormOptions }
-  readonly form?: { readonly [key: string]: any }
+  readonly body?: IBodyFormData | IBody
   readonly headers?: { readonly [key: string]: string }
   readonly query?: { readonly [parameter: string]: string }
 }
@@ -52,6 +57,10 @@ const queue = new Bottleneck({
 export type IntervalSet = Set<NodeJS.Timer>
 
 const refillIntervalSet: IntervalSet = new Set()
+
+function isFormData(body: IBodyFormData | IBody): body is IBodyFormData {
+  return body.formData !== undefined
+}
 
 /**
  * refillReservoir() refills the queue's reservoir
@@ -143,14 +152,11 @@ export function makeApiRequest(
 
           const body = payload && payload.body
           const hasForm = !!(body && body.formData)
-          const form = body && hasForm ? body.formData : {}
+          const form = body && isFormData(body) ? body.formData : {}
           const formData = Object.entries(form).reduce(
             (previous, [name, value]) => {
               // tslint:disable-next-line
-              previous.append.apply(
-                previous,
-                [name].concat(value as ReadonlyArray<any>),
-              )
+              previous.append.apply(previous, [name].concat(value))
 
               return previous
             },
@@ -158,14 +164,16 @@ export function makeApiRequest(
           )
 
           const requestHeaders = {
-            ...(hasForm && typeof formData.getHeaders === 'function'
-              ? formData.getHeaders()
+            ...(hasForm
+              ? typeof formData.getHeaders === 'function'
+                ? formData.getHeaders()
+                : { ['content-type']: 'multipart/form-data' }
               : {}),
           }
 
           const requestBody = {
-            // Node FormData module is missing some methods to be compliant with fetch,
-            // however it works fine with it.
+            // "form-data" module is missing some methods to be compliant with w3c FormData spec,
+            // however it works fine here.
             body: hasForm ? (formData as any) : JSON.stringify(body),
           }
 
