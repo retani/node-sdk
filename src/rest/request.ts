@@ -164,11 +164,11 @@ export function makeApiRequest(
           )
 
           const requestHeaders = {
-            ...(hasForm
-              ? typeof formData.getHeaders === 'function'
-                ? formData.getHeaders()
-                : { ['content-type']: 'multipart/form-data' }
-              : {}),
+            ...(hasForm && {
+              'content-type': 'multipart/form-data',
+              ...(typeof formData.getHeaders === 'function' &&
+                formData.getHeaders()),
+            }),
           }
 
           const requestBody = {
