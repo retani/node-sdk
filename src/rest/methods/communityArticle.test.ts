@@ -60,14 +60,7 @@ describe('communityArticlesGet()', () => {
     await client.userCheckInToUtilisationPeriod(user.id, utilisationPeriod.id)
     const clientNewUser = restClient({ username: email, password })
 
-    // Before the tests, delete all existing articles so we have a clean slate
-    const resultAllArticles = await client.communityArticlesGet()
-    await resultAllArticles._embedded.items.forEach(async article =>
-      client.communityArticleDelete(article.id),
-    )
-
-    const resultWithNoArticles = await clientNewUser.communityArticlesGet()
-    expect(resultWithNoArticles.total).toEqual(0)
+    const initialResults = await clientNewUser.communityArticlesGet()
 
     const articleData = {
       category: 'welcome-message',
@@ -78,8 +71,8 @@ describe('communityArticlesGet()', () => {
     }
 
     await clientNewUser.communityArticleCreate(user.id, articleData)
-    const resultWithOneArticle = await clientNewUser.communityArticlesGet()
-    expect(resultWithOneArticle.total).toEqual(1)
+    const resultWithOneNewArticle = await clientNewUser.communityArticlesGet()
+    expect(resultWithOneNewArticle.total).toEqual(initialResults.total + 1)
   })
 })
 
