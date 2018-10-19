@@ -18,7 +18,8 @@ import {
 } from './oauth'
 import { InterfaceAllthingsRestClientOptions } from './types'
 
-const logger = makeLogger('REST API Request')
+const requestLogger = makeLogger('REST API Request')
+const responseLogger = makeLogger('REST API Response')
 
 interface IFormOptions {
   readonly [key: string]: ReadonlyArray<any>
@@ -58,8 +59,10 @@ export type IntervalSet = Set<NodeJS.Timer>
 
 const refillIntervalSet: IntervalSet = new Set()
 
-function isFormData(body: IBodyFormData | IBody): body is IBodyFormData {
-  return body.formData !== undefined
+function isFormData(
+  body: IBodyFormData | IBody | undefined,
+): body is IBodyFormData {
+  return typeof body !== 'undefined' && body.formData !== undefined
 }
 
 /**
@@ -93,6 +96,37 @@ function refillReservoir(): IntervalSet {
   return refillIntervalSet
 }
 
+async function makeResultFromResponse(
+  response: Response,
+): Promise<Error | { readonly status: number; readonly body: any }> {
+  // Retry 503s as it was likely a rate-limited request
+  if (response.status === 503) {
+    return response.clone()
+  }
+
+  if (!response.ok) {
+    return new Error(`${response.status} ${response.statusText}`)
+  }
+
+  // The API only returns JSON, so if it's something else there was
+  // probably an error.
+  if (
+    response.headers.get('content-type') !== 'application/json' &&
+    response.status !== 204
+  ) {
+    return new Error(
+      `Response content type was "${response.headers.get(
+        'content-type',
+      )}" but expected JSON`,
+    )
+  }
+
+  return {
+    body: response.status === 204 ? '' : await response.json(),
+    status: response.status,
+  }
+}
+
 /**
  * Determine if the result was successful. Here, successful means
  * _not_ a 503 error.
@@ -123,14 +157,14 @@ export function makeApiRequest(
         } request ${previousResult.path}.`
 
         // tslint:disable-next-line:no-expression-statement
-        logger.error(error)
+        requestLogger.error(error)
 
         throw new Error(error)
       }
 
       // tslint:disable-next-line:no-expression-statement
-      logger.warn(
-        `Warning: encountered ${previousResult.statusCode}. Retrying ${
+      requestLogger.warn(
+        `Warning: encountered ${previousResult.status}. Retrying ${
           previousResult.method
         } request ${previousResult.path} (retry #${retryCount}).`,
       )
@@ -144,6 +178,7 @@ export function makeApiRequest(
       return (
         refillReservoir() &&
         (await queue.schedule(async () => {
+          const method = httpMethod.toUpperCase()
           const url = `${apiUrl}/api${apiMethod}${
             payload && payload.query
               ? '?' + querystring.stringify(payload.query)
@@ -151,8 +186,8 @@ export function makeApiRequest(
           }`
 
           const body = payload && payload.body
-          const hasForm = !!(body && body.formData)
-          const form = body && isFormData(body) ? body.formData : {}
+          const hasForm = isFormData(body)
+          const form = isFormData(body) ? body.formData : {}
           const formData = Object.entries(form).reduce(
             (previous, [name, value]) => {
               // tslint:disable-next-line
@@ -163,7 +198,16 @@ export function makeApiRequest(
             new FormDataModule(),
           )
 
-          const requestHeaders = {
+          const headers = {
+            accept: 'application/json',
+            authorization: `Bearer ${accessToken}`,
+            'content-type': 'application/json',
+            'user-agent': USER_AGENT,
+
+            // user overrides
+            ...((payload && payload.headers) || {}),
+
+            // content-type header overrides given FormData
             ...(hasForm && {
               'content-type': 'multipart/form-data',
               ...(typeof formData.getHeaders === 'function' &&
@@ -171,54 +215,46 @@ export function makeApiRequest(
             }),
           }
 
+          // Log the request including raw body
+          // tslint:disable-next-line:no-expression-statement
+          requestLogger.log(method, url, {
+            body,
+            headers,
+          })
+
           const requestBody = {
-            // "form-data" module is missing some methods to be compliant with w3c FormData spec,
-            // however it works fine here.
+            // "form-data" module is missing some methods to be compliant with
+            // w3c FormData spec, however it works fine here.
             body: hasForm ? (formData as any) : JSON.stringify(body),
           }
 
           const response = await fetch(url, {
             cache: 'no-cache',
             credentials: 'omit',
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              accept: 'application/json',
-              'content-type': 'application/json',
-              'user-agent': USER_AGENT,
-              ...((payload && payload.headers) || {}),
-              ...requestHeaders,
-            },
-            method: httpMethod.toUpperCase(),
+
+            headers,
+            method,
             mode: 'cors',
+
             ...((hasForm || body) && requestBody),
           })
 
-          // Retry 503s as it was likely a rate-limited request
-          if (response.status === 503) {
-            return response
-          }
+          const result = await makeResultFromResponse(response)
 
-          if (!response.ok) {
-            return new Error(`${response.status} ${response.statusText}`)
-          }
+          // Log the response
+          // tslint:disable-next-line:no-expression-statement
+          responseLogger.log(
+            method,
+            url,
+            result instanceof Error
+              ? { error: result }
+              : {
+                  body: result.body,
+                  status: response.status,
+                },
+          )
 
-          // The API only returns JSON, so if it's something else there was
-          // probably an error.
-          if (
-            response.headers.get('content-type') !== 'application/json' &&
-            response.status !== 204
-          ) {
-            return new Error(
-              `Response content type was "${response.headers.get(
-                'content-type',
-              )}" but expected JSON`,
-            )
-          }
-
-          return {
-            body: response.status === 204 ? '' : await response.json(),
-            statusCode: response.status,
-          }
+          return result
         }))
       )
     } catch (error) {
@@ -238,9 +274,6 @@ export default async function request(
   apiMethod: string,
   payload?: IRequestOptions,
 ): RequestResult {
-  // tslint:disable-next-line:no-expression-statement
-  logger.log(httpMethod, apiMethod, payload)
-
   const { apiUrl, accessToken: maybeAccessToken } = options
 
   const accessToken =
@@ -250,7 +283,7 @@ export default async function request(
       : await getNewTokenUsingPasswordGrant(options))
 
   if (!accessToken) {
-    throw new Error('Issue getting OAuth2 authentication token.')
+    throw new Error('Unable to get OAuth2 authentication token.')
   }
 
   /*
@@ -272,7 +305,7 @@ export default async function request(
 
   if (result instanceof Error) {
     // tslint:disable-next-line:no-expression-statement
-    logger.log('Request Error', result, payload)
+    requestLogger.log('Request Error', result, payload)
 
     throw result
   }
