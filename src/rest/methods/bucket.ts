@@ -41,7 +41,7 @@ export async function bucketCreate(
 export type MethodBucketAddFile = (
   bucketId: string,
   fileId: string,
-) => Promise<string>
+) => Promise<boolean>
 export async function bucketAddFile(
   client: InterfaceAllthingsRestClient,
   bucketId: string,
