@@ -33,7 +33,6 @@ describe('communityArticleCreateComment()', () => {
 
     expect(result.id).toBeTruthy()
     expect(result.content).toEqual(testData.content)
-    expect(result._embedded.user.id).toEqual(USER_ID)
   })
 })
 
@@ -105,7 +104,6 @@ describe('commentGet()', () => {
 
     expect(result.id).toEqual(comment.id)
     expect(result.content).toEqual(testData.content)
-    expect(result._embedded.user.id).toEqual(USER_ID)
   })
 })
 
