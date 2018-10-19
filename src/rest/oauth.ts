@@ -5,7 +5,7 @@ import { USER_AGENT } from '../constants'
 import makeLogger from '../utils/logger'
 import { InterfaceAllthingsRestClientOptions } from './types'
 
-const logger = makeLogger('API Request')
+const logger = makeLogger('OAuth Request')
 
 const MEMOIZE_OPTIONS = { cachePromiseRejection: false, maxAge: 3600 * 1000 }
 
@@ -13,6 +13,9 @@ export const getNewTokenUsingPasswordGrant = memoize(
   async (
     clientOptions: InterfaceAllthingsRestClientOptions,
   ): Promise<string | undefined> => {
+    // tslint:disable-next-line:no-expression-statement
+    logger.log('Performing password grant flow')
+
     const {
       clientId,
       clientSecret,
@@ -37,7 +40,8 @@ export const getNewTokenUsingPasswordGrant = memoize(
         cache: 'no-cache',
         credentials: 'omit',
         headers: {
-          // OAuth 2 requires request content-type to be application/x-www-form-urlencoded
+          // OAuth 2 requires request content-type to be
+          // application/x-www-form-urlencoded
           'Content-Type': 'application/x-www-form-urlencoded',
           accept: 'application/json',
           'user-agent': USER_AGENT,
@@ -74,6 +78,9 @@ export const getNewTokenUsingPasswordGrant = memoize(
 export const unmemoizedGetNewTokenUsingImplicitFlow = async (
   clientOptions: InterfaceAllthingsRestClientOptions,
 ): Promise<string | undefined> => {
+  // tslint:disable-next-line:no-expression-statement
+  logger.log('Performing implicit grant flow')
+
   const redirectUri = clientOptions.redirectUri || window.location
   const payload = querystring.parse(window.location.hash)
   const accessToken = payload && payload.access_token
