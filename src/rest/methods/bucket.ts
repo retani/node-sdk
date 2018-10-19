@@ -49,7 +49,7 @@ export async function bucketAddFile(
 ): Promise<boolean> {
   return (await client.post(`/v1/buckets/${bucketId}/files`, {
     id: fileId,
-  })
+  })) === ''
 }
 
 export type MethodBucketRemoveFile = (
