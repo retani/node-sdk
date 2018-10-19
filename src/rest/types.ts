@@ -229,7 +229,7 @@ export interface InterfaceAllthingsRestClient {
   readonly fileCreate: MethodFileCreate
 
   /**
-   * Delets a file
+   * Deletes a file by it's ID
    */
   readonly fileDelete: MethodFileDelete
 
