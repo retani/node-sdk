@@ -4,6 +4,13 @@ import httpDelete from './delete'
 import httpGet from './get'
 import { agentCreate, agentCreatePermissions } from './methods/agent'
 import { appCreate } from './methods/app'
+import {
+  communityArticleCreate,
+  communityArticleDelete,
+  communityArticleGetById,
+  communityArticlesGet,
+  communityArticleUpdate,
+} from './methods/communityArticle'
 import { groupCreate, groupFindById, groupUpdateById } from './methods/group'
 import { lookupIds } from './methods/idLookup'
 import {
@@ -57,6 +64,13 @@ const API_METHODS: ReadonlyArray<any> = [
 
   // App
   appCreate,
+
+  // CommunityArticle
+  communityArticleCreate,
+  communityArticleDelete,
+  communityArticleGetById,
+  communityArticlesGet,
+  communityArticleUpdate,
 
   // ID Lookup
   lookupIds,

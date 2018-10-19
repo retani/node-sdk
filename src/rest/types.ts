@@ -6,6 +6,13 @@ import {
 } from './methods/agent'
 import { MethodAppCreate } from './methods/app'
 import {
+  MethodCommunityArticleCreate,
+  MethodCommunityArticleDelete,
+  MethodCommunityArticleGetById,
+  MethodCommunityArticlesGet,
+  MethodCommunityArticleUpdate,
+} from './methods/communityArticle'
+import {
   MethodGroupCreate,
   MethodGroupFindById,
   MethodGroupUpdateById,
@@ -131,6 +138,33 @@ export interface InterfaceAllthingsRestClient {
    * Create a new App.
    */
   readonly appCreate: MethodAppCreate
+
+  // Community Article
+
+  /**
+   * Create a new community article
+   */
+  readonly communityArticleCreate: MethodCommunityArticleCreate
+
+  /**
+   * Delete a community article by its ID
+   */
+  readonly communityArticleDelete: MethodCommunityArticleDelete
+
+  /**
+   * Get a community article by its ID
+   */
+  readonly communityArticleGetById: MethodCommunityArticleGetById
+
+  /**
+   * List all community articles for a user by their utilisation periods
+   */
+  readonly communityArticlesGet: MethodCommunityArticlesGet
+
+  /**
+   * Update a community article by its ID
+   */
+  readonly communityArticleUpdate: MethodCommunityArticleUpdate
 
   // ID Lookup
 
