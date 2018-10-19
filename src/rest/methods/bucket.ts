@@ -47,7 +47,7 @@ export async function bucketAddFile(
   bucketId: string,
   fileId: string,
 ): Promise<boolean> {
-  return client.post(`/v1/buckets/${bucketId}/files`, {
+  return (await client.post(`/v1/buckets/${bucketId}/files`, {
     id: fileId,
   })
 }
