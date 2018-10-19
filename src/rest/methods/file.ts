@@ -52,10 +52,10 @@ export async function fileCreate(
   })
 }
 
-export type MethodFileDelete = (fileId: string) => string
+export type MethodFileDelete = (fileId: string) => Promise<boolean>
 export async function fileDelete(
   client: InterfaceAllthingsRestClient,
   fileId: string,
-): FileResult {
-  return client.delete(`/v1/files/${fileId}`)
+): Promise<boolean> {
+  return (await client.delete(`/v1/files/${fileId}`)) === ''
 }

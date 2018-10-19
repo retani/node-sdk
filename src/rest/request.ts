@@ -20,8 +20,14 @@ import { InterfaceAllthingsRestClientOptions } from './types'
 
 const logger = makeLogger('REST API Request')
 
+interface IFormOptions {
+  readonly [key: string]: ReadonlyArray<any>
+}
+
 export interface IRequestOptions {
-  readonly body?: { readonly [key: string]: any }
+  readonly body?:
+    | { readonly [key: string]: any }
+    | { readonly ['formData']: IFormOptions }
   readonly form?: { readonly [key: string]: any }
   readonly headers?: { readonly [key: string]: string }
   readonly query?: { readonly [parameter: string]: string }
@@ -138,12 +144,18 @@ export function makeApiRequest(
           const body = payload && payload.body
           const hasForm = !!(body && body.formData)
           const form = body && hasForm ? body.formData : {}
-          const formData = Object.keys(form).reduce((prev, name) => {
-            // tslint:disable-next-line
-            prev.append.apply(prev, [name].concat(form[name]))
+          const formData = Object.entries(form).reduce(
+            (previous, [name, value]) => {
+              // tslint:disable-next-line
+              previous.append.apply(
+                previous,
+                [name].concat(value as ReadonlyArray<any>),
+              )
 
-            return prev
-          }, new FormDataModule())
+              return previous
+            },
+            new FormDataModule(),
+          )
 
           const requestHeaders = {
             ...(hasForm && typeof formData.getHeaders === 'function'
@@ -152,7 +164,8 @@ export function makeApiRequest(
           }
 
           const requestBody = {
-            // Sorry typescript you got it wrong this time
+            // Node FormData module is missing some methods to be compliant with fetch,
+            // however it works fine with it.
             body: hasForm ? (formData as any) : JSON.stringify(body),
           }
 

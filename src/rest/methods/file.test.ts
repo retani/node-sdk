@@ -15,6 +15,6 @@ describe('fileCreate(), fileDelete()', () => {
     expect(createdFile.type).toEqual('image/png')
     expect(createdFile.path).toEqual('deers')
     const deleteFile = await client.fileDelete(createdFile.id)
-    expect(deleteFile).toBe('')
+    expect(deleteFile).toBe(true)
   })
 })
