@@ -4,6 +4,7 @@ import generateId from 'nanoid'
 import restClient from '..'
 import { APP_ID, APP_PROPERTY_MANAGER_ID } from '../../../test/constants'
 import { EnumLocale, EnumTimezone } from '../types'
+import { getDateOrNullField } from './communityArticle'
 import { EnumUnitType } from './unit'
 
 const client = restClient()
@@ -127,5 +128,15 @@ describe('communityArticleUpdate()', () => {
       data,
     )
     expect(resultAfterUpdate.title).toEqual(data.title)
+  })
+})
+
+describe('getDateOrNullField()', () => {
+  it('should return a Date object when given a string, and null otherwise', async () => {
+    const dateString = '2015-03-25T12:00:00Z'
+    expect(getDateOrNullField(dateString) instanceof Date).toEqual(true)
+
+    expect(getDateOrNullField(null)).toEqual(null)
+    expect(getDateOrNullField(undefined)).toEqual(null)
   })
 })

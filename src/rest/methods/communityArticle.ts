@@ -76,7 +76,7 @@ export interface IPreprocessedCommunityArticle extends IBasicCommunityArticle {
 export interface ICommunityArticle extends IBasicCommunityArticle {
   readonly createdAt: Date
   readonly publishedFrom: Date
-  readonly publishedTo?: Date
+  readonly publishedTo: Date | null
   readonly firstPublished: Date
   readonly deletedAt: Date | null
 }
@@ -127,11 +127,10 @@ export function mapCommunityArticleDateFields({
   return {
     ...communityArticle,
     createdAt: stringToDate(createdAt),
-    deletedAt: typeof deletedAt === 'string' ? stringToDate(deletedAt) : null,
+    deletedAt: getDateOrNullField(deletedAt),
     firstPublished: stringToDate(firstPublished),
     publishedFrom: stringToDate(publishedFrom),
-    publishedTo:
-      typeof publishedTo === 'string' ? stringToDate(publishedTo) : undefined,
+    publishedTo: getDateOrNullField(publishedTo),
   }
 }
 
@@ -146,6 +145,17 @@ function mapCommunityArticleCollectionDateFields(
       ),
     },
   }
+}
+
+// Returns a Date object if called with a string, null otherwise
+export function getDateOrNullField(
+  arg: string | null | undefined,
+): Date | null {
+  if (typeof arg === 'string') {
+    return stringToDate(arg)
+  }
+
+  return null
 }
 
 /*
