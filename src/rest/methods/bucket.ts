@@ -46,7 +46,7 @@ export async function bucketAddFile(
   client: InterfaceAllthingsRestClient,
   bucketId: string,
   fileId: string,
-): Promise<string> {
+): Promise<boolean> {
   return client.post(`/v1/buckets/${bucketId}/files`, {
     id: fileId,
   })
