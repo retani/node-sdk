@@ -6,6 +6,13 @@ import {
 } from './methods/agent'
 import { MethodAppCreate } from './methods/app'
 import {
+  MethodCommentDelete,
+  MethodCommentGet,
+  MethodCommentUpdate,
+  MethodCommunityArticleCreateComment,
+  MethodCommunityArticleGetComments,
+} from './methods/comment'
+import {
   MethodCommunityArticleCreate,
   MethodCommunityArticleDelete,
   MethodCommunityArticleGetById,
@@ -138,6 +145,33 @@ export interface InterfaceAllthingsRestClient {
    * Create a new App.
    */
   readonly appCreate: MethodAppCreate
+
+  // Comment
+
+  /**
+   * Delete a comment by comment ID
+   */
+  readonly commentDelete: MethodCommentDelete
+
+  /**
+   * Get a comment by comment ID
+   */
+  readonly commentGet: MethodCommentGet
+
+  /**
+   * Update a comment by comment ID
+   */
+  readonly commentUpdate: MethodCommentUpdate
+
+  /**
+   * Create a new comment by community article ID
+   */
+  readonly communityArticleCreateComment: MethodCommunityArticleCreateComment
+
+  /**
+   * List all comments of a community article by community article ID
+   */
+  readonly communityArticleGetComments: MethodCommunityArticleGetComments
 
   // Community Article
 

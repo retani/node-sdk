@@ -5,6 +5,13 @@ import httpGet from './get'
 import { agentCreate, agentCreatePermissions } from './methods/agent'
 import { appCreate } from './methods/app'
 import {
+  commentDelete,
+  commentGet,
+  commentUpdate,
+  communityArticleCreateComment,
+  communityArticleGetComments,
+} from './methods/comment'
+import {
   communityArticleCreate,
   communityArticleDelete,
   communityArticleGetById,
@@ -64,6 +71,13 @@ const API_METHODS: ReadonlyArray<any> = [
 
   // App
   appCreate,
+
+  // Comment
+  commentDelete,
+  commentGet,
+  commentUpdate,
+  communityArticleCreateComment,
+  communityArticleGetComments,
 
   // CommunityArticle
   communityArticleCreate,
