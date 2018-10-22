@@ -209,7 +209,6 @@ export function makeApiRequest(
 
             // content-type header overrides given FormData
             ...(hasForm && {
-              'content-type': 'multipart/form-data',
               ...(typeof formData.getHeaders === 'function' &&
                 formData.getHeaders()),
             }),
