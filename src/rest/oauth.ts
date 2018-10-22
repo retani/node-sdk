@@ -83,7 +83,7 @@ export const unmemoizedGetNewTokenUsingImplicitFlow = async (
 
   const redirectUri = clientOptions.redirectUri || window.location
   const payload = querystring.parse(window.location.hash)
-  const accessToken = payload && payload.access_token
+  const accessToken = payload && (payload.access_token as string)
 
   const oauthUrl = `${
     clientOptions.oauthUrl
