@@ -201,7 +201,7 @@ export function makeApiRequest(
           const headers = {
             accept: 'application/json',
             authorization: `Bearer ${accessToken}`,
-            'content-type': 'application/json',
+            ...(!hasForm && { 'content-type': 'application/json' }),
             'user-agent': USER_AGENT,
 
             // user overrides
