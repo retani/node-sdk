@@ -2,6 +2,7 @@ import { getQueryString } from '../../utils/getQueryString'
 import { stringToDate } from '../../utils/stringToDate'
 import { InterfaceAllthingsRestClient } from '../types'
 import { ICommunityArticle } from './communityArticle'
+import { LikeCollectionResult } from './like'
 import { IUser } from './user'
 
 // @TODO: get this from types file once it's merged
@@ -186,4 +187,52 @@ export async function commentUpdate(
   },
 ): CommentResult {
   return client.patch(`/v1/comments/${commentId}`, data)
+}
+
+/*
+  Create a like for a comment by comment ID
+  https://api-doc.allthings.me/#/Comments/Likes/post_comments__commentId__likes
+*/
+
+export type MethodCommentCreateLike = (commentId: string) => Promise<boolean>
+
+export async function commentCreateLike(
+  client: InterfaceAllthingsRestClient,
+  commentId: string,
+): Promise<boolean> {
+  return (await client.post(`/v1/comments/${commentId}/likes`)) === ''
+}
+
+/*
+  Delete a like for a comment by comment ID
+  https://api-doc.allthings.me/#/Comments/Likes/delete_comments__commentId__likes
+*/
+
+export type MethodCommentDeleteLike = (commentId: string) => Promise<boolean>
+
+export async function commentDeleteLike(
+  client: InterfaceAllthingsRestClient,
+  commentId: string,
+): Promise<boolean> {
+  return (await client.delete(`/v1/comments/${commentId}/likes`)) === ''
+}
+
+/*
+  Get all likes for a comment by comment ID
+  https://api-doc.allthings.me/#/Comments/Likes/get_comments__commentId__likes
+*/
+
+export type MethodCommentGetLikes = (
+  commentId: string,
+  filter?: string,
+) => LikeCollectionResult // @TODO
+
+export async function commentGetLikes(
+  client: InterfaceAllthingsRestClient,
+  commentId: string,
+  filter?: string,
+): LikeCollectionResult {
+  const query = getQueryString({ filter })
+
+  return client.get(`/v1/comments/${commentId}/likes${query}`)
 }

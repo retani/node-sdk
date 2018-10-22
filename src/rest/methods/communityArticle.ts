@@ -1,6 +1,7 @@
 import { getQueryString } from '../../utils/getQueryString'
 import { stringToDate } from '../../utils/stringToDate'
 import { EnumLocale, InterfaceAllthingsRestClient } from '../types'
+import { LikeCollectionResult } from './like'
 import { IUser } from './user'
 
 // @TODO: get this from types file once it's merged
@@ -108,6 +109,15 @@ export interface ICommunityArticleCollection
   }
 }
 
+export interface ICommunityArticleStats {
+  readonly total: number
+  readonly scheduled: number
+  readonly createdByUser: number
+  readonly _links: {
+    readonly self: IGenericLink
+  }
+}
+
 export type PartialCommunityArticle = Partial<IPreprocessedCommunityArticle>
 
 export type CommunityArticleResult = Promise<ICommunityArticle>
@@ -115,6 +125,8 @@ export type CommunityArticleResult = Promise<ICommunityArticle>
 export type CommunityArticleCollectionResult = Promise<
   ICommunityArticleCollection
 >
+
+export type CommunityArticleStatsResult = Promise<ICommunityArticleStats>
 
 export function mapCommunityArticleDateFields({
   createdAt,
@@ -262,5 +274,87 @@ export async function communityArticlesGet(
 
   return mapCommunityArticleCollectionDateFields(
     await client.get(`/v2/community-articles${query}`),
+  )
+}
+
+/*
+  Get community article stats by user ID
+  https://api-doc.allthings.me/#/CommunityArticles/Stats/get_users__userId__community_article_stats
+*/
+
+export type MethodCommunityArticleStatsGetByUser = (
+  userId: string,
+  appFilter?: string,
+) => CommunityArticleStatsResult
+
+export async function communityArticleStatsGetByUser(
+  client: InterfaceAllthingsRestClient,
+  userId: string,
+  filter?: string,
+): CommunityArticleStatsResult {
+  const query = getQueryString({ filter })
+
+  return client.get(`/v1/users/${userId}/community-article-stats${query}`)
+}
+
+/*
+  Create a like for a community article by community article ID
+  https://api-doc.allthings.me/#/CommunityArticles/Likes/post_community_articles__communityArticleID__likes
+*/
+
+export type MethodCommunityArticleCreateLike = (
+  communityArticleId: string,
+) => Promise<boolean>
+
+export async function communityArticleCreateLike(
+  client: InterfaceAllthingsRestClient,
+  communityArticleId: string,
+): Promise<boolean> {
+  return (
+    (await client.post(
+      `/v1/community-articles/${communityArticleId}/likes`,
+    )) === ''
+  )
+}
+
+/*
+  Delete a like for a community article by community article ID
+  https://api-doc.allthings.me/#/CommunityArticles/Likes/delete_community_articles__communityArticleID__likes
+*/
+
+export type MethodCommunityArticleDeleteLike = (
+  communityArticleId: string,
+) => Promise<boolean>
+
+export async function communityArticleDeleteLike(
+  client: InterfaceAllthingsRestClient,
+  communityArticleId: string,
+): Promise<boolean> {
+  return (
+    (await client.delete(
+      `/v1/community-articles/${communityArticleId}/likes`,
+    )) === ''
+  )
+}
+
+/*
+  Get all likes for a community article by community article ID
+  https://api-doc.allthings.me/#/CommunityArticles/Likes/get_community_articles__communityArticleID__likes
+*/
+
+export type MethodCommunityArticleGetLikes = (
+  communityArticleId: string,
+  filter?: string,
+) => LikeCollectionResult // @TODO
+
+export async function communityArticleGetLikes(
+  client: InterfaceAllthingsRestClient,
+  communityArticleId: string,
+  filter?: string,
+): LikeCollectionResult {
+  const query = getQueryString({ filter })
+
+  return client.get(
+    `/v1/community-articles/${communityArticleId}/likes${query}`,
   )
 }

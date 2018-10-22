@@ -6,17 +6,24 @@ import {
 } from './methods/agent'
 import { MethodAppCreate } from './methods/app'
 import {
+  MethodCommentCreateLike,
   MethodCommentDelete,
+  MethodCommentDeleteLike,
   MethodCommentGet,
+  MethodCommentGetLikes,
   MethodCommentUpdate,
   MethodCommunityArticleCreateComment,
   MethodCommunityArticleGetComments,
 } from './methods/comment'
 import {
   MethodCommunityArticleCreate,
+  MethodCommunityArticleCreateLike,
   MethodCommunityArticleDelete,
+  MethodCommunityArticleDeleteLike,
   MethodCommunityArticleGetById,
+  MethodCommunityArticleGetLikes,
   MethodCommunityArticlesGet,
+  MethodCommunityArticleStatsGetByUser,
   MethodCommunityArticleUpdate,
 } from './methods/communityArticle'
 import {
@@ -149,14 +156,29 @@ export interface InterfaceAllthingsRestClient {
   // Comment
 
   /**
+   * Create a new like by comment ID
+   */
+  readonly commentCreateLike: MethodCommentCreateLike
+
+  /**
    * Delete a comment by comment ID
    */
   readonly commentDelete: MethodCommentDelete
 
   /**
+   * Delete a like by comment ID
+   */
+  readonly commentDeleteLike: MethodCommentDeleteLike
+
+  /**
    * Get a comment by comment ID
    */
   readonly commentGet: MethodCommentGet
+
+  /**
+   * Get all likes by comment ID
+   */
+  readonly commentGetLikes: MethodCommentGetLikes
 
   /**
    * Update a comment by comment ID
@@ -181,9 +203,19 @@ export interface InterfaceAllthingsRestClient {
   readonly communityArticleCreate: MethodCommunityArticleCreate
 
   /**
+   * Create a new like by community article ID
+   */
+  readonly communityArticleCreateLike: MethodCommunityArticleCreateLike
+
+  /**
    * Delete a community article by its ID
    */
   readonly communityArticleDelete: MethodCommunityArticleDelete
+
+  /**
+   * Delete a like by community article ID
+   */
+  readonly communityArticleDeleteLike: MethodCommunityArticleDeleteLike
 
   /**
    * Get a community article by its ID
@@ -191,9 +223,19 @@ export interface InterfaceAllthingsRestClient {
   readonly communityArticleGetById: MethodCommunityArticleGetById
 
   /**
+   * Get all likes by community article ID
+   */
+  readonly communityArticleGetLikes: MethodCommunityArticleGetLikes
+
+  /**
    * List all community articles for a user by their utilisation periods
    */
   readonly communityArticlesGet: MethodCommunityArticlesGet
+
+  /**
+   * Get community article stats by user ID
+   */
+  readonly communityArticleStatsGetByUser: MethodCommunityArticleStatsGetByUser
 
   /**
    * Update a community article by its ID

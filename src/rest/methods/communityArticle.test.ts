@@ -1,11 +1,16 @@
 // tslint:disable:no-expression-statement
 // tslint:disable:no-object-mutation
 import generateId from 'nanoid'
-import restClient from '..'
-import { APP_ID, APP_PROPERTY_MANAGER_ID } from '../../../test/constants'
+import restClient, { EnumUserPermissionObjectType } from '..'
+import {
+  APP_ID,
+  APP_PROPERTY_MANAGER_ID,
+  USER_ID,
+} from '../../../test/constants'
 import { EnumLocale, EnumTimezone } from '../types'
 import { getDateOrNullField } from './communityArticle'
 import { EnumUnitType } from './unit'
+import { EnumUserPermissionRole } from './user'
 
 const client = restClient()
 
@@ -29,7 +34,7 @@ beforeAll(async () => {
     locale: EnumLocale.en_US,
   })
 
-  sharedUserId = user.id // tslint:disable-line no-expression-statement
+  sharedUserId = user.id
   testData.channels = ['Property-' + property.id]
 })
 
@@ -128,6 +133,105 @@ describe('communityArticleUpdate()', () => {
       data,
     )
     expect(resultAfterUpdate.title).toEqual(data.title)
+  })
+})
+
+describe('communityArticleStatsGetByUser()', () => {
+  it('should return community article stats by a user ID', async () => {
+    const property = await client.propertyCreate(APP_ID, {
+      name: 'CommunityArticleStatsGetByUser Test Property',
+      timezone: EnumTimezone.EuropeBerlin,
+    })
+    const group = await client.groupCreate(property.id, {
+      name: 'CommunityArticleStatsGetByUser Test Group',
+      propertyManagerId: APP_PROPERTY_MANAGER_ID,
+    })
+    const unit = await client.unitCreate(group.id, {
+      name: 'CommunityArticleStatsGetByUser Test Unit',
+      type: EnumUnitType.rented,
+    })
+    const utilisationPeriod = await client.utilisationPeriodCreate(unit.id, {
+      endDate: '2050-01-03',
+      externalId: generateId(),
+      startDate: '2015-01-03',
+    })
+    const password = generateId()
+    const email = generateId() + '@foobar.test'
+    const user = await client.userCreate(APP_ID, generateId(), password, {
+      email,
+      locale: EnumLocale.en_US,
+    })
+    await client.userCheckInToUtilisationPeriod(user.id, utilisationPeriod.id)
+    const permissionData = {
+      objectId: unit.id,
+      objectType: EnumUserPermissionObjectType.unit,
+      restrictions: [],
+      role: EnumUserPermissionRole.pinboardAdmin,
+    }
+    await client.userCreatePermission(user.id, permissionData)
+    const clientNewUser = restClient({ username: email, password })
+
+    const result = await clientNewUser.communityArticleStatsGetByUser(user.id)
+
+    expect(typeof result.total === 'number').toEqual(true)
+    expect(typeof result.scheduled === 'number').toEqual(true)
+    expect(typeof result.createdByUser === 'number').toEqual(true)
+  })
+})
+
+describe('communityArticleCreateLike()', () => {
+  it('should create a new like in a community article', async () => {
+    const communityArticle = await client.communityArticleCreate(
+      sharedUserId,
+      testData,
+    )
+
+    expect(
+      await client.communityArticleCreateLike(communityArticle.id),
+    ).toEqual(true)
+    await expect(
+      client.communityArticleCreateLike(communityArticle.id),
+    ).rejects.toThrow('409 Conflict')
+  })
+})
+
+describe('communityArticleDeleteLike()', () => {
+  it('should delete a like in a community article', async () => {
+    const communityArticle = await client.communityArticleCreate(
+      sharedUserId,
+      testData,
+    )
+
+    await client.communityArticleCreateLike(communityArticle.id)
+
+    expect(
+      await client.communityArticleDeleteLike(communityArticle.id),
+    ).toEqual(true)
+    await expect(
+      client.communityArticleDeleteLike(communityArticle.id),
+    ).rejects.toThrow('409 Conflict')
+  })
+})
+
+describe('communityArticleGetLikes()', () => {
+  it('should get all likes for a community article', async () => {
+    const communityArticle = await client.communityArticleCreate(
+      sharedUserId,
+      testData,
+    )
+
+    const resultWithNoLikes = await client.communityArticleGetLikes(
+      communityArticle.id,
+    )
+    expect(resultWithNoLikes.total).toEqual(0)
+
+    await client.communityArticleCreateLike(communityArticle.id)
+
+    const resultWithOneLike = await client.communityArticleGetLikes(
+      communityArticle.id,
+    )
+    expect(resultWithOneLike.total).toEqual(1)
+    expect(resultWithOneLike._embedded.items[0].id).toEqual(USER_ID)
   })
 })
 

@@ -5,17 +5,24 @@ import httpGet from './get'
 import { agentCreate, agentCreatePermissions } from './methods/agent'
 import { appCreate } from './methods/app'
 import {
+  commentCreateLike,
   commentDelete,
+  commentDeleteLike,
   commentGet,
+  commentGetLikes,
   commentUpdate,
   communityArticleCreateComment,
   communityArticleGetComments,
 } from './methods/comment'
 import {
   communityArticleCreate,
+  communityArticleCreateLike,
   communityArticleDelete,
+  communityArticleDeleteLike,
   communityArticleGetById,
+  communityArticleGetLikes,
   communityArticlesGet,
+  communityArticleStatsGetByUser,
   communityArticleUpdate,
 } from './methods/communityArticle'
 import { groupCreate, groupFindById, groupUpdateById } from './methods/group'
@@ -73,17 +80,24 @@ const API_METHODS: ReadonlyArray<any> = [
   appCreate,
 
   // Comment
+  commentCreateLike,
   commentDelete,
+  commentDeleteLike,
   commentGet,
+  commentGetLikes,
   commentUpdate,
   communityArticleCreateComment,
   communityArticleGetComments,
 
   // CommunityArticle
   communityArticleCreate,
+  communityArticleCreateLike,
   communityArticleDelete,
+  communityArticleDeleteLike,
   communityArticleGetById,
+  communityArticleGetLikes,
   communityArticlesGet,
+  communityArticleStatsGetByUser,
   communityArticleUpdate,
 
   // ID Lookup

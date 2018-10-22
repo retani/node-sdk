@@ -1,12 +1,18 @@
 // tslint:disable:no-expression-statement
+// tslint:disable:no-object-mutation
 import restClient from '..'
 import { APP_ID, USER_ID } from '../../../test/constants'
 import { EnumTimezone } from '../types'
 
 const client = restClient()
 
-let sharedPropertyId: string // tslint:disable-line no-let
-
+const communityArticleData = {
+  category: 'events',
+  channels: ['foobar'],
+  content:
+    'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+  title: 'Hello world!',
+}
 const testData = {
   content: 'Hello world!',
 }
@@ -16,19 +22,15 @@ beforeAll(async () => {
     name: 'Community Article Test Property',
     timezone: EnumTimezone.EuropeBerlin,
   })
-
-  sharedPropertyId = property.id
+  communityArticleData.channels = ['Property-' + property.id]
 })
 
 describe('communityArticleCreateComment()', () => {
   it('should be able to create a comment in a community article', async () => {
-    const { id } = await client.communityArticleCreate(USER_ID, {
-      category: 'events',
-      channels: ['Property-' + sharedPropertyId],
-      content:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-      title: 'Hello world!',
-    })
+    const { id } = await client.communityArticleCreate(
+      USER_ID,
+      communityArticleData,
+    )
     const result = await client.communityArticleCreateComment(id, testData)
 
     expect(result.id).toBeTruthy()
@@ -38,13 +40,10 @@ describe('communityArticleCreateComment()', () => {
 
 describe('communityArticleGetComments()', () => {
   it('should be able to list all comments in a community article', async () => {
-    const { id } = await client.communityArticleCreate(USER_ID, {
-      category: 'events',
-      channels: ['Property-' + sharedPropertyId],
-      content:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-      title: 'Hello world!',
-    })
+    const { id } = await client.communityArticleCreate(
+      USER_ID,
+      communityArticleData,
+    )
 
     const resultWithoutComments = await client.communityArticleGetComments(id)
     expect(resultWithoutComments.total).toEqual(0)
@@ -58,13 +57,10 @@ describe('communityArticleGetComments()', () => {
 
 describe('commentDelete()', () => {
   it('should be able to delete a comment by comment ID', async () => {
-    const communityArticle = await client.communityArticleCreate(USER_ID, {
-      category: 'events',
-      channels: ['Property-' + sharedPropertyId],
-      content:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-      title: 'Hello world!',
-    })
+    const communityArticle = await client.communityArticleCreate(
+      USER_ID,
+      communityArticleData,
+    )
     const comment = await client.communityArticleCreateComment(
       communityArticle.id,
       testData,
@@ -88,13 +84,10 @@ describe('commentDelete()', () => {
 
 describe('commentGet()', () => {
   it('should be able to get a comment by comment ID', async () => {
-    const communityArticle = await client.communityArticleCreate(USER_ID, {
-      category: 'events',
-      channels: ['Property-' + sharedPropertyId],
-      content:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-      title: 'Hello world!',
-    })
+    const communityArticle = await client.communityArticleCreate(
+      USER_ID,
+      communityArticleData,
+    )
     const comment = await client.communityArticleCreateComment(
       communityArticle.id,
       testData,
@@ -109,13 +102,10 @@ describe('commentGet()', () => {
 
 describe('commentUpdate()', () => {
   it('should be able to update a comment by comment ID', async () => {
-    const communityArticle = await client.communityArticleCreate(USER_ID, {
-      category: 'events',
-      channels: ['Property-' + sharedPropertyId],
-      content:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-      title: 'Hello world!',
-    })
+    const communityArticle = await client.communityArticleCreate(
+      USER_ID,
+      communityArticleData,
+    )
     const comment = await client.communityArticleCreateComment(
       communityArticle.id,
       testData,
@@ -131,5 +121,65 @@ describe('commentUpdate()', () => {
     )
     expect(updatedComment.id).toEqual(comment.id)
     expect(updatedComment.content).toEqual(updatedCommentData.content)
+  })
+})
+
+describe('commentCreateLike()', () => {
+  it('should create a new like in a comment', async () => {
+    const communityArticle = await client.communityArticleCreate(
+      USER_ID,
+      communityArticleData,
+    )
+    const comment = await client.communityArticleCreateComment(
+      communityArticle.id,
+      testData,
+    )
+
+    expect(await client.commentCreateLike(comment.id)).toEqual(true)
+    await expect(client.commentCreateLike(comment.id)).rejects.toThrow(
+      '409 Conflict',
+    )
+  })
+})
+
+describe('commentDeleteLike()', () => {
+  it('should delete a like in a comment', async () => {
+    const communityArticle = await client.communityArticleCreate(
+      USER_ID,
+      communityArticleData,
+    )
+    const comment = await client.communityArticleCreateComment(
+      communityArticle.id,
+      testData,
+    )
+
+    await client.commentCreateLike(comment.id)
+
+    expect(await client.commentDeleteLike(comment.id)).toEqual(true)
+    await expect(client.commentDeleteLike(comment.id)).rejects.toThrow(
+      '409 Conflict',
+    )
+  })
+})
+
+describe('commentGetLikes()', () => {
+  it('should get all likes for a comment', async () => {
+    const communityArticle = await client.communityArticleCreate(
+      USER_ID,
+      communityArticleData,
+    )
+    const comment = await client.communityArticleCreateComment(
+      communityArticle.id,
+      testData,
+    )
+
+    const resultWithNoLikes = await client.commentGetLikes(comment.id)
+    expect(resultWithNoLikes.total).toEqual(0)
+
+    await client.commentCreateLike(comment.id)
+
+    const resultWithOneLike = await client.commentGetLikes(comment.id)
+    expect(resultWithOneLike.total).toEqual(1)
+    expect(resultWithOneLike._embedded.items[0].id).toEqual(USER_ID)
   })
 })
