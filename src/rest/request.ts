@@ -9,7 +9,7 @@ import {
   QUEUE_RESERVOIR_REFILL_INTERVAL,
   USER_AGENT,
 } from '../constants'
-import { until } from '../utils/functional'
+import { fnClearInterval, until } from '../utils/functional'
 import makeLogger from '../utils/logger'
 import sleep from '../utils/sleep'
 import {
@@ -80,14 +80,14 @@ function refillReservoir(): IntervalSet {
       if (queue.empty() && (await queue.running()) === 0 && reservoir > 10) {
         return (
           queue.incrementReservoir(1) &&
-          !clearInterval(interval) &&
+          fnClearInterval(interval) &&
           refillIntervalSet.delete(interval)
         )
       }
 
       return reservoir < QUEUE_RESERVOIR
         ? queue.incrementReservoir(1)
-        : !clearInterval(interval) && refillIntervalSet.delete(interval)
+        : fnClearInterval(interval) && refillIntervalSet.delete(interval)
     }, QUEUE_RESERVOIR_REFILL_INTERVAL)
 
     return refillIntervalSet.add(interval)
