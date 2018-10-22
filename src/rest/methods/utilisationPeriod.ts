@@ -9,6 +9,7 @@ export interface IUtilisationPeriod {
   readonly endDate: string | null
   readonly externalId: string | null
   readonly id: string
+  readonly invitations: ReadonlyArray<IUtilisationPeriodInvite>
   readonly name: string
   readonly startDate: string
   readonly stats: {
@@ -18,6 +19,22 @@ export interface IUtilisationPeriod {
   readonly tenantIds: ReadonlyArray<string>
   readonly userCount: number | null
   readonly users: ReadonlyArray<IUser>
+}
+
+export interface IUtilisationPeriodInvite {
+  readonly id: string
+  readonly code: string
+  readonly createdAt: string
+  readonly email: string | null
+  readonly expiresAt: string | null
+  readonly permanent: boolean
+  readonly utilisationPeriods: ReadonlyArray<string>
+  readonly invitationSent: boolean
+  readonly tenantId: string
+  readonly organizations: ReadonlyArray<string> // array of mongoId
+  readonly teams: ReadonlyArray<string> // array of mongoId
+  readonly resendAttempts: ReadonlyArray<string> // array of dates
+  readonly usedAt: string | null
 }
 
 export type PartialUtilisationPeriod = Partial<IUtilisationPeriod>
@@ -50,11 +67,11 @@ export async function utilisationPeriodCreate(
 ): UtilisationPeriodResult {
   const {
     tenantIDs: tenantIds,
-    _embedded: { users },
+    _embedded: { invitations, users },
     ...result
   } = await client.post(`/v1/units/${unitId}/utilisation-periods`, data)
 
-  return { ...result, tenantIds, users: remapEmbeddedUser(users) }
+  return { ...result, invitations, tenantIds, users: remapEmbeddedUser(users) }
 }
 
 /*
@@ -71,11 +88,11 @@ export async function utilisationPeriodFindById(
 ): UtilisationPeriodResult {
   const {
     tenantIDs: tenantIds,
-    _embedded: { users },
+    _embedded: { invitations, users },
     ...result
   } = await client.get(`/v1/utilisation-periods/${utilisationPeriodId}`)
 
-  return { ...result, tenantIds, users: remapEmbeddedUser(users) }
+  return { ...result, invitations, tenantIds, users: remapEmbeddedUser(users) }
 }
 
 /*
@@ -96,11 +113,11 @@ export async function utilisationPeriodUpdateById(
 ): UtilisationPeriodResult {
   const {
     tenantIDs: tenantIds,
-    _embedded: { users },
+    _embedded: { invitations, users },
     ...result
   } = await client.patch(`/v1/utilisation-periods/${utilisationPeriodId}`, data)
 
-  return { ...result, tenantIds, users: remapEmbeddedUser(users) }
+  return { ...result, invitations, tenantIds, users: remapEmbeddedUser(users) }
 }
 
 export type MethodUtilisationPeriodCheckInUser = (
