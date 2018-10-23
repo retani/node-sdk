@@ -1,5 +1,5 @@
 import { InterfaceAllthingsRestClient } from '../types'
-import { IUser, remapUserResponse } from './user'
+import { IUser, remapEmbeddedUser } from './user'
 
 export interface IUtilisationPeriod {
   readonly _embedded: {
@@ -44,9 +44,6 @@ export type UtilisationPeriodResults = Promise<
   ReadonlyArray<IUtilisationPeriod>
 >
 
-const remapEmbeddedUser = (users: ReadonlyArray<any>) =>
-  users.map(remapUserResponse)
-
 /*
   Create new Utilisation Period
 */
@@ -65,13 +62,17 @@ export async function utilisationPeriodCreate(
     readonly startDate: string
   },
 ): UtilisationPeriodResult {
-  const {
-    tenantIDs: tenantIds,
-    _embedded: { invitations, users },
-    ...result
-  } = await client.post(`/v1/units/${unitId}/utilisation-periods`, data)
+  const { tenantIDs: tenantIds, _embedded, ...result } = await client.post(
+    `/v1/units/${unitId}/utilisation-periods`,
+    data,
+  )
 
-  return { ...result, invitations, tenantIds, users: remapEmbeddedUser(users) }
+  return {
+    ...result,
+    invitations: _embedded.invitations,
+    tenantIds,
+    users: remapEmbeddedUser(_embedded),
+  }
 }
 
 /*
@@ -86,13 +87,16 @@ export async function utilisationPeriodFindById(
   client: InterfaceAllthingsRestClient,
   utilisationPeriodId: string,
 ): UtilisationPeriodResult {
-  const {
-    tenantIDs: tenantIds,
-    _embedded: { invitations, users },
-    ...result
-  } = await client.get(`/v1/utilisation-periods/${utilisationPeriodId}`)
+  const { tenantIDs: tenantIds, _embedded, ...result } = await client.get(
+    `/v1/utilisation-periods/${utilisationPeriodId}`,
+  )
 
-  return { ...result, invitations, tenantIds, users: remapEmbeddedUser(users) }
+  return {
+    ...result,
+    invitations: _embedded.invitations,
+    tenantIds,
+    users: remapEmbeddedUser(_embedded),
+  }
 }
 
 /*
@@ -111,13 +115,17 @@ export async function utilisationPeriodUpdateById(
     readonly startDate: string
   },
 ): UtilisationPeriodResult {
-  const {
-    tenantIDs: tenantIds,
-    _embedded: { invitations, users },
-    ...result
-  } = await client.patch(`/v1/utilisation-periods/${utilisationPeriodId}`, data)
+  const { tenantIDs: tenantIds, _embedded, ...result } = await client.patch(
+    `/v1/utilisation-periods/${utilisationPeriodId}`,
+    data,
+  )
 
-  return { ...result, invitations, tenantIds, users: remapEmbeddedUser(users) }
+  return {
+    ...result,
+    invitations: _embedded.invitations,
+    tenantIds,
+    users: remapEmbeddedUser(_embedded),
+  }
 }
 
 export type MethodUtilisationPeriodCheckInUser = (
