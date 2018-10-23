@@ -140,7 +140,7 @@ export function responseWasSuccessful(response: Response): boolean {
 /**
  * Perform an API request. The request is passed to the queue from where it is
  * queued and scheduled for execution. When a request fails with a retryable
- * statuCode, the request is retried up to REQUEST_MAX_RETRIES times. Retries
+ * statusCode, the request is retried up to REQUEST_MAX_RETRIES times. Retries
  * are implemented with exponential-backing off strategy with jitter.
  */
 export function makeApiRequest(
