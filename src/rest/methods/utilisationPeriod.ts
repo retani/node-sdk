@@ -146,3 +146,20 @@ export async function utilisationPeriodCheckInUser(
     })) && client.utilisationPeriodFindById(utilisationPeriodId)
   )
 }
+
+export type MethodUtilisationPeriodCheckOutUser = (
+  utilisationPeriodId: string,
+  userId: string,
+) => UtilisationPeriodResult
+
+export async function utilisationPeriodCheckOutUser(
+  client: InterfaceAllthingsRestClient,
+  utilisationPeriodId: string,
+  userId: string,
+): Promise<boolean> {
+  return (
+    (await client.delete(
+      `/v1/utilisation-periods/${utilisationPeriodId}/users/${userId}`,
+    )) === ''
+  )
+}

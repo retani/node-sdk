@@ -46,6 +46,7 @@ import {
 } from './methods/user'
 import {
   utilisationPeriodCheckInUser,
+  utilisationPeriodCheckOutUser,
   utilisationPeriodCreate,
   utilisationPeriodFindById,
   utilisationPeriodUpdateById,
@@ -117,6 +118,7 @@ const API_METHODS: ReadonlyArray<any> = [
   utilisationPeriodFindById,
   utilisationPeriodUpdateById,
   utilisationPeriodCheckInUser,
+  utilisationPeriodCheckOutUser,
 ]
 
 export { EnumUnitType, EnumUserPermissionObjectType, EnumUserPermissionRole }

@@ -128,4 +128,42 @@ describe('utilisationPeriodCheckInUser()', () => {
     expect(user.id).toEqual(checkedInUserId)
     expect(usersUtilisationPeriodId).toEqual(utilisationPeriod.id)
   })
+
+  describe('utilisationPeriodCheckOutUser()', () => {
+    it('should remove and existing user from a utilisationPeriod', async () => {
+      const initialData = {
+        endDate: '2999-01-03',
+        externalId: generateId(),
+        startDate: '2999-01-03',
+      }
+      const utilisationPeriod = await client.utilisationPeriodCreate(
+        sharedUnitId,
+        initialData,
+      )
+
+      const userEmail = generateId() + '@test.com'
+
+      const user = await client.userCreate(APP_ID, generateId(), generateId(), {
+        email: userEmail,
+        locale: EnumLocale.de_DE,
+      })
+
+      await client.utilisationPeriodCheckInUser(utilisationPeriod.id, {
+        email: userEmail,
+      })
+
+      const checkOutResult = await client.utilisationPeriodCheckOutUser(
+        utilisationPeriod.id,
+        user.id,
+      )
+
+      expect(checkOutResult).toEqual(true)
+
+      const emptyUtilisationPeriod = await client.utilisationPeriodFindById(
+        utilisationPeriod.id,
+      )
+
+      expect(emptyUtilisationPeriod.users).toHaveLength(0)
+    })
+  })
 })
