@@ -12,17 +12,18 @@ export interface ILogger {
 
 export default function makeLogger(name: string): ILogger {
   return ['log', 'info', 'warn', 'error'].reduce(
-    (logger, type: 'log' | 'info' | 'warn' | 'error') => ({
+    (logger: object, type: 'log' | 'info' | 'warn' | 'error') => ({
       ...logger,
       [type]: function log(
         ...logs: any[] // tslint:disable-line readonly-array
-      ): boolean {
+      ): true {
         if (
           SUBSCRIPTIONS.includes('*') ||
           SUBSCRIPTIONS.includes(name) ||
           SUBSCRIPTIONS.includes(name.toLocaleLowerCase())
         ) {
-          return !!console[type](`${name}:`, ...logs)
+          // tslint:disable-next-line no-console no-expression-statement
+          console[type](`${name}:`, ...logs)
         }
 
         return true

@@ -34,3 +34,14 @@ export async function until<A, B>(
     ? transformed
     : until(predicate, transformer, transformed, iterationCount + 1)
 }
+
+/**
+ * Abstracts the expression-statement involved with the clearInterval()
+ * call so that it can be used elsewhere more "functionally"
+ */
+export function fnClearInterval(intervalId: NodeJS.Timeout): true {
+  // tslint:disable-next-line no-expression-statement
+  clearInterval(intervalId)
+
+  return true
+}

@@ -67,7 +67,7 @@ export default [
       replace({
         'process.env.NODE_ENV': JSON.stringify('production'),
         // tslint:disable-next-line:object-literal-sort-keys
-        'process.env': JSON.stringify({}),
+        'process.env': JSON.stringify([]),
       }),
       terser(),
     ],
