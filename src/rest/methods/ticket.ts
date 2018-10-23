@@ -6,6 +6,7 @@ import {
   IConversation,
   mapConversationDateFields,
 } from './conversation'
+import { IFile } from './file'
 import { IGroup } from './group'
 import { IProperty } from './property'
 import { IUnit } from './unit'
@@ -58,7 +59,7 @@ export interface ITicketEmbedded {
   readonly assignedTo: IUser | null
   readonly category: ICategory
   readonly conversations: ReadonlyArray<IConversation>
-  readonly files: ReadonlyArray<any> // @TODO
+  readonly files: ReadonlyArray<IFile>
   readonly group: IGroup
   readonly property: IProperty
   readonly unit: IUnit
@@ -79,7 +80,7 @@ export interface IBasicTicket {
   readonly title: string
   readonly channels: ReadonlyArray<string>
   readonly channelPaths: ReadonlyArray<ReadonlyArray<string>>
-  readonly files: ReadonlyArray<any> // @TODO
+  readonly files: ReadonlyArray<IFile>
   readonly read: boolean
   readonly sortHash: string
   readonly incrementID: number
@@ -107,7 +108,7 @@ export interface IBasicTicketCollection {
   readonly limit: number
   readonly pages: number
   readonly total: number
-  readonly metaData: ReadonlyArray<any> // @TODO
+  readonly metaData: ReadonlyArray<string>
   readonly _links: {
     readonly self: IGenericLink
     readonly first: IGenericLink

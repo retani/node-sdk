@@ -54,7 +54,7 @@ export interface IMessageCollection {
   readonly limit: number
   readonly pages: number
   readonly total: number
-  readonly metaData: ReadonlyArray<any> // @TODO
+  readonly metaData: ReadonlyArray<string>
   readonly _links: {
     readonly self: IGenericLink
     readonly first: IGenericLink
@@ -165,8 +165,8 @@ export type MethodConversationListMessages = (
 export async function conversationListMessages(
   client: InterfaceAllthingsRestClient,
   conversationId: string,
-  token?: string | null,
-  filter?: string | null,
+  token?: string,
+  filter?: string,
 ): MessageCollectionResult {
   const query = getQueryString({ token, filter })
 

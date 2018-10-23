@@ -1,7 +1,7 @@
 import qs from 'query-string'
 
 interface IStringMap {
-  readonly [key: string]: any
+  readonly [key: string]: string | undefined
 }
 
 export function getQueryString(obj: IStringMap): string {
