@@ -103,7 +103,7 @@ export const unmemoizedGetNewTokenUsingImplicitFlow = async (
   }
 
   // tslint:disable-next-line:no-expression-statement
-  window.history.replaceState({}, undefined, window.location.href.split('#')[0])
+  window.history.replaceState({}, '', window.location.href.split('#')[0])
 
   return accessToken
 }
