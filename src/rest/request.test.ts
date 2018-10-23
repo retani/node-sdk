@@ -65,7 +65,7 @@ describe('Request', () => {
 
     await expect(
       request(clientOptions, 'get' as HttpVerb, '/v1/me'),
-    ).rejects.toThrow('Issue getting OAuth2 authentication token.')
+    ).rejects.toThrow('Unable to get OAuth2 authentication token.')
 
     expect(global.window.location.href).toBeTruthy()
     expect(global.window.location.href).toContain(clientOptions.oauthUrl)
@@ -80,6 +80,7 @@ describe('Request', () => {
     const mockMakeApiRequest = require('./request').makeApiRequest
 
     mockFetch.mockResolvedValueOnce({
+      clone: () => ({ text: () => '' }),
       headers: new Map([['content-type', 'text/html']]),
       ok: true,
       status: 200,

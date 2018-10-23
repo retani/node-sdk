@@ -5,11 +5,19 @@ import httpGet from './get'
 import { agentCreate, agentCreatePermissions } from './methods/agent'
 import { appCreate } from './methods/app'
 import {
+  bucketAddFile,
+  bucketCreate,
+  bucketGet,
+  bucketRemoveFile,
+  bucketRemoveFilesInPath,
+} from './methods/bucket'
+import {
   conversationCreateMessage,
   conversationGetById,
   conversationListMessages,
   conversationUpdateMessageById,
 } from './methods/conversation'
+import { fileCreate, fileDelete } from './methods/file'
 import { groupCreate, groupFindById, groupUpdateById } from './methods/group'
 import { lookupIds } from './methods/idLookup'
 import {
@@ -78,6 +86,17 @@ const API_METHODS: ReadonlyArray<any> = [
   conversationCreateMessage,
   conversationListMessages,
   conversationUpdateMessageById,
+
+  // Bucket
+  bucketCreate,
+  bucketAddFile,
+  bucketRemoveFile,
+  bucketRemoveFilesInPath,
+  bucketGet,
+
+  // File
+  fileCreate,
+  fileDelete,
 
   // ID Lookup
   lookupIds,

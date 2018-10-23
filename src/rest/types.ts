@@ -6,11 +6,19 @@ import {
 } from './methods/agent'
 import { MethodAppCreate } from './methods/app'
 import {
+  MethodBucketAddFile,
+  MethodBucketCreate,
+  MethodBucketGet,
+  MethodBucketRemoveFile,
+  MethodBucketRemoveFilesInPath,
+} from './methods/bucket'
+import {
   MethodConversationCreateMessage,
   MethodConversationGetById,
   MethodConversationListMessages,
   MethodConversationUpdateMessageById,
 } from './methods/conversation'
+import { MethodFileCreate, MethodFileDelete } from './methods/file'
 import {
   MethodGroupCreate,
   MethodGroupFindById,
@@ -151,6 +159,29 @@ export interface InterfaceAllthingsRestClient {
    */
   readonly appCreate: MethodAppCreate
 
+  // Bucket
+
+  /**
+   * Create a new Bucket. Buckets are containers for files.
+   */
+  readonly bucketCreate: MethodBucketCreate
+  /**
+   * Adds a file to the bucket.
+   */
+  readonly bucketAddFile: MethodBucketAddFile
+  /**
+   * Deletes a file from a bucket.
+   */
+  readonly bucketRemoveFile: MethodBucketRemoveFile
+  /**
+   * Deletes all files within that bucket that are in the passed path.
+   */
+  readonly bucketRemoveFilesInPath: MethodBucketRemoveFilesInPath
+  /**
+   * Gets a Bucket.
+   */
+  readonly bucketGet: MethodBucketGet
+
   // Conversation
 
   /**
@@ -172,6 +203,18 @@ export interface InterfaceAllthingsRestClient {
    * Update message by message ID
    */
   readonly conversationUpdateMessageById: MethodConversationUpdateMessageById
+
+  // File
+
+  /**
+   * Creates a file
+   */
+  readonly fileCreate: MethodFileCreate
+
+  /**
+   * Deletes a file by it's ID
+   */
+  readonly fileDelete: MethodFileDelete
 
   // ID Lookup
 

@@ -14,7 +14,7 @@ Allthings Node/Javascript SDK
 ## Installation & Usage
 
 ```sh
-yarn add allthings
+yarn add @allthings/sdk
 ```
 
 ```javascript
@@ -57,7 +57,7 @@ The available configuration options are outlined here:
 | **username**     |         | Username to use with OAuth 2.0 Password Grant authentication flow                                       |
 | **password**     |         | Password to use with OAuth 2.0 Password Grant authentication flow                                       |
 | **concurrency**  |         | Number of concurrent requests to perform in parallel. Default behavior is burst of 30/s, 1/s thereafter |
-
+| **apiUrl**  |              | Base API url to use. Defaults to https://api.allthings.me/, respects value of the `ALLTHINGS_REST_API_URL` environment variable  |
 
 ## Authentication
 
