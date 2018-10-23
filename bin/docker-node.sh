@@ -25,6 +25,8 @@ set -- \
   -v "$PWD/../.yarncache:/srv/www/.yarncache" \
   -e "YARN_CACHE_FOLDER=/srv/www/.yarncache" \
   -e NODE_ENV \
+  -e NPM_TOKEN \
+  -e GITHUB_TOKEN \
   --entrypoint "$CMD" \
   --rm \
   allthings/node \
