@@ -4,6 +4,7 @@ import restClient from '..'
 import { APP_ID, APP_PROPERTY_MANAGER_ID } from '../../../test/constants'
 import { EnumLocale, EnumTimezone } from '../types'
 import { EnumUnitType } from './unit'
+import { remapEmbeddedUser } from './user'
 
 let sharedUnitId: string // tslint:disable-line no-let
 
@@ -162,8 +163,8 @@ describe('utilisationPeriodCheckInUser()', () => {
       const emptyUtilisationPeriod = await client.utilisationPeriodFindById(
         utilisationPeriod.id,
       )
-
       expect(emptyUtilisationPeriod.users).toHaveLength(0)
+      expect(remapEmbeddedUser(emptyUtilisationPeriod)).toEqual([])
     })
   })
 })
