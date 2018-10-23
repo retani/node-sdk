@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { generate as generateId } from 'shortid'
+import generateId from 'nanoid'
 import restClient from '..'
 import { APP_ID, APP_PROPERTY_MANAGER_ID } from '../../../test/constants'
 import { EnumLocale, EnumTimezone } from '../types'
@@ -43,6 +43,7 @@ describe('agentCreate()', () => {
     } = await client.get(
       `/v1/property-managers/${APP_PROPERTY_MANAGER_ID}/users?limit=-1`,
     )
+
     const ourManagerAgent = managerAgents.find(
       (item: any) => item.id === agent.id,
     )

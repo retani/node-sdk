@@ -7,7 +7,7 @@ import replace from 'rollup-plugin-replace'
 //import typescript from 'rollup-plugin-typescript'
 import packageJson from './package.json'
 
-const external = ['bottleneck', 'mem', 'readline', 'nanoid']
+const external = [...Object.keys(packageJson.dependencies), 'readline']
 
 const plugins = [
   resolve({
@@ -67,7 +67,7 @@ export default [
       replace({
         'process.env.NODE_ENV': JSON.stringify('production'),
         // tslint:disable-next-line:object-literal-sort-keys
-        'process.env': JSON.stringify({}),
+        'process.env': JSON.stringify([]),
       }),
       terser(),
     ],

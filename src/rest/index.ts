@@ -5,6 +5,14 @@ import httpGet from './get'
 import { agentCreate, agentCreatePermissions } from './methods/agent'
 import { appCreate } from './methods/app'
 import { groupCreate, groupGetById, groupUpdateById } from './methods/group'
+import {
+  bucketAddFile,
+  bucketCreate,
+  bucketGet,
+  bucketRemoveFile,
+  bucketRemoveFilesInPath,
+} from './methods/bucket'
+import { fileCreate, fileDelete } from './methods/file'
 import { lookupIds } from './methods/idLookup'
 import {
   propertyCreate,
@@ -58,6 +66,13 @@ const API_METHODS: ReadonlyArray<any> = [
   // App
   appCreate,
 
+  // Bucket
+  bucketCreate,
+  bucketAddFile,
+  bucketRemoveFile,
+  bucketRemoveFilesInPath,
+  bucketGet,
+
   // ID Lookup
   lookupIds,
 
@@ -75,6 +90,10 @@ const API_METHODS: ReadonlyArray<any> = [
   registrationCodeCreate,
   registrationCodeDelete,
   registrationCodeGetById,
+
+  // File
+  fileCreate,
+  fileDelete,
 
   // Unit
   unitCreate,

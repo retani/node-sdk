@@ -14,7 +14,7 @@ Allthings Node/Javascript SDK
 ## Installation & Usage
 
 ```sh
-yarn add allthings
+yarn add @allthings/sdk
 ```
 
 ```javascript
