@@ -37,5 +37,5 @@ steps:
   - name: release
     command: >
       bin/artifacts-download.sh &&
-      bin/docker-node.sh yarn semantic-release || true
+      bin/docker-node.sh yarn semantic-release
     branches: 'master'

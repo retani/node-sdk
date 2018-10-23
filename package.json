@@ -45,7 +45,7 @@
     "prebuild": "npm run clean",
     "build": "tsc -d && cp package.json dist/ && rollup -c && rm dist/package.json",
     "dev": "tsc -w",
-    "preversion": "git pull && yarn check --integrity && yarn security-check && yarn lint && yarn test",
+    "preversion": "read -e -p 'This project is setup to automatically publish to NPM. Are you sure you want to manually publish a version? [Yes/n]' YN && [[ $YN == \"yes\" || $YN == \"Yes\" ]] && git pull && yarn check --integrity && yarn security-check && yarn lint && yarn test",
     "postversion": "git push --tags origin HEAD",
     "prepublishOnly": "npm run lint && npm run build",
     "prettier": "prettier --write",
