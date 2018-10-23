@@ -48,11 +48,9 @@
     "preversion": "git pull && yarn check --integrity && yarn security-check && yarn lint && yarn test",
     "postversion": "git push --tags origin HEAD",
     "prepublishOnly": "npm run lint && npm test && npm run security-check && npm run build",
-    "precommit": "lint-staged",
     "prettier": "prettier --write",
     "security-check": "nsp check",
     "upgrade-dependencies": "yarn upgrade-interactive --latest --exact",
-    "commitmsg": "commitlint -e $GIT_PARAMS",
     "semantic-release": "semantic-release -d",
     "serve": "npx serve -l 3333",
     "test:implicit-flow": "open http://localhost:3333/test/fixtures/implicit-flow?clientId=$ALLTHINGS_OAUTH_CLIENT_ID"
@@ -77,7 +75,7 @@
     "@types/query-string": "6.1.0",
     "coveralls": "3.0.2",
     "form-data": "2.3.3",
-    "husky": "0.14.3",
+    "husky": "1.1.2",
     "jest": "23.6.0",
     "lint-staged": "7.3.0",
     "nsp": "3.2.1",
@@ -156,5 +154,11 @@
       "/node_modules/",
       "/test/"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
   }
 }
