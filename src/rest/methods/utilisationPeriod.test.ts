@@ -164,7 +164,7 @@ describe('utilisationPeriodCheckInUser()', () => {
         utilisationPeriod.id,
       )
       expect(emptyUtilisationPeriod.users).toHaveLength(0)
-      expect(remapEmbeddedUser(emptyUtilisationPeriod)).toEqual([])
+      expect(remapEmbeddedUser(emptyUtilisationPeriod.users)).toEqual([])
     })
   })
 })
