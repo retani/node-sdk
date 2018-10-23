@@ -1,6 +1,6 @@
 {
   "name": "@allthings/sdk",
-  "version": "0.5.3",
+  "version": "0.0.0-development",
   "description": "",
   "author": "Allthings GmbH",
   "maintainers": [
@@ -47,7 +47,7 @@
     "dev": "tsc -w",
     "preversion": "git pull && yarn check --integrity && yarn security-check && yarn lint && yarn test",
     "postversion": "git push --tags origin HEAD",
-    "prepublishOnly": "npm run lint && npm test && npm run security-check && npm run build",
+    "prepublishOnly": "npm run lint && npm run build",
     "prettier": "prettier --write",
     "security-check": "nsp check",
     "upgrade-dependencies": "yarn upgrade-interactive --latest --exact",
