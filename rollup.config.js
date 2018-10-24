@@ -7,7 +7,17 @@ import replace from 'rollup-plugin-replace'
 //import typescript from 'rollup-plugin-typescript'
 import packageJson from './package.json'
 
-const external = [...Object.keys(packageJson.dependencies), 'readline']
+const external = [
+  ...Object.keys(packageJson.dependencies),
+  'fs',
+  'http',
+  'https',
+  'path',
+  'readline',
+  'stream',
+  'url',
+  'util',
+]
 
 const plugins = [
   resolve({

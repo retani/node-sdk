@@ -28,6 +28,7 @@
   "types": "dist/src/index.d.ts",
   "files": [
     "dist/*.js",
+    "dist/*.min.js",
     "dist/**/*.d.ts"
   ],
   "bin": {
@@ -47,7 +48,7 @@
     "dev": "tsc -w",
     "preversion": "read -e -p 'This project is setup to automatically publish to NPM. Are you sure you want to manually publish a version? [Yes/n]' YN && [[ $YN == \"yes\" || $YN == \"Yes\" ]] && git pull && yarn check --integrity && yarn security-check && yarn lint && yarn test",
     "postversion": "git push --tags origin HEAD",
-    "prepublishOnly": "npm run lint && npm run build",
+    "prepublishOnly": "npm run build",
     "prettier": "prettier --write",
     "security-check": "nsp check",
     "upgrade-dependencies": "yarn upgrade-interactive --latest --exact",
