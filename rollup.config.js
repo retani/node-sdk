@@ -47,13 +47,6 @@ export default [
     ],
     plugins,
   },
-  // The SDKs CLI
-  {
-    external,
-    input: 'dist/src/cli.js',
-    output: [{ file: 'dist/cli.js', format: 'cjs' }],
-    plugins: [hashbang(), ...plugins],
-  },
   // For modern browsers
   {
     input: 'dist/src/index.js',
@@ -81,5 +74,12 @@ export default [
       }),
       terser(),
     ],
+  },
+  // The SDKs CLI
+  {
+    external,
+    input: 'dist/src/cli.js',
+    output: [{ file: 'dist/cli.js', format: 'cjs' }],
+    plugins: [hashbang(), ...plugins],
   },
 ]
