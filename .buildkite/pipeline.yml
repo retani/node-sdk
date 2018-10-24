@@ -42,3 +42,5 @@ steps:
       git pull &&
       bin/docker-node.sh yarn semantic-release
     branches: 'master'
+    agents:
+      queue: t2-large
