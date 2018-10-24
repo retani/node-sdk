@@ -39,6 +39,6 @@ steps:
       bin/artifacts-download.sh &&
       git remote set-url origin https://github.com/allthings/node-sdk.git && 
       git checkout master &&
-      git pull &&
+      git pull && git pull --tags &&
       bin/docker-node.sh yarn semantic-release
     branches: 'master'
