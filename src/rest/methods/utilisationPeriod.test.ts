@@ -91,7 +91,7 @@ describe('utilisationPeriodUpdateById()', () => {
 })
 
 describe('utilisationPeriodCheckInUser()', () => {
-  it('should checkIn and existing user to a utilisationPeriod by email', async () => {
+  it('should checkIn an existing user to a utilisationPeriod by email', async () => {
     const initialData = {
       endDate: '2450-01-03',
       externalId: generateId(),
@@ -131,7 +131,7 @@ describe('utilisationPeriodCheckInUser()', () => {
   })
 
   describe('utilisationPeriodCheckOutUser()', () => {
-    it('should remove and existing user from a utilisationPeriod', async () => {
+    it('should remove an existing user from a utilisationPeriod', async () => {
       const initialData = {
         endDate: '2999-01-03',
         externalId: generateId(),
