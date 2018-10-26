@@ -1,6 +1,7 @@
 import { getQueryString } from '../../utils/getQueryString'
 import { stringToDate } from '../../utils/stringToDate'
 import { EnumLocale, InterfaceAllthingsRestClient } from '../types'
+import { IFile } from './file'
 import { LikeCollectionResult } from './like'
 import { IUser } from './user'
 
@@ -13,9 +14,9 @@ export interface ITranslationObject {
   readonly locale: EnumLocale
   readonly id: string
   readonly content: string
-  readonly files: ReadonlyArray<any> // @TODO
+  readonly files: ReadonlyArray<IFile>
   readonly _embedded: {
-    readonly files: ReadonlyArray<any> // @TODO
+    readonly files: ReadonlyArray<IFile>
   }
 }
 
@@ -32,7 +33,7 @@ export interface IBasicCommunityArticle {
   readonly channels: ReadonlyArray<string>
   readonly unpublishedChannels: ReadonlyArray<string>
   readonly content: string
-  readonly files: ReadonlyArray<any> // @TODO
+  readonly files: ReadonlyArray<IFile>
   readonly commentCount: number
   readonly published: boolean
   readonly sortHash: string
@@ -50,9 +51,9 @@ export interface IBasicCommunityArticle {
   readonly _embedded: {
     readonly likes: ReadonlyArray<any> // @TODO
     readonly user: IUser
-    readonly files: ReadonlyArray<any> // @TODO
+    readonly files: ReadonlyArray<IFile>
   }
-  readonly channelPathLabels: ReadonlyArray<IChannelPathLabel> // @TODO
+  readonly channelPathLabels: ReadonlyArray<IChannelPathLabel>
   readonly _meta: {
     readonly comments: {
       readonly unpublishedCount: number
@@ -87,7 +88,7 @@ export interface IBasicCommunityArticleCollection {
   readonly limit: number
   readonly pages: number
   readonly total: number
-  readonly metaData: ReadonlyArray<any> // @TODO
+  readonly metaData: ReadonlyArray<string>
   readonly _links: {
     readonly self: IGenericLink
     readonly first: IGenericLink

@@ -10,7 +10,7 @@ export interface ILikeCollection {
   readonly limit: number
   readonly pages: number
   readonly total: number
-  readonly metaData: ReadonlyArray<any> // @TODO
+  readonly metaData: ReadonlyArray<string>
   readonly _links: {
     readonly self: IGenericLink
     readonly first: IGenericLink
