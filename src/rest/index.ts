@@ -5,6 +5,13 @@ import httpGet from './get'
 import { agentCreate, agentCreatePermissions } from './methods/agent'
 import { appCreate } from './methods/app'
 import {
+  bucketAddFile,
+  bucketCreate,
+  bucketGet,
+  bucketRemoveFile,
+  bucketRemoveFilesInPath,
+} from './methods/bucket'
+import {
   commentCreateLike,
   commentDelete,
   commentDeleteLike,
@@ -25,6 +32,7 @@ import {
   communityArticleStatsGetByUser,
   communityArticleUpdate,
 } from './methods/communityArticle'
+import { fileCreate, fileDelete } from './methods/file'
 import { groupCreate, groupFindById, groupUpdateById } from './methods/group'
 import { lookupIds } from './methods/idLookup'
 import {
@@ -79,6 +87,13 @@ const API_METHODS: ReadonlyArray<any> = [
   // App
   appCreate,
 
+  // Bucket
+  bucketCreate,
+  bucketAddFile,
+  bucketRemoveFile,
+  bucketRemoveFilesInPath,
+  bucketGet,
+
   // Comment
   commentCreateLike,
   commentDelete,
@@ -117,6 +132,10 @@ const API_METHODS: ReadonlyArray<any> = [
   registrationCodeCreate,
   registrationCodeDelete,
   registrationCodeFindById,
+
+  // File
+  fileCreate,
+  fileDelete,
 
   // Unit
   unitCreate,

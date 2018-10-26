@@ -6,6 +6,13 @@ import {
 } from './methods/agent'
 import { MethodAppCreate } from './methods/app'
 import {
+  MethodBucketAddFile,
+  MethodBucketCreate,
+  MethodBucketGet,
+  MethodBucketRemoveFile,
+  MethodBucketRemoveFilesInPath,
+} from './methods/bucket'
+import {
   MethodCommentCreateLike,
   MethodCommentDelete,
   MethodCommentDeleteLike,
@@ -26,6 +33,7 @@ import {
   MethodCommunityArticleStatsGetByUser,
   MethodCommunityArticleUpdate,
 } from './methods/communityArticle'
+import { MethodFileCreate, MethodFileDelete } from './methods/file'
 import {
   MethodGroupCreate,
   MethodGroupFindById,
@@ -152,6 +160,29 @@ export interface InterfaceAllthingsRestClient {
    * Create a new App.
    */
   readonly appCreate: MethodAppCreate
+
+  // Bucket
+
+  /**
+   * Create a new Bucket. Buckets are containers for files.
+   */
+  readonly bucketCreate: MethodBucketCreate
+  /**
+   * Adds a file to the bucket.
+   */
+  readonly bucketAddFile: MethodBucketAddFile
+  /**
+   * Deletes a file from a bucket.
+   */
+  readonly bucketRemoveFile: MethodBucketRemoveFile
+  /**
+   * Deletes all files within that bucket that are in the passed path.
+   */
+  readonly bucketRemoveFilesInPath: MethodBucketRemoveFilesInPath
+  /**
+   * Gets a Bucket.
+   */
+  readonly bucketGet: MethodBucketGet
 
   // Comment
 
@@ -299,6 +330,18 @@ export interface InterfaceAllthingsRestClient {
    * Delete a registration code by it
    */
   readonly registrationCodeDelete: MethodRegistrationCodeDelete
+
+  // File
+
+  /**
+   * Creates a file
+   */
+  readonly fileCreate: MethodFileCreate
+
+  /**
+   * Deletes a file by it's ID
+   */
+  readonly fileDelete: MethodFileDelete
 
   // Unit
 
