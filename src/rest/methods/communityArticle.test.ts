@@ -2,11 +2,7 @@
 // tslint:disable:no-object-mutation
 import generateId from 'nanoid'
 import restClient, { EnumUserPermissionObjectType } from '..'
-import {
-  APP_ID,
-  APP_PROPERTY_MANAGER_ID,
-  USER_ID,
-} from '../../../test/constants'
+import { APP_ID, APP_PROPERTY_MANAGER_ID } from '../../../test/constants'
 import { EnumLocale, EnumTimezone } from '../types'
 import { getDateOrNullField } from './communityArticle'
 import { EnumUnitType } from './unit'
@@ -231,7 +227,7 @@ describe('communityArticleGetLikes()', () => {
       communityArticle.id,
     )
     expect(resultWithOneLike.total).toEqual(1)
-    expect(resultWithOneLike._embedded.items[0].id).toEqual(USER_ID)
+    expect(resultWithOneLike._embedded.items[0].id).toBeTruthy()
   })
 })
 
