@@ -4,7 +4,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import json from 'rollup-plugin-json'
 import { terser } from 'rollup-plugin-terser'
 import replace from 'rollup-plugin-replace'
-//import typescript from 'rollup-plugin-typescript'
+import babel from 'rollup-plugin-babel'
 import packageJson from './package.json'
 
 const external = [
@@ -52,7 +52,6 @@ export default [
     input: 'dist/src/index.js',
     output: [{ name: 'allthings', file: packageJson.browser, format: 'umd' }],
     plugins: [
-      //typescript({lib: ["dom", "es2018", "esnext"], target: "es2015"}),
       resolve({
         browser: true,
         jsnext: true,
@@ -71,6 +70,21 @@ export default [
         'process.env.NODE_ENV': JSON.stringify('production'),
         // tslint:disable-next-line:object-literal-sort-keys
         'process.env': JSON.stringify([]),
+      }),
+      babel({
+        //exclude: 'node_modules/**',
+        presets: [
+          [
+            '@babel/preset-env',
+            {
+              targets: {
+                chrome: '58',
+                ie: '11',
+              },
+              useBuiltIns: 'entry',
+            },
+          ],
+        ],
       }),
       terser(),
     ],

@@ -210,7 +210,7 @@ export function makeApiRequest(
             accept: 'application/json',
             authorization: `Bearer ${accessToken}`,
             ...(!hasForm && { 'content-type': 'application/json' }),
-            'user-agent': USER_AGENT,
+            ...(typeof window !== 'undefined' && { 'user-agent': USER_AGENT }),
 
             // user overrides
             ...((payload && payload.headers) || {}),
