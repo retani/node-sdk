@@ -1,3 +1,4 @@
+import '@babel/polyfill'
 export {
   default as restClient,
   EnumUnitType,
